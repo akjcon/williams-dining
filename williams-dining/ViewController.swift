@@ -10,9 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let menuRetriever = MenuRetriever()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
+        menuRetriever.getMenus(MenuChoice.Driscoll)
     }
 
     override func didReceiveMemoryWarning() {

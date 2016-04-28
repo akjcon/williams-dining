@@ -5,6 +5,7 @@
 
 target 'williams-dining' do
   pod 'Alamofire', '~> 3.3'
+  pod 'SwiftyJSON'
 end
 
 target 'williams-diningTests' do
