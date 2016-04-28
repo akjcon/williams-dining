@@ -10,20 +10,29 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    let menuRetriever = MenuRetriever()
+    var diningHallMenus = [DiningHall:[MenuItem]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
-        menuRetriever.getMenus(MenuChoice.Driscoll)
+        for diningHall in DiningHall.allCases {
+            diningHallMenus[diningHall] = MenuRetriever.getMenus(diningHall)
+        }
+        // aah, it's asynchronous...
+        
+        for diningHall in DiningHall.allCases {
+            print(diningHall)
+            let menuItems = diningHallMenus[diningHall]!
+            print(menuItems)
+            for item in menuItems {
+                print(item)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 
