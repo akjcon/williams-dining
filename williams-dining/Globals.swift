@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-
+var diningHallMenus = [DiningHall:[MenuItem]]()
 
 enum DiningHall {
     case Driscoll

@@ -12,8 +12,7 @@ import SwiftyJSON
 
 class MenuRetriever: NSObject {
 
-    static func getMenus(diningHall: DiningHall) -> [MenuItem] {
-        var items = [MenuItem]()
+    static func getMenus(diningHall: DiningHall) {
         Alamofire.request(.GET, "https://dining.williams.edu/wp-json/dining/service_units/" + String(diningHall.getIntValue())).responseJSON { (response) in
             guard response.result.error == nil else {
                 print("Error occurred during menu request")
@@ -21,20 +20,17 @@ class MenuRetriever: NSObject {
                 return
             }
             if let value: AnyObject = response.result.value {
-                items = self.parseMenu(JSON(value),diningHall: diningHall)
+                self.parseMenu(JSON(value), diningHall: diningHall)
             }
         }
-        return items
     }
 
-    static func parseMenu(jsonMenu: JSON, diningHall: DiningHall) -> [MenuItem] {
+    static func parseMenu(jsonMenu: JSON, diningHall: DiningHall) {
         var items = [MenuItem]()
-//        print(jsonMenu)
         for (_,item):(String,JSON) in jsonMenu {
             items.append(MenuItem(item: item,diningHall: diningHall))
         }
-        print(items)
-        return items
-//        items.forEach({print($0)})
+        diningHallMenus[diningHall] = items
+        NSNotificationCenter.defaultCenter().postNotificationName("decrementDiningHallCounter", object: nil)
     }
 }

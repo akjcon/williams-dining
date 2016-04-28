@@ -10,20 +10,32 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var diningHallMenus = [DiningHall:[MenuItem]]()
+    var diningHallCounter = 5
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         for diningHall in DiningHall.allCases {
-            diningHallMenus[diningHall] = MenuRetriever.getMenus(diningHall)
+            MenuRetriever.getMenus(diningHall)
+//            diningHallMenus[diningHall] = MenuRetriever.getMenus(diningHall)
         }
-        // aah, it's asynchronous...
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.decrementDiningHallCounter), name: "decrementDiningHallCounter", object: nil)
+    }
+
+    func decrementDiningHallCounter() {
+        diningHallCounter -= 1
+        print(diningHallCounter)
+        if diningHallCounter == 0 {
+            print("all menus loaded")
+            self.updateDisplay()
+            // update display // show ready or whatever
+        }
+    }
+
+    func updateDisplay() {
         for diningHall in DiningHall.allCases {
             print(diningHall)
             let menuItems = diningHallMenus[diningHall]!
-            print(menuItems)
             for item in menuItems {
                 print(item)
             }
