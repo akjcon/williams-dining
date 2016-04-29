@@ -28,6 +28,10 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
         self.tableView.delegate = self
     }
 
+    func calculateNumberOfSectionsInData() {
+        
+    }
+
 
 
 
