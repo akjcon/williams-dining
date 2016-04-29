@@ -109,19 +109,18 @@ class FoodDictionary: NSObject {
     */
     private func fetchActiveDiningHalls(predicate: NSPredicate?) -> [DiningHall] {
         let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
-
-        // consider a sort descriptor?
-
         if predicate != nil {
             fetchRequest.predicate = predicate!
         }
 
         if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
 
+            print(fetchResults)
             var diningHalls = Set<DiningHall>()
             fetchResults!.forEach({
                 diningHalls.insert(DiningHall(num: $0.diningHall))
             })
+            print(diningHalls)
             return Array(diningHalls).sort({$0.intValue() < $1.intValue() })
         }
         return []
@@ -180,15 +179,11 @@ class FoodDictionary: NSObject {
         return fetchActiveDiningHalls(predicate)
     }
 
-    /*
     override init() {
         super.init()
+        print(managedObjectContext)
 
-        // temporarily here, but later will move this to auto-update or something
-        self.loadAPIMenusIntoMemory()
-
-        // load menus into app from CoreData (?)
-    }*/
+    }
 
 
     /**
@@ -228,6 +223,8 @@ class FoodDictionary: NSObject {
         for diningHall in DiningHall.allCases {
             self.getMenu(diningHall)
         }
+        try? managedObjectContext.save()
+//        (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
     }
 
     /**

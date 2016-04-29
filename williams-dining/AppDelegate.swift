@@ -60,6 +60,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
 
+    func updateData() {
+        foodDictionary.fetchMenusFromAPI()
+        let date = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+        let dateStr = String(components.year) + "-" + String(components.month) + "-" + String(components.day)
+        defaults.setValue(dateStr, forKey: "lastUpdatedAt")
+    }
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         foodDictionary = FoodDictionary()
         // Override point for customization after application launch.
@@ -74,21 +83,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(
             UIApplicationBackgroundFetchIntervalMinimum)
 
-
-        // work on bg fetching
-/*        let date = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
-        let dateStr = String(components.year) + "-" + String(components.month) + "-" + String(components.day)*/
-        // test variable for if updated today
-
         let dateStr = "0000-00-00"
         defaults.registerDefaults(["lastUpdatedAt":dateStr])
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if Date(dateString: defaults.valueForKey("lastUpdatedAt") as! String).isEarlierThan(Date(date: NSDate())) {
-            print("aha!")
-            foodDictionary.fetchMenusFromAPI()
+            updateData()
             let controller = storyboard.instantiateViewControllerWithIdentifier("LoadingViewController")
             self.window?.rootViewController = controller
         } else {
@@ -119,18 +119,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 
-        self.saveContext()
+//        self.saveContext()
     }
 
     // Support for background fetch
     func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
 
-        foodDictionary.fetchMenusFromAPI()
-        let date = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
-        let dateStr = String(components.year) + "-" + String(components.month) + "-" + String(components.day)
-        defaults.setValue(dateStr, forKey: "lastUpdatedAt")
+        updateData()
 
     }
 
