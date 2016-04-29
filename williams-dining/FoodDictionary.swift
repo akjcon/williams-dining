@@ -28,30 +28,31 @@ class FoodDictionary: NSObject {
     // Meal Times -> Dining Halls (keys for mealMenus)
 
     func getActiveMealTimes() -> [MealTime] {
-        return activeMealTimes
+        return activeMealTimes.sort({$0.sortingValue() < $1.sortingValue() })
     }
 
     func getActiveDiningHalls() -> [DiningHall] {
-        return activeDiningHalls
+        return activeDiningHalls.sort({$0.sortingValue() < $1.sortingValue() })
     }
 
 
     func getMealTimesForDiningHall(diningHall: DiningHall) -> [MealTime]? {
-        // do preferential orderings?
         let mealTimes = mealTimesForDiningHalls[diningHall]
         if mealTimes == nil {
             return []
-        } else if mealTimes!.contains(.Brunch) {
-            return [.Brunch,.Dinner,.Dessert]
-        } else if mealTimes!.contains(.Breakfast) && mealTimes!.contains(.Lunch) {
-            return [.Breakfast,.Lunch,.Dinner,.Dessert]
         } else {
-            return [.Lunch]
+            return mealTimes!.sort({$0.sortingValue() < $1.sortingValue() })
         }
     }
 
     func getDiningHallsForMealTime(mealTime: MealTime) -> [DiningHall]? {
-        return diningHallsForMealTimes[mealTime]
+        let diningHalls = diningHallsForMealTimes[mealTime]
+        if diningHalls == nil {
+            return []
+        } else {
+            return diningHalls!.sort({$0.sortingValue() < $1.sortingValue() })
+        }
+//        return diningHallsForMealTimes[mealTime]
     }
 
 
@@ -146,6 +147,23 @@ enum DiningHall {
     case EcoCafe
     case Error
 
+    func sortingValue() -> Int {
+        switch(self) {
+        case .Driscoll:
+            return 1
+        case .Whitmans:
+            return 2
+        case .Mission:
+            return 3
+        case .GrabAndGo:
+            return 4
+        case .EcoCafe:
+            return 5
+        case .Error:
+            return 10
+        }
+    }
+
     static let allCases = [Driscoll,Whitmans,Mission,GrabAndGo,EcoCafe]
 
     func getIntValue() -> Int {
@@ -186,6 +204,23 @@ enum MealTime {
     case Brunch
     case Dessert
     case Error
+
+    func sortingValue() -> Int {
+        switch(self) {
+        case .Breakfast:
+            return 1
+        case .Brunch:
+            return 2
+        case .Lunch:
+            return 3
+        case .Dinner:
+            return 4
+        case .Dessert:
+            return 5
+        case .Error:
+            return 10
+        }
+    }
 
     static let allCases = [Breakfast,Lunch,Dinner,Brunch,Dessert]
 
