@@ -15,7 +15,12 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
 
-    var pickerDataSource = foodDictionary.getActiveDiningHalls()
+    var menuItems = [CoreDataMenuItem]()
+
+//    var pickerDataSource = foodDictionary.getActiveDiningHalls()
+
+//    var pickerDataSource = DiningHall.allCases
+    var pickerDataSource = foodDictionary.fetchActiveDiningHalls()
 
     var selectedDiningHall: DiningHall!
 
@@ -28,16 +33,23 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
         self.tableView.delegate = self
 
         selectedDiningHall = pickerDataSource[0]
+        fetchData()
         let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
         view.backgroundColor = Style.primaryColor
         self.view.addSubview(view)
+    }
+
+    func fetchData() {
+        menuItems = foodDictionary.fetchDiningHallItems(selectedDiningHall)
+//        print(menuItems)
+        tableView.reloadData()
     }
 
     /*
      UITableView functions
     */
 
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+/*    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
         header.contentView.backgroundColor = Style.primaryColor
         header.textLabel!.textColor = UIColor.yellowColor()
@@ -53,20 +65,26 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
             return keys![section].stringValue()
         }
         return ""
-    }
+    }*/
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        let keys = foodDictionary.getMealTimesForDiningHall(selectedDiningHall)
+        return 1
+/*        let keys = foodDictionary.getMealTimesForDiningHall(selectedDiningHall)
         if keys == nil {
             print("not a valid case")
         } else {
             return keys!.count
         }
-        return 0
+        return 0*/
     }
 
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return menuItems.count
+//        return foodDictionary.fetchDiningHallItems(selectedDiningHall).count
+
+
+        /*
         let dict = foodDictionary.getDiningHallMenu(selectedDiningHall)
         if dict == nil {
             print("invalid selection")
@@ -79,10 +97,15 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 return dict![selectedKey]!.count
             }
         }
-        return 0
+        return 0*/
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let items = foodDictionary.fetchDiningHallItems(selectedDiningHall)
+        let menuItem = menuItems[indexPath.row]
+//        let menuItem = items[indexPath.row]
+
+        /*
         let section = indexPath.section
         var menuItem: MenuItem = MenuItem()
         let dict = foodDictionary.getDiningHallMenu(selectedDiningHall)
@@ -96,11 +119,16 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 let selectedKey = keys![section]
                 menuItem = dict![selectedKey]![indexPath.row]
             }
-        }
+        }*/
+
+
         let cell = tableView.dequeueReusableCellWithIdentifier("DiningHallTableCell") as! FoodTableViewCell
-        if menuItem.diningHall != .Error {
+
+        cell.titleLabel.text = menuItem.name
+
+/*        if menuItem.diningHall != .Error {
             cell.titleLabel.text = menuItem.food
-        }
+        }*/
         return cell;
     }
 
@@ -123,7 +151,8 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         selectedDiningHall = pickerDataSource[row]
-        tableView.reloadData()
+        fetchData()
+//        tableView.reloadData()
     }
 
 

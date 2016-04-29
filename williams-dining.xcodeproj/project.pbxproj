@@ -19,6 +19,9 @@
 		244CE8461CD30B0E0028D376 /* FoodDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8451CD30B0E0028D376 /* FoodDictionary.swift */; };
 		244CE8481CD326A50028D376 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8471CD326A50028D376 /* Style.swift */; };
 		24DD9C841CD3B10C00E2777C /* williams-dining.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 24DD9C821CD3B10C00E2777C /* williams-dining.xcdatamodeld */; };
+		24DD9C861CD3B57800E2777C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24DD9C851CD3B57800E2777C /* CoreData.framework */; };
+		24DD9C891CD3C06A00E2777C /* CoreDataMenuItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DD9C871CD3C06A00E2777C /* CoreDataMenuItem+CoreDataProperties.swift */; };
+		24DD9C8A1CD3C06A00E2777C /* CoreDataMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DD9C881CD3C06A00E2777C /* CoreDataMenuItem.swift */; };
 		F1637C2481B8E75357EC25F2 /* Pods_williams_dining.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D872BC6A8A109C56C19E017C /* Pods_williams_dining.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +61,9 @@
 		244CE8451CD30B0E0028D376 /* FoodDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodDictionary.swift; sourceTree = "<group>"; };
 		244CE8471CD326A50028D376 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		24DD9C831CD3B10C00E2777C /* williams-dining.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "williams-dining.xcdatamodel"; sourceTree = "<group>"; };
+		24DD9C851CD3B57800E2777C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		24DD9C871CD3C06A00E2777C /* CoreDataMenuItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreDataMenuItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		24DD9C881CD3C06A00E2777C /* CoreDataMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataMenuItem.swift; sourceTree = "<group>"; };
 		A2EA4F1F83C1B8B116D1C407 /* Pods-williams-dining.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-williams-dining.release.xcconfig"; path = "Pods/Target Support Files/Pods-williams-dining/Pods-williams-dining.release.xcconfig"; sourceTree = "<group>"; };
 		A564556DEBF5A07FAC690AB0 /* Pods-williams-dining.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-williams-dining.debug.xcconfig"; path = "Pods/Target Support Files/Pods-williams-dining/Pods-williams-dining.debug.xcconfig"; sourceTree = "<group>"; };
 		D872BC6A8A109C56C19E017C /* Pods_williams_dining.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_williams_dining.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24DD9C861CD3B57800E2777C /* CoreData.framework in Frameworks */,
 				F1637C2481B8E75357EC25F2 /* Pods_williams_dining.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,6 +132,8 @@
 				244CE8451CD30B0E0028D376 /* FoodDictionary.swift */,
 				244CE8471CD326A50028D376 /* Style.swift */,
 				24DD9C821CD3B10C00E2777C /* williams-dining.xcdatamodeld */,
+				24DD9C871CD3C06A00E2777C /* CoreDataMenuItem+CoreDataProperties.swift */,
+				24DD9C881CD3C06A00E2777C /* CoreDataMenuItem.swift */,
 			);
 			path = "williams-dining";
 			sourceTree = "<group>";
@@ -159,6 +168,7 @@
 		8E940E72CCC38AFBC3EDF524 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				24DD9C851CD3B57800E2777C /* CoreData.framework */,
 				D872BC6A8A109C56C19E017C /* Pods_williams_dining.framework */,
 			);
 			name = Frameworks;
@@ -350,11 +360,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24DD9C8A1CD3C06A00E2777C /* CoreDataMenuItem.swift in Sources */,
 				244CE8401CD301CA0028D376 /* MealsViewController.swift in Sources */,
 				243A94A31CBF328B00A7C3B3 /* ViewController.swift in Sources */,
 				244CE8441CD3065B0028D376 /* FoodTableViewCell.swift in Sources */,
 				244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */,
 				244CE8461CD30B0E0028D376 /* FoodDictionary.swift in Sources */,
+				24DD9C891CD3C06A00E2777C /* CoreDataMenuItem+CoreDataProperties.swift in Sources */,
 				24DD9C841CD3B10C00E2777C /* williams-dining.xcdatamodeld in Sources */,
 				243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */,
 				244CE8481CD326A50028D376 /* Style.swift in Sources */,
