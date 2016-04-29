@@ -16,6 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
+        view.backgroundColor = Style.primaryColor
+        self.window?.rootViewController!.view.addSubview(view)
+
+
         return true
     }
 

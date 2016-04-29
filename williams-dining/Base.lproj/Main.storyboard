@@ -73,20 +73,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal Times" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2c-7C-YGe">
-                                <rect key="frame" x="0.0" y="40" width="600" height="48"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="48"/>
                                 <color key="backgroundColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAq-aV-tuD">
-                                <rect key="frame" x="140" y="88" width="320" height="100"/>
+                                <rect key="frame" x="140" y="68" width="320" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="USk-BK-R9X"/>
                                 </constraints>
                             </pickerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GSm-hv-pA2">
-                                <rect key="frame" x="0.0" y="188" width="600" height="363"/>
+                                <rect key="frame" x="0.0" y="168" width="600" height="383"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DiningHallTableCell" id="naa-Lz-gLC" customClass="FoodTableViewCell" customModule="williams_dining" customModuleProvider="target">
@@ -123,7 +123,7 @@
                             <constraint firstItem="s2c-7C-YGe" firstAttribute="centerX" secondItem="2N3-tj-4br" secondAttribute="centerX" id="eg3-bd-F0Y"/>
                             <constraint firstItem="AAq-aV-tuD" firstAttribute="centerX" secondItem="2N3-tj-4br" secondAttribute="centerX" id="qVv-FF-jfv"/>
                             <constraint firstItem="GSm-hv-pA2" firstAttribute="leading" secondItem="2N3-tj-4br" secondAttribute="leadingMargin" constant="-20" id="te0-48-m1a"/>
-                            <constraint firstItem="s2c-7C-YGe" firstAttribute="top" secondItem="xwN-hm-Umb" secondAttribute="bottom" constant="20" id="w04-06-s6t"/>
+                            <constraint firstItem="s2c-7C-YGe" firstAttribute="top" secondItem="xwN-hm-Umb" secondAttribute="bottom" id="w04-06-s6t"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Meals" image="fork_knife" id="1UM-hn-H5y"/>
@@ -150,20 +150,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dining Halls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7R-37-Ypd">
-                                <rect key="frame" x="0.0" y="40" width="600" height="48"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="48"/>
                                 <color key="backgroundColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E7X-1p-KIi">
-                                <rect key="frame" x="140" y="88" width="320" height="100"/>
+                                <rect key="frame" x="140" y="68" width="320" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="m8f-MZ-kDM"/>
                                 </constraints>
                             </pickerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4O2-aA-9HQ">
-                                <rect key="frame" x="0.0" y="188" width="600" height="363"/>
+                                <rect key="frame" x="0.0" y="168" width="600" height="383"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DiningHallTableCell" id="46q-f8-14i" customClass="FoodTableViewCell" customModule="williams_dining" customModuleProvider="target">
@@ -202,7 +202,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="4O2-aA-9HQ" secondAttribute="trailing" constant="-20" id="iIL-wW-59O"/>
                             <constraint firstItem="c7R-37-Ypd" firstAttribute="centerX" secondItem="9Bu-Bk-bJJ" secondAttribute="centerX" id="tS8-Qw-mcy"/>
                             <constraint firstItem="c7R-37-Ypd" firstAttribute="leading" secondItem="9Bu-Bk-bJJ" secondAttribute="leadingMargin" constant="-20" id="uDz-1C-fhv"/>
-                            <constraint firstItem="c7R-37-Ypd" firstAttribute="top" secondItem="Kf2-iS-1VK" secondAttribute="bottom" constant="20" id="uKt-nc-ort"/>
+                            <constraint firstItem="c7R-37-Ypd" firstAttribute="top" secondItem="Kf2-iS-1VK" secondAttribute="bottom" id="uKt-nc-ort"/>
                             <constraint firstItem="E7X-1p-KIi" firstAttribute="top" secondItem="c7R-37-Ypd" secondAttribute="bottom" id="ztY-QE-p7B"/>
                         </constraints>
                     </view>

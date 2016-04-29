@@ -26,6 +26,9 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.tableView.dataSource = self
         self.tableView.delegate = self
         selectedMealTime = pickerDataSource[0]
+        let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
+        view.backgroundColor = Style.primaryColor
+        self.view.addSubview(view)
     }
 
     /*

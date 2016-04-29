@@ -28,6 +28,9 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
         self.tableView.delegate = self
 
         selectedDiningHall = pickerDataSource[0]
+        let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
+        view.backgroundColor = Style.primaryColor
+        self.view.addSubview(view)
     }
 
     /*
