@@ -14,6 +14,9 @@
 		243A94AB1CBF328B00A7C3B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243A94A91CBF328B00A7C3B3 /* LaunchScreen.storyboard */; };
 		243A94B61CBF328B00A7C3B3 /* williams_diningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94B51CBF328B00A7C3B3 /* williams_diningTests.swift */; };
 		243A94C11CBF328B00A7C3B3 /* williams_diningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94C01CBF328B00A7C3B3 /* williams_diningUITests.swift */; };
+		244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE83D1CD301B20028D376 /* DiningHallViewController.swift */; };
+		244CE8401CD301CA0028D376 /* MealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE83F1CD301CA0028D376 /* MealsViewController.swift */; };
+		244CE8441CD3065B0028D376 /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8431CD3065B0028D376 /* FoodTableViewCell.swift */; };
 		247570D11CD295CB005E39EF /* MenuRetriever.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247570D01CD295CB005E39EF /* MenuRetriever.swift */; };
 		247570D51CD2CBB7005E39EF /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247570D41CD2CBB7005E39EF /* Globals.swift */; };
 		F1637C2481B8E75357EC25F2 /* Pods_williams_dining.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D872BC6A8A109C56C19E017C /* Pods_williams_dining.framework */; };
@@ -50,6 +53,9 @@
 		243A94BC1CBF328B00A7C3B3 /* williams-diningUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "williams-diningUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		243A94C01CBF328B00A7C3B3 /* williams_diningUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = williams_diningUITests.swift; sourceTree = "<group>"; };
 		243A94C21CBF328B00A7C3B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		244CE83D1CD301B20028D376 /* DiningHallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHallViewController.swift; sourceTree = "<group>"; };
+		244CE83F1CD301CA0028D376 /* MealsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsViewController.swift; sourceTree = "<group>"; };
+		244CE8431CD3065B0028D376 /* FoodTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
 		247570D01CD295CB005E39EF /* MenuRetriever.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuRetriever.swift; sourceTree = "<group>"; };
 		247570D41CD2CBB7005E39EF /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		A2EA4F1F83C1B8B116D1C407 /* Pods-williams-dining.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-williams-dining.release.xcconfig"; path = "Pods/Target Support Files/Pods-williams-dining/Pods-williams-dining.release.xcconfig"; sourceTree = "<group>"; };
@@ -116,6 +122,9 @@
 				243A94AC1CBF328B00A7C3B3 /* Info.plist */,
 				247570D01CD295CB005E39EF /* MenuRetriever.swift */,
 				247570D41CD2CBB7005E39EF /* Globals.swift */,
+				244CE83D1CD301B20028D376 /* DiningHallViewController.swift */,
+				244CE83F1CD301CA0028D376 /* MealsViewController.swift */,
+				244CE8431CD3065B0028D376 /* FoodTableViewCell.swift */,
 			);
 			path = "williams-dining";
 			sourceTree = "<group>";
@@ -338,7 +347,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				247570D51CD2CBB7005E39EF /* Globals.swift in Sources */,
+				244CE8401CD301CA0028D376 /* MealsViewController.swift in Sources */,
 				243A94A31CBF328B00A7C3B3 /* ViewController.swift in Sources */,
+				244CE8441CD3065B0028D376 /* FoodTableViewCell.swift in Sources */,
+				244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */,
 				247570D11CD295CB005E39EF /* MenuRetriever.swift in Sources */,
 				243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */,
 			);

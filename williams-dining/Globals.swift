@@ -40,6 +40,21 @@ enum DiningHall {
         }
         return 0
     }
+
+    func getStringValue() -> String {
+        if self == .Driscoll {
+            return "Driscoll"
+        } else if self == .Mission {
+            return "Mission"
+        } else if self == .EcoCafe {
+            return "Eco Cafe"
+        } else if self == .GrabAndGo {
+            return "Grab and Go"
+        } else if self == .Whitmans {
+            return "Whitmans"
+        }
+        return ""
+    }
 }
 
 enum MealTime {
@@ -50,6 +65,8 @@ enum MealTime {
     case Dessert
     case Error
 
+    static let allCases = [Breakfast,Lunch,Dinner,Brunch,Dessert]
+    
     init(mealTime: String) {
         switch(mealTime.lowercaseString) {
         case "breakfast":
@@ -83,15 +100,20 @@ struct MenuItem {
 
     // flesh this out WRT data structure
     func addToDataStructure() {
-        var list = diningHallMenus[diningHall]
-        if list == nil {
-//            print("2 this case")
+        var dhList = diningHallMenus[diningHall]
+        if dhList == nil {
             diningHallMenus[diningHall] = [self]
         } else {
-//            print(list)
-            diningHallMenus[diningHall] = diningHallMenus[diningHall]?.append(self)
-//            print("3 that case")
-//            list?.append(self)
+            dhList!.append(self)
+            diningHallMenus[diningHall] = dhList
+        }
+
+        var mealList = mealMenus[mealTime]
+        if mealList == nil {
+            mealMenus[mealTime] = [self]
+        } else {
+            mealList!.append(self)
+            mealMenus[mealTime] = mealList
         }
     }
 }
