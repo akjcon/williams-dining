@@ -26,12 +26,9 @@ class MenuRetriever: NSObject {
     }
 
     static func parseMenu(jsonMenu: JSON, diningHall: DiningHall) {
-//        var items = [MenuItem]()
-        for (_,item):(String,JSON) in jsonMenu {
-            MenuItem(item: item, diningHall: diningHall).addToDataStructure()
-//            items.append(MenuItem(item: item,diningHall: diningHall))
+        for (_,itemDictionary):(String,JSON) in jsonMenu {
+            MenuItem(itemDict: itemDictionary, diningHall: diningHall).addToDataStructure()
         }
-//        diningHallMenus[diningHall] = items
         NSNotificationCenter.defaultCenter().postNotificationName("decrementDiningHallCounter", object: nil)
     }
 }

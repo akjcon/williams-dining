@@ -74,21 +74,24 @@ struct MenuItem {
     var diningHall: DiningHall
     var course: String
 
-    init(item: JSON, diningHall: DiningHall) {
-        self.mealTime = MealTime(mealTime: item["meal"].string!)
-        self.food = item["formal_name"].string!
+    init(itemDict: JSON, diningHall: DiningHall) {
+        self.mealTime = MealTime(mealTime: itemDict["meal"].string!)
+        self.food = itemDict["formal_name"].string!
         self.diningHall = diningHall
-        self.course = item["course"].string!
+        self.course = itemDict["course"].string!
     }
 
+    // flesh this out WRT data structure
     func addToDataStructure() {
         var list = diningHallMenus[diningHall]
         if list == nil {
+//            print("2 this case")
             diningHallMenus[diningHall] = [self]
         } else {
-            list?.append(self)
+//            print(list)
+            diningHallMenus[diningHall] = diningHallMenus[diningHall]?.append(self)
+//            print("3 that case")
+//            list?.append(self)
         }
-
-
     }
 }

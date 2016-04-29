@@ -40,9 +40,11 @@ class ViewController: UIViewController {
         for diningHall in DiningHall.allCases {
             print(diningHall)
             let menuItems = diningHallMenus[diningHall]!
-            for item in menuItems {
+            print(menuItems.count)
+/*            for item in menuItems {
+                print("hello")
                 print(item)
-            }
+            }*/
         }
     }
 
