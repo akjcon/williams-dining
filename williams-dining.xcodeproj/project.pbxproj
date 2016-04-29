@@ -11,7 +11,6 @@
 		243A94A31CBF328B00A7C3B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A21CBF328B00A7C3B3 /* ViewController.swift */; };
 		243A94A61CBF328B00A7C3B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243A94A41CBF328B00A7C3B3 /* Main.storyboard */; };
 		243A94A81CBF328B00A7C3B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 243A94A71CBF328B00A7C3B3 /* Assets.xcassets */; };
-		243A94AB1CBF328B00A7C3B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243A94A91CBF328B00A7C3B3 /* LaunchScreen.storyboard */; };
 		243A94B61CBF328B00A7C3B3 /* williams_diningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94B51CBF328B00A7C3B3 /* williams_diningTests.swift */; };
 		243A94C11CBF328B00A7C3B3 /* williams_diningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94C01CBF328B00A7C3B3 /* williams_diningUITests.swift */; };
 		244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE83D1CD301B20028D376 /* DiningHallViewController.swift */; };
@@ -46,7 +45,6 @@
 		243A94A21CBF328B00A7C3B3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		243A94A51CBF328B00A7C3B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		243A94A71CBF328B00A7C3B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		243A94AA1CBF328B00A7C3B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		243A94AC1CBF328B00A7C3B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		243A94B11CBF328B00A7C3B3 /* williams-diningTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "williams-diningTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		243A94B51CBF328B00A7C3B3 /* williams_diningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = williams_diningTests.swift; sourceTree = "<group>"; };
@@ -120,7 +118,6 @@
 				243A94A21CBF328B00A7C3B3 /* ViewController.swift */,
 				243A94A41CBF328B00A7C3B3 /* Main.storyboard */,
 				243A94A71CBF328B00A7C3B3 /* Assets.xcassets */,
-				243A94A91CBF328B00A7C3B3 /* LaunchScreen.storyboard */,
 				243A94AC1CBF328B00A7C3B3 /* Info.plist */,
 				247570D01CD295CB005E39EF /* MenuRetriever.swift */,
 				244CE83D1CD301B20028D376 /* DiningHallViewController.swift */,
@@ -274,7 +271,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				243A94AB1CBF328B00A7C3B3 /* LaunchScreen.storyboard in Resources */,
 				243A94A81CBF328B00A7C3B3 /* Assets.xcassets in Resources */,
 				243A94A61CBF328B00A7C3B3 /* Main.storyboard in Resources */,
 			);
@@ -398,14 +394,6 @@
 				243A94A51CBF328B00A7C3B3 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		243A94A91CBF328B00A7C3B3 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				243A94AA1CBF328B00A7C3B3 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
