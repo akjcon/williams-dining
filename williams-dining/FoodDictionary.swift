@@ -18,43 +18,72 @@ class FoodDictionary: NSObject {
 
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 
-    func fetchActiveDiningHalls() -> [DiningHall] {
+    /**
+     Fetch all menu items for a given diningHall and a given mealTime
+     
+     - parameters:
+        - diningHall: the selected diningHall
+        - mealTime: the selected mealTime
+     
+     SELECT *
+     FROM CoreData
+     WHERE  diningHall = diningHall
+        AND mealTime = mealTime
+    */
+    func fetchByMealTimeAndDiningHall(mealTime: MealTime, diningHall: DiningHall) -> [CoreDataMenuItem] {
         let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
 
-        fetchRequest.propertiesToFetch = ["diningHall"]
-//        fetchRequest.propertiesToFetch =
-        fetchRequest.returnsDistinctResults = true
-        fetchRequest.resultType = .DictionaryResultType
-//        fetchRequest.propertiesToFetch = NSArray(objects: )
+        // Create a sort descriptor object that sorts on the "title"
+        // property of the Core Data object
+        let sortDescriptor = NSSortDescriptor(key: "course", ascending: true)
 
-        // consider a sort descriptor?
+        // Set the list of sort descriptors in the fetch request,
+        // so it includes the sort descriptor
+        fetchRequest.sortDescriptors = [sortDescriptor]
 
-//        let predicate = NSPredicate()
-//        let predicate = NSPredicate(format: "%K == %@", "diningHall", NSNumber(integer: diningHall.intValue()))
+        let firstPredicate = NSPredicate(format: "%K == %@", "diningHall", NSNumber(integer: diningHall.intValue()))
+        let secondPredicate = NSPredicate(format: "%K == %@", "mealTime", NSNumber(integer: mealTime.intValue()))
 
-//        fetchRequest.predicate = predicate
 
-        var results = try? managedObjectContext.executeFetchRequest(fetchRequest)
-        print("oooo")
-        for result in results! {
-            print(result)
+        // Set the predicate on the fetch request
+        fetchRequest.predicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [firstPredicate,secondPredicate])
+
+        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
+
+            return fetchResults!
         }
+        return []
 
-/*        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
+    }
 
-            print(fetchResults)
-            print("weaaa")
-            var diningHalls = [DiningHall]()
-            fetchResults!.forEach({diningHalls.append(DiningHall(num: $0.diningHall))})
-
-            return diningHalls
-            //            return [fetchResults?.forEach({$0.mealTime})]
-            
-            //          return fetchResults!
-        }*/
+    /**
+     Fetch all active dining halls from Core Data
+     
+     SELECT UNIQUE diningHall
+     FROM CoreData
+    */
+    func fetchActiveDiningHalls() -> [DiningHall] {
+        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
+        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
+            var diningHalls = Set<DiningHall>()
+            fetchResults!.forEach({
+                diningHalls.insert(DiningHall(num: $0.diningHall))
+            })
+            return Array(diningHalls).sort({$0.intValue() < $1.intValue() })
+        }
         return []
     }
 
+    /**
+     Fetch active meal times for a given dining hall
+     
+     - parameters:
+        - diningHall: the selected diningHall
+     
+     SELECT UNIQUE mealTime
+     FROM CoreData
+     WHERE diningHall = diningHall
+    */
     func fetchMealTimesForDiningHall(diningHall: DiningHall) -> [MealTime] {
         let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
 
@@ -66,11 +95,11 @@ class FoodDictionary: NSObject {
 
         if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
 
-            var mealTimes = [MealTime]()
-            fetchResults!.forEach({mealTimes.append(MealTime(num: $0.mealTime))})
-//            return [fetchResults?.forEach({$0.mealTime})]
-
-  //          return fetchResults!
+            var mealTimes = Set<MealTime>()
+            fetchResults!.forEach({
+                mealTimes.insert(MealTime(num: $0.mealTime))
+            })
+            return Array(mealTimes).sort({$0.intValue() < $1.intValue() })
         }
         return []
     }
@@ -100,7 +129,6 @@ class FoodDictionary: NSObject {
 
     override init() {
         super.init()
-//        print("hello")
 
         // temporarily here, but later will move this to auto-update or something
         self.fetchMenus()
@@ -113,7 +141,6 @@ class FoodDictionary: NSObject {
         print(menuCounter)
 
         if menuCounter == 0 {
-//            fetchAllItems()
             NSNotificationCenter.defaultCenter().postNotificationName("dataIsReady", object: nil)
         }
     }
