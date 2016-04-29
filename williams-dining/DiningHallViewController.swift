@@ -12,6 +12,7 @@ import UIKit
 class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var pickerView: UIPickerView!
+    @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
 
     var pickerDataSource = foodDictionary.getActiveDiningHalls()
@@ -27,6 +28,10 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
         self.tableView.delegate = self
 
         selectedDiningHall = pickerDataSource[0]
+
+        titleLabel.textColor = Style.yellowColor
+        titleLabel.backgroundColor = Style.primaryColor
+        titleLabel.alpha = 0.9
     }
 
     /*

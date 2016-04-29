@@ -13,6 +13,7 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
     var pickerDataSource = foodDictionary.getActiveMealTimes()
 
+    @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var pickerView: UIPickerView!
     var selectedMealTime: MealTime!
@@ -25,6 +26,10 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.tableView.dataSource = self
         self.tableView.delegate = self
         selectedMealTime = pickerDataSource[0]
+
+        titleLabel.textColor = Style.yellowColor
+        titleLabel.backgroundColor = Style.primaryColor
+        titleLabel.alpha = 0.9
     }
 
     /*
