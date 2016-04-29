@@ -13,6 +13,10 @@ var foodDictionary = FoodDictionary()
 
 class FoodDictionary: NSObject {
 
+    private var activeMealTimes = [MealTime]()
+
+    private var activeDiningHalls = [DiningHall]()
+
     private var mealTimesForDiningHalls = [DiningHall:[MealTime]]()
     // Dining Halls -> Meal Times (keys for diningHallMenus)
     private var diningHallMenus = [DiningHall:[MealTime:[MenuItem]]]()
@@ -23,6 +27,15 @@ class FoodDictionary: NSObject {
     private var diningHallsForMealTimes = [MealTime:[DiningHall]]()
     // Meal Times -> Dining Halls (keys for mealMenus)
 
+    func getActiveMealTimes() -> [MealTime] {
+        return activeMealTimes
+    }
+
+    func getActiveDiningHalls() -> [DiningHall] {
+        return activeDiningHalls
+    }
+
+
     func getMealTimesForDiningHall(diningHall: DiningHall) -> [MealTime]? {
         // do preferential orderings?
         let mealTimes = mealTimesForDiningHalls[diningHall]
@@ -30,8 +43,10 @@ class FoodDictionary: NSObject {
             return []
         } else if mealTimes!.contains(.Brunch) {
             return [.Brunch,.Dinner,.Dessert]
-        } else {
+        } else if mealTimes!.contains(.Breakfast) && mealTimes!.contains(.Lunch) {
             return [.Breakfast,.Lunch,.Dinner,.Dessert]
+        } else {
+            return [.Lunch]
         }
     }
 
@@ -43,11 +58,6 @@ class FoodDictionary: NSObject {
     func getDiningHallMenu(diningHall: DiningHall) -> [MealTime:[MenuItem]]? {
         return diningHallMenus[diningHall]
     }
-
-/*    func getDiningHallMenuKeys(diningHall: DiningHall) -> [MealTime] {
-        let diningHallDict = diningHallMenus[diningHall]
-
-    }*/
 
     func getMealMenu(mealTime: MealTime) -> [DiningHall:[MenuItem]]? {
         return mealMenus[mealTime]
@@ -114,6 +124,14 @@ class FoodDictionary: NSObject {
 
 
     func addMenuItem(item: MenuItem) {
+        if !activeMealTimes.contains(item.mealTime) {
+            activeMealTimes.append(item.mealTime)
+        }
+
+        if !activeDiningHalls.contains(item.diningHall) {
+            activeDiningHalls.append(item.diningHall)
+        }
+
 
         addItemToDiningHallDict(item)
         addItemToMealDict(item)

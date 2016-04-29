@@ -13,7 +13,9 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
     @IBOutlet var pickerView: UIPickerView!
     @IBOutlet var tableView: UITableView!
+
     var pickerDataSource = DiningHall.allCases
+//    var pickerDataSource = foodDictionary.getActiveDiningHalls()
 
     var selectedDiningHall: DiningHall = .Driscoll
 
@@ -107,7 +109,7 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        selectedDiningHall = DiningHall.allCases[row]
+        selectedDiningHall = pickerDataSource[row]
         tableView.reloadData()
     }
 

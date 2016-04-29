@@ -13,6 +13,7 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
 
     var pickerDataSource = MealTime.allCases
+//    var pickerDataSource = foodDictionary.getActiveMealTimes()
 
     @IBOutlet var tableView: UITableView!
     @IBOutlet var pickerView: UIPickerView!
@@ -108,7 +109,7 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        selectedMealTime = MealTime.allCases[row]
+        selectedMealTime = pickerDataSource[row]
         tableView.reloadData()
     }
     
