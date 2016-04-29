@@ -13,8 +13,7 @@ class ViewController: UIViewController {
     var diningHallCounter = 5
     @IBOutlet var activityLabel: UILabel!
 
-    var orderedActivityLabels: [String] = ["Sipping the fresh Berkshire mountain air...",
-                                           "Climbing the purple mountains...",
+    var orderedActivityLabels: [String] = ["Climbing the purple mountains...",
                                            "Yodeling...",
                                            "Herding the cows...",
                                            "Milking the cattle...",

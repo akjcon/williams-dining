@@ -18,10 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Williams Meals" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQZ-Tf-H2J">
-                                <rect key="frame" x="244" y="40" width="113" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Williams College" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQZ-Tf-H2J">
+                                <rect key="frame" x="0.0" y="20" width="600" height="48"/>
+                                <color key="backgroundColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="D31-pR-PnF">
@@ -40,9 +41,11 @@
                             <constraint firstItem="D31-pR-PnF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8T2-or-cM1"/>
                             <constraint firstItem="zQZ-Tf-H2J" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NCZ-mQ-nri"/>
                             <constraint firstItem="0c8-ac-Ucx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Wk1-jg-AWF"/>
+                            <constraint firstItem="zQZ-Tf-H2J" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="cUp-r9-2iR"/>
                             <constraint firstItem="0c8-ac-Ucx" firstAttribute="top" secondItem="D31-pR-PnF" secondAttribute="bottom" constant="30" id="f8C-Rq-9Lh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zQZ-Tf-H2J" secondAttribute="trailing" constant="-20" id="f8U-o8-ueQ"/>
                             <constraint firstItem="D31-pR-PnF" firstAttribute="leading" secondItem="0c8-ac-Ucx" secondAttribute="trailing" constant="30" id="ilq-1d-yVV"/>
-                            <constraint firstItem="zQZ-Tf-H2J" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="mjR-Lv-H2K"/>
+                            <constraint firstItem="zQZ-Tf-H2J" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="mjR-Lv-H2K"/>
                             <constraint firstItem="D31-pR-PnF" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="saV-63-ly1"/>
                         </constraints>
                         <variation key="default">
