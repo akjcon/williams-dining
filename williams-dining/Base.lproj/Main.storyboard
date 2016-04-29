@@ -126,7 +126,7 @@
                             <constraint firstItem="s2c-7C-YGe" firstAttribute="top" secondItem="xwN-hm-Umb" secondAttribute="bottom" id="w04-06-s6t"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Meals" image="fork_knife" id="1UM-hn-H5y"/>
+                    <tabBarItem key="tabBarItem" title="Meals" image="food-and-drink" id="1UM-hn-H5y"/>
                     <connections>
                         <outlet property="pickerView" destination="AAq-aV-tuD" id="cSm-xs-SB4"/>
                         <outlet property="tableView" destination="GSm-hv-pA2" id="LhX-tP-T03"/>
@@ -206,7 +206,7 @@
                             <constraint firstItem="E7X-1p-KIi" firstAttribute="top" secondItem="c7R-37-Ypd" secondAttribute="bottom" id="ztY-QE-p7B"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Dining Halls" image="dining_hall" id="P2A-hk-Fao"/>
+                    <tabBarItem key="tabBarItem" title="Dining Halls" image="fork_knife" id="P2A-hk-Fao"/>
                     <connections>
                         <outlet property="pickerView" destination="E7X-1p-KIi" id="9k3-rU-bvZ"/>
                         <outlet property="tableView" destination="4O2-aA-9HQ" id="jrC-gW-hs3"/>
@@ -243,7 +243,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="dining_hall" width="30" height="30"/>
+        <image name="food-and-drink" width="30" height="30"/>
         <image name="fork_knife" width="30" height="30"/>
     </resources>
 </document>
