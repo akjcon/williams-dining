@@ -8,10 +8,66 @@
 
 import Foundation
 import SwiftyJSON
+import Alamofire
 
-var foodDictionary = FoodDictionary()
+import CoreData
+
+var foodDictionary: FoodDictionary!
 
 class FoodDictionary: NSObject {
+
+
+    private var menuItems = [NSManagedObject]()
+
+//    menuItem.valueForKey("name") as? String
+
+    override init() {
+        super.init()
+        print("hello")
+        self.fetchMenus()
+    }
+
+
+    private var menuCounter = 5
+
+    func isReady() -> Bool {
+        return menuCounter == 0
+    }
+
+    func decrementMenuCounter() {
+        menuCounter -= 1
+        print(menuCounter)
+
+        if isReady() {
+            NSNotificationCenter.defaultCenter().postNotificationName("dataIsReady", object: nil)
+        }
+    }
+
+    func fetchMenus() {
+        for diningHall in DiningHall.allCases {
+            self.getMenu(diningHall)
+        }
+    }
+
+    private func getMenu(diningHall: DiningHall) {
+        Alamofire.request(.GET, "https://dining.williams.edu/wp-json/dining/service_units/" + String(diningHall.getIntValue())).responseJSON { (response) in
+            guard response.result.error == nil else {
+                print("Error occurred during menu request")
+                print(response.result.error!)
+                return
+            }
+            if let value: AnyObject = response.result.value {
+                self.parseMenu(JSON(value), diningHall: diningHall)
+            }
+        }
+    }
+
+    private func parseMenu(jsonMenu: JSON, diningHall: DiningHall) {
+        for (_,itemDictionary):(String,JSON) in jsonMenu {
+            self.addMenuItem(MenuItem(itemDict: itemDictionary, diningHall: diningHall))
+        }
+        self.decrementMenuCounter()
+    }
 
     private var activeMealTimes = [MealTime]()
 
@@ -276,26 +332,5 @@ struct MenuItem {
         self.food = itemDict["formal_name"].string!
         self.diningHall = diningHall
         self.course = itemDict["course"].string!
-    }
-
-    // flesh this out WRT data structure
-    func addToDataStructure() {
-        foodDictionary.addMenuItem(self)
-        /*        var dhList = diningHallMenus[diningHall]
-         if dhList == nil {
-         diningHallMenus[diningHall] = [self]
-         } else {
-         dhList!.append(self)
-         diningHallMenus[diningHall] = dhList
-         }
-
-         var mealList = mealMenus[mealTime]
-         if mealList == nil {
-         mealMenus[mealTime] = [self]
-         } else {
-         mealList!.append(self)
-         mealMenus[mealTime] = mealList
-         }
-         }*/
     }
 }

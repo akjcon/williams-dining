@@ -25,19 +25,26 @@ class ViewController: UIViewController {
                                            "Loading menus..."]
 
     var timer: NSTimer!
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        foodDictionary = FoodDictionary()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        for diningHall in DiningHall.allCases {
-            MenuRetriever.getMenus(diningHall)
-        }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.decrementDiningHallCounter), name: "decrementDiningHallCounter", object: nil)
 
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.pushToMenus), name: "dataIsReady", object: nil)
         activityLabel.text = orderedActivityLabels[0]
 
         timer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(ViewController.changeActivityLabel), userInfo: nil, repeats: true)
     }
+
+    func pushToMenus() {
+        timer.invalidate()
+        performSegueWithIdentifier("EnterApplicationSegue", sender: self)
+    }
+
 
     /**
      Increment the text of the activity label.
@@ -47,21 +54,6 @@ class ViewController: UIViewController {
     internal func changeActivityLabel() {
         let curIndex: Int = orderedActivityLabels.indexOf(activityLabel.text!)!
         activityLabel.text = orderedActivityLabels[curIndex + 1]
-    }
-
-    /**
-     Decrement the dining hall counter, which starts at 5, to tell us that we have returned another menu.
-     
-     When at 0, enter the app.
-    */
-    internal func decrementDiningHallCounter() {
-        diningHallCounter -= 1
-        print(diningHallCounter)
-        if diningHallCounter == 0 {
-            print("all menus loaded")
-            timer.invalidate()
-            performSegueWithIdentifier("EnterApplicationSegue", sender: self)
-        }
     }
 }
 
