@@ -11,12 +11,16 @@ import UIKit
 
 class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
 
-    var pickerDataSource = foodDictionary.getActiveMealTimes()
+//    var pickerDataSource = foodDictionary.getActiveMealTimes()
+    var pickerDataSource = foodDictionary.fetchActiveMealTimes()
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var pickerView: UIPickerView!
     var selectedMealTime: MealTime!
+
+    var activeDiningHalls: [DiningHall]!
+    var menuItems: [DiningHall:[CoreDataMenuItem]]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +30,28 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.tableView.dataSource = self
         self.tableView.delegate = self
         selectedMealTime = pickerDataSource[0]
+        fetchData()
         let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
         view.backgroundColor = Style.primaryColor
         self.view.addSubview(view)
+    }
+
+    func fetchData() {
+        menuItems = [DiningHall:[CoreDataMenuItem]]()
+        // cache this?
+        // my data structure was PREV correct lol
+
+        activeDiningHalls =
+            foodDictionary.fetchDiningHallsForMealTime(selectedMealTime)
+//            foodDictionary.fetchMealTimesForDiningHall(selectedDiningHall)
+
+        for diningHall in activeDiningHalls {
+            let mealItems = foodDictionary.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: diningHall)
+
+            menuItems[diningHall] = mealItems
+        }
+        
+        tableView.reloadData()
     }
 
     /*
@@ -43,28 +66,32 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
 
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let keys = foodDictionary.getDiningHallsForMealTime(selectedMealTime)
+        return activeDiningHalls[section].stringValue()
+/*        let keys = foodDictionary.getDiningHallsForMealTime(selectedMealTime)
         if keys == nil {
             print("not a valid case")
         } else {
             return keys![section].stringValue()
         }
-        return ""
+        return ""*/
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        let keys = foodDictionary.getDiningHallsForMealTime(selectedMealTime)
+        return activeDiningHalls.count
+/*        let keys = foodDictionary.getDiningHallsForMealTime(selectedMealTime)
         if keys == nil {
             print("not a valid case")
         } else {
             return keys!.count
         }
-        return 0
+        return 0*/
     }
 
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let dict = foodDictionary.getMealMenu(selectedMealTime)
+        return menuItems[activeDiningHalls[section]]!.count
+
+/*        let dict = foodDictionary.getMealMenu(selectedMealTime)
         if dict == nil {
             print("invalid selection")
         } else {
@@ -76,11 +103,16 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
                 return dict![selectedKey]!.count
             }
         }
-        return 0
+        return 0*/
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let section = indexPath.section
+        let menuItem = menuItems[activeDiningHalls[section]]![indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("DiningHallTableCell") as! FoodTableViewCell
+        cell.titleLabel.text = menuItem.name
+        return cell;
+/*        let section = indexPath.section
         var menuItem: MenuItem = MenuItem()
         let dict = foodDictionary.getMealMenu(selectedMealTime)
         if dict == nil {
@@ -98,7 +130,7 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         if menuItem.diningHall != .Error {
             cell.titleLabel.text = menuItem.food
         }
-        return cell;
+        return cell;*/
     }
 
 
@@ -114,13 +146,14 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
 
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return String(pickerDataSource[row])
+        return pickerDataSource[row].stringValue()
     }
 
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         selectedMealTime = pickerDataSource[row]
-        tableView.reloadData()
+        fetchData()
+//        tableView.reloadData()
     }
     
     
