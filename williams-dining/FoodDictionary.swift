@@ -52,7 +52,6 @@ class FoodDictionary: NSObject {
         } else {
             return diningHalls!.sort({$0.sortingValue() < $1.sortingValue() })
         }
-//        return diningHallsForMealTimes[mealTime]
     }
 
 
@@ -181,7 +180,7 @@ enum DiningHall {
         return 0
     }
 
-    func getStringValue() -> String {
+    func stringValue() -> String {
         if self == .Driscoll {
             return "Driscoll"
         } else if self == .Mission {
@@ -191,7 +190,7 @@ enum DiningHall {
         } else if self == .GrabAndGo {
             return "Grab and Go"
         } else if self == .Whitmans {
-            return "Whitmans"
+            return "Whitman's"
         }
         return ""
     }
@@ -204,6 +203,23 @@ enum MealTime {
     case Brunch
     case Dessert
     case Error
+
+    func stringValue() -> String {
+        switch(self) {
+        case .Breakfast:
+            return "Breakfast"
+        case .Brunch:
+            return "Brunch"
+        case .Lunch:
+            return "Lunch"
+        case .Dinner:
+            return "Dinner"
+        case .Dessert:
+            return "Dessert"
+        case .Error:
+            return ""
+        }
+    }
 
     func sortingValue() -> Int {
         switch(self) {

@@ -12,12 +12,12 @@ import UIKit
 class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
 
 
-    var pickerDataSource = MealTime.allCases
-//    var pickerDataSource = foodDictionary.getActiveMealTimes()
+//    var pickerDataSource = MealTime.allCases
+    var pickerDataSource = foodDictionary.getActiveMealTimes()
 
     @IBOutlet var tableView: UITableView!
     @IBOutlet var pickerView: UIPickerView!
-    var selectedMealTime: MealTime = .Breakfast
+    var selectedMealTime: MealTime!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,7 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.pickerView.delegate = self
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        selectedMealTime = pickerDataSource[0]
     }
 
     /*
@@ -37,7 +38,7 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         if keys == nil {
             print("not a valid case")
         } else {
-            return String(keys![section])
+            return keys![section].stringValue()
         }
         return ""
     }

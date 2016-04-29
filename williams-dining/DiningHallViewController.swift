@@ -14,10 +14,10 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet var pickerView: UIPickerView!
     @IBOutlet var tableView: UITableView!
 
-    var pickerDataSource = DiningHall.allCases
-//    var pickerDataSource = foodDictionary.getActiveDiningHalls()
+//    var pickerDataSource = DiningHall.allCases
+    var pickerDataSource = foodDictionary.getActiveDiningHalls()
 
-    var selectedDiningHall: DiningHall = .Driscoll
+    var selectedDiningHall: DiningHall!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,8 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
         self.pickerView.delegate = self
         self.tableView.dataSource = self
         self.tableView.delegate = self
+
+        selectedDiningHall = pickerDataSource[0]
     }
 
     /*
@@ -37,7 +39,7 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
         if keys == nil {
             print("not a valid case")
         } else {
-            return String(keys![section])
+            return keys![section].stringValue()
         }
         return ""
     }
@@ -104,7 +106,7 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
 
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerDataSource[row].getStringValue()
+        return pickerDataSource[row].stringValue()
     }
 
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
