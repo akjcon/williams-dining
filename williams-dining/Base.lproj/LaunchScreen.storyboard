@@ -30,12 +30,19 @@
                                 <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sipping the fresh Berkshire air..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYF-59-ULN">
-                                <rect key="frame" x="143" y="348" width="383" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sipping the fresh Berkshire air..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYF-59-ULN">
+                                <rect key="frame" x="178.5" y="348" width="243" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NCx-9Z-o8q">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                                <color key="backgroundColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="D4u-Vy-BN7"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -45,9 +52,13 @@
                             <constraint firstItem="5RV-lW-dWc" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="HcA-xS-JY0"/>
                             <constraint firstItem="DDh-JT-JGR" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-20" id="IPN-gn-ouo"/>
                             <constraint firstItem="5RV-lW-dWc" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Kz3-fz-d9y"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NCx-9Z-o8q" secondAttribute="trailing" constant="-20" id="RM5-l0-HQ2"/>
+                            <constraint firstItem="NCx-9Z-o8q" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-20" id="UEu-iN-bgy"/>
                             <constraint firstItem="iYF-59-ULN" firstAttribute="top" secondItem="5RV-lW-dWc" secondAttribute="bottom" constant="30" id="oiL-aS-Olr"/>
+                            <constraint firstItem="NCx-9Z-o8q" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="-20" id="pZA-P9-xuM"/>
                         </constraints>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="53" y="375"/>
