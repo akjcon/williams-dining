@@ -9,7 +9,13 @@
 import Foundation
 import SwiftyJSON
 
+// data structure:
+// dining hall -> meals
+// meals -> dining halls
+
+// then build scrolling tables w/ headers
 var diningHallMenus = [DiningHall:[MenuItem]]()
+var mealMenus = [MealTime:[MenuItem]]()
 
 enum DiningHall {
     case Driscoll
@@ -73,5 +79,16 @@ struct MenuItem {
         self.food = item["formal_name"].string!
         self.diningHall = diningHall
         self.course = item["course"].string!
+    }
+
+    func addToDataStructure() {
+        var list = diningHallMenus[diningHall]
+        if list == nil {
+            diningHallMenus[diningHall] = [self]
+        } else {
+            list?.append(self)
+        }
+
+
     }
 }

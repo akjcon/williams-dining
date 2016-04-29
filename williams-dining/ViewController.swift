@@ -22,6 +22,10 @@ class ViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.decrementDiningHallCounter), name: "decrementDiningHallCounter", object: nil)
     }
 
+    // two options:
+    // meals by dining hall
+    // dining halls by meal
+
     func decrementDiningHallCounter() {
         diningHallCounter -= 1
         print(diningHallCounter)
