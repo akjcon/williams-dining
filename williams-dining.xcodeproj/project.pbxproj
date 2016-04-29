@@ -503,7 +503,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "williams-dining/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "GladdenLabs.williams-dining";
+				PRODUCT_BUNDLE_IDENTIFIER = "AndersenLabs.williams-dining";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -515,7 +515,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "williams-dining/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "GladdenLabs.williams-dining";
+				PRODUCT_BUNDLE_IDENTIFIER = "AndersenLabs.williams-dining";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
