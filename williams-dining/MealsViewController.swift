@@ -26,10 +26,6 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.tableView.dataSource = self
         self.tableView.delegate = self
         selectedMealTime = pickerDataSource[0]
-
-        titleLabel.textColor = Style.yellowColor
-        titleLabel.backgroundColor = Style.primaryColor
-        titleLabel.alpha = 0.9
     }
 
     /*
