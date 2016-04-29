@@ -31,6 +31,13 @@ class FoodDictionary: NSObject {
  
     */
 
+    var time: NSDate?
+
+    func fetch(completion: () -> Void) {
+        time = NSDate()
+        completion()
+    }
+
     
 
 
@@ -50,30 +57,19 @@ class FoodDictionary: NSObject {
      WHERE  diningHall = diningHall
         AND mealTime = mealTime
     */
-    func fetchByMealTimeAndDiningHall(mealTime: MealTime, diningHall: DiningHall) -> [CoreDataMenuItem] {
+    internal func fetchByMealTimeAndDiningHall(mealTime: MealTime, diningHall: DiningHall) -> [CoreDataMenuItem] {
         let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
-
-        // Create a sort descriptor object that sorts on the "title"
-        // property of the Core Data object
         let sortDescriptor = NSSortDescriptor(key: "course", ascending: true)
-
-        // Set the list of sort descriptors in the fetch request,
-        // so it includes the sort descriptor
         fetchRequest.sortDescriptors = [sortDescriptor]
-
         let firstPredicate = NSPredicate(format: "%K == %@", "diningHall", NSNumber(integer: diningHall.intValue()))
         let secondPredicate = NSPredicate(format: "%K == %@", "mealTime", NSNumber(integer: mealTime.intValue()))
 
-
-        // Set the predicate on the fetch request
         fetchRequest.predicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [firstPredicate,secondPredicate])
 
         if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
-
             return fetchResults!
         }
         return []
-
     }
 
     /**
@@ -82,18 +78,23 @@ class FoodDictionary: NSObject {
      SELECT UNIQUE diningHall
      FROM CoreData
     */
-    func fetchActiveDiningHalls() -> [DiningHall] {
+    internal func fetchActiveDiningHalls() -> [DiningHall] {
         return fetchActiveDiningHalls(nil)
-        /*
-        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
-        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
-            var diningHalls = Set<DiningHall>()
-            fetchResults!.forEach({
-                diningHalls.insert(DiningHall(num: $0.diningHall))
-            })
-            return Array(diningHalls).sort({$0.intValue() < $1.intValue() })
-        }
-        return []*/
+    }
+
+    /**
+     Fetch active meal times for a given dining hall
+
+     - parameters:
+     - diningHall: the selected diningHall
+
+     SELECT UNIQUE mealTime
+     FROM CoreData
+     WHERE diningHall = diningHall
+     */
+    internal func fetchMealTimesForDiningHall(diningHall: DiningHall) -> [MealTime] {
+        let predicate = NSPredicate(format: "%K == %@", "diningHall", NSNumber(integer: diningHall.intValue()))
+        return fetchActiveMealTimes(predicate)
     }
 
     /**
@@ -106,7 +107,7 @@ class FoodDictionary: NSObject {
      - parameters: 
         - predicate: the NSPredicate according to which, to fetch the dining halls
     */
-    func fetchActiveDiningHalls(predicate: NSPredicate?) -> [DiningHall] {
+    private func fetchActiveDiningHalls(predicate: NSPredicate?) -> [DiningHall] {
         let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
 
         // consider a sort descriptor?
@@ -132,50 +133,11 @@ class FoodDictionary: NSObject {
      SELECT UNIQUE mealTime
      FROM CoreData
      */
-    func fetchActiveMealTimes() -> [MealTime] {
+    internal func fetchActiveMealTimes() -> [MealTime] {
         return fetchActiveMealTimes(nil)
-/*        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
-        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
-            var mealTimes = Set<MealTime>()
-            fetchResults!.forEach({
-                mealTimes.insert(MealTime(num: $0.mealTime))
-            })
-            return Array(mealTimes).sort({$0.intValue() < $1.intValue() })
-        }
-        return []*/
     }
 
-    /**
-     Fetch active meal times for a given dining hall
-     
-     - parameters:
-        - diningHall: the selected diningHall
-     
-     SELECT UNIQUE mealTime
-     FROM CoreData
-     WHERE diningHall = diningHall
-    */
-    func fetchMealTimesForDiningHall(diningHall: DiningHall) -> [MealTime] {
-//        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
 
-        // consider a sort descriptor?
-
-        let predicate = NSPredicate(format: "%K == %@", "diningHall", NSNumber(integer: diningHall.intValue()))
-
-//        fetchRequest.predicate = predicate
-
-        return fetchActiveMealTimes(predicate)
-
-/*        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
-
-            var mealTimes = Set<MealTime>()
-            fetchResults!.forEach({
-                mealTimes.insert(MealTime(num: $0.mealTime))
-            })
-            return Array(mealTimes).sort({$0.intValue() < $1.intValue() })
-        }
-        return []*/
-    }
 
     /**
      Fetch active meal times for a given dining hall
@@ -187,18 +149,11 @@ class FoodDictionary: NSObject {
      FROM CoreData
      WHERE predicate
      */
-    func fetchActiveMealTimes(predicate: NSPredicate?) -> [MealTime] {
+    private func fetchActiveMealTimes(predicate: NSPredicate?) -> [MealTime] {
         let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
-
-        // consider a sort descriptor?
-
         if predicate != nil {
             fetchRequest.predicate = predicate!
         }
-
-//        let predicate = NSPredicate(format: "%K == %@", "diningHall", NSNumber(integer: diningHall.intValue()))
-//        fetchRequest.predicate = predicate
-
         if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
 
             var mealTimes = Set<MealTime>()
@@ -220,61 +175,20 @@ class FoodDictionary: NSObject {
      FROM CoreData
      WHERE mealTime = mealTime
      */
-    func fetchDiningHallsForMealTime (mealTime: MealTime) -> [DiningHall] {
-
-//        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
-
-        // consider a sort descriptor?
-
+    internal func fetchDiningHallsForMealTime (mealTime: MealTime) -> [DiningHall] {
         let predicate = NSPredicate(format: "%K == %@", "mealTime", NSNumber(integer: mealTime.intValue()))
-
         return fetchActiveDiningHalls(predicate)
-/*        fetchRequest.predicate = predicate
-
-        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
-
-            var diningHalls = Set<DiningHall>()
-            fetchResults!.forEach({
-                diningHalls.insert(DiningHall(num: $0.diningHall))
-            })
-            return Array(diningHalls).sort({$0.intValue() < $1.intValue() })
-        }
-        return []*/
     }
 
-
     /*
-    func fetchDiningHallItems(diningHall: DiningHall) -> [CoreDataMenuItem] {
-        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
-
-        // Create a sort descriptor object that sorts on the "title"
-        // property of the Core Data object
-        let sortDescriptor = NSSortDescriptor(key: "course", ascending: true)
-
-        // Set the list of sort descriptors in the fetch request,
-        // so it includes the sort descriptor
-        fetchRequest.sortDescriptors = [sortDescriptor]
-
-        let predicate = NSPredicate(format: "%K == %@", "diningHall", NSNumber(integer: diningHall.intValue()))
-
-
-        // Set the predicate on the fetch request
-        fetchRequest.predicate = predicate
-
-        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
-            return fetchResults!
-        }
-        return []
-    }*/
-
     override init() {
         super.init()
 
         // temporarily here, but later will move this to auto-update or something
-        self.fetchMenus()
+        self.loadAPIMenusIntoMemory()
 
         // load menus into app from CoreData (?)
-    }
+    }*/
 
 
     /**
@@ -300,7 +214,17 @@ class FoodDictionary: NSObject {
      
      This should only be called once a day
     */
-    private func fetchMenus() {
+    internal func fetchMenusFromAPI() {
+        menuCounter = 5
+        let sc = NSPersistentStoreCoordinator()
+        let stores = sc.persistentStores
+//        NSArray *stores = [persistentStoreCoordinator persistentStores];
+        for store in stores {
+            try? sc.removePersistentStore(store)
+            try? NSFileManager.defaultManager().removeItemAtPath((store.URL?.path)!)
+        }
+
+
         for diningHall in DiningHall.allCases {
             self.getMenu(diningHall)
         }
@@ -338,131 +262,4 @@ class FoodDictionary: NSObject {
         }
         self.decrementMenuCounter()
     }
-
-    /*
-
-    private var activeMealTimes = [MealTime]()
-
-    private var activeDiningHalls = [DiningHall]()
-
-    private var mealTimesForDiningHalls = [DiningHall:[MealTime]]()
-    // Dining Halls -> Meal Times (keys for diningHallMenus)
-    private var diningHallMenus = [DiningHall:[MealTime:[MenuItem]]]()
-    // Dining Halls -> Meal Times -> Menu Items
-
-    private var mealMenus = [MealTime:[DiningHall:[MenuItem]]]()
-    // Meal Times -> Dining Halls -> Menu Items
-    private var diningHallsForMealTimes = [MealTime:[DiningHall]]()
-    // Meal Times -> Dining Halls (keys for mealMenus)
-
-    func getActiveMealTimes() -> [MealTime] {
-        return activeMealTimes.sort({$0.intValue() < $1.intValue() })
-    }
-
-    func getActiveDiningHalls() -> [DiningHall] {
-        return activeDiningHalls.sort({$0.intValue() < $1.intValue() })
-    }
-
-
-    func getMealTimesForDiningHall(diningHall: DiningHall) -> [MealTime]? {
-        let mealTimes = mealTimesForDiningHalls[diningHall]
-        if mealTimes == nil {
-            return []
-        } else {
-            return mealTimes!.sort({$0.intValue() < $1.intValue() })
-        }
-    }
-
-    func getDiningHallsForMealTime(mealTime: MealTime) -> [DiningHall]? {
-        let diningHalls = diningHallsForMealTimes[mealTime]
-        if diningHalls == nil {
-            return []
-        } else {
-            return diningHalls!.sort({$0.intValue() < $1.intValue() })
-        }
-    }
-
-
-    func getDiningHallMenu(diningHall: DiningHall) -> [MealTime:[MenuItem]]? {
-        return diningHallMenus[diningHall]
-    }
-
-    func getMealMenu(mealTime: MealTime) -> [DiningHall:[MenuItem]]? {
-        return mealMenus[mealTime]
-    }*/
-
-    /*
-    func addItemToDiningHallDict(item: MenuItem) {
-        // add it to dict of keys
-        var mealKeys = mealTimesForDiningHalls[item.diningHall]
-        if mealKeys == nil {
-            mealKeys = [item.mealTime]
-        } else {
-            if !mealKeys!.contains(item.mealTime) {
-                mealKeys!.append(item.mealTime)
-            }
-        }
-        mealTimesForDiningHalls[item.diningHall] = mealKeys
-
-
-        // add it to the dict of dicts
-        var diningHallDict = diningHallMenus[item.diningHall]
-        if diningHallDict == nil {
-            diningHallDict = [item.mealTime:[item]]
-        } else {
-            var mealDict = diningHallDict![item.mealTime]
-            if mealDict == nil {
-                mealDict = [item]
-            } else {
-                mealDict?.append(item)
-            }
-            diningHallDict![item.mealTime] = mealDict
-        }
-        diningHallMenus[item.diningHall] = diningHallDict
-
-    }
-
-    func addItemToMealDict(item: MenuItem) {
-        // add it to dict of keys
-        var diningHallKeys = diningHallsForMealTimes[item.mealTime]
-        if diningHallKeys == nil {
-            diningHallKeys = [item.diningHall]
-        } else {
-            if !diningHallKeys!.contains(item.diningHall) {
-                diningHallKeys!.append(item.diningHall)
-            }
-        }
-        diningHallsForMealTimes[item.mealTime] = diningHallKeys
-
-
-        // add to dict of dicts
-        var mealDict = mealMenus[item.mealTime]
-        if mealDict == nil {
-            mealDict = [item.diningHall:[item]]
-        } else {
-            var diningHallDict = mealDict![item.diningHall]
-            if diningHallDict == nil {
-                diningHallDict = [item]
-            } else {
-                diningHallDict?.append(item)
-            }
-            mealDict![item.diningHall] = diningHallDict
-        }
-        mealMenus[item.mealTime] = mealDict
-    }*/
-
-    /*
-    func addMenuItem(item: MenuItem) {
-        if !activeMealTimes.contains(item.mealTime) {
-            activeMealTimes.append(item.mealTime)
-        }
-
-        if !activeDiningHalls.contains(item.diningHall) {
-            activeDiningHalls.append(item.diningHall)
-        }
-
-
-        addItemToDiningHallDict(item)
-        addItemToMealDict(item)
-    }*/
 }

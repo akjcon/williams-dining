@@ -23,7 +23,6 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
     var menuItems: [MealTime:[CoreDataMenuItem]]!
 
-//    var activeMenuItems: [CoreDataMenuItem]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +41,6 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
     func fetchData() {
         menuItems = [MealTime:[CoreDataMenuItem]]()
-        // cache this?
-        // my data structure was PREV correct lol
 
         activeMealTimes = foodDictionary.fetchMealTimesForDiningHall(selectedDiningHall)
 

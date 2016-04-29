@@ -10,7 +10,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="williams_dining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoadingViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="williams_dining" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -236,7 +236,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="hLs-gz-0hA">
             <objects>
-                <tabBarController id="waf-e5-oYH" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainViewController" id="waf-e5-oYH" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="v0R-EA-VvJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

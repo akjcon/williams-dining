@@ -9,21 +9,92 @@
 import UIKit
 import CoreData
 
+class Date: NSObject {
+    var year: Int
+    var month: Int
+    var day: Int
+
+    init(date: NSDate) {
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+
+        self.year = components.year
+        self.month = components.month
+        self.day = components.day
+        super.init()
+    }
+
+    init(dateString: String) {
+        let string = dateString.componentsSeparatedByString("-")
+        self.year = Int(string[0])!
+        self.month = Int(string[1])!
+        self.day = Int(string[2])!
+    }
+
+    func stringValue() -> String {
+        return String(year) + "-" + String(month) + "-" + String(day)
+    }
+
+    func isEarlierThan(date: Date) -> Bool {
+        // perhaps collapse this if possible
+        if self.year > date.year {
+            return false
+        } else {
+            if self.month > date.month {
+                return false
+            } else {
+                if self.day >= date.day {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        foodDictionary = FoodDictionary()
         // Override point for customization after application launch.
 
+        // set the status bar to white, and add a purple BG
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
         view.backgroundColor = Style.primaryColor
         self.window?.rootViewController!.view.addSubview(view)
 
+        // set the background fetching interval
+        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(
+            UIApplicationBackgroundFetchIntervalMinimum)
 
+
+        // work on bg fetching
+/*        let date = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+        let dateStr = String(components.year) + "-" + String(components.month) + "-" + String(components.day)*/
+        // test variable for if updated today
+
+        let dateStr = "0000-00-00"
+        defaults.registerDefaults(["lastUpdatedAt":dateStr])
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if Date(dateString: defaults.valueForKey("lastUpdatedAt") as! String).isEarlierThan(Date(date: NSDate())) {
+            print("aha!")
+            foodDictionary.fetchMenusFromAPI()
+            let controller = storyboard.instantiateViewControllerWithIdentifier("LoadingViewController")
+            self.window?.rootViewController = controller
+        } else {
+            let controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController")
+            self.window?.rootViewController = controller
+        }
         return true
     }
 
@@ -49,6 +120,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 
         self.saveContext()
+    }
+
+    // Support for background fetch
+    func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+
+        foodDictionary.fetchMenusFromAPI()
+        let date = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+        let dateStr = String(components.year) + "-" + String(components.month) + "-" + String(components.day)
+        defaults.setValue(dateStr, forKey: "lastUpdatedAt")
+
     }
 
     // MARK: - Core Data stack
