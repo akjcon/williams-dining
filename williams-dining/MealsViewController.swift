@@ -11,8 +11,6 @@ import UIKit
 
 class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
 
-
-//    var pickerDataSource = MealTime.allCases
     var pickerDataSource = foodDictionary.getActiveMealTimes()
 
     @IBOutlet var tableView: UITableView!
@@ -32,6 +30,13 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     /*
      UITableView functions
      */
+
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
+        header.contentView.backgroundColor = Style.primaryColor
+        header.textLabel!.textColor = UIColor.yellowColor() //make the text white
+        header.alpha = 0.9 //make the header transparent
+    }
 
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let keys = foodDictionary.getDiningHallsForMealTime(selectedMealTime)

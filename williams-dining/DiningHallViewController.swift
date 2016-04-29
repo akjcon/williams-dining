@@ -14,7 +14,6 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet var pickerView: UIPickerView!
     @IBOutlet var tableView: UITableView!
 
-//    var pickerDataSource = DiningHall.allCases
     var pickerDataSource = foodDictionary.getActiveDiningHalls()
 
     var selectedDiningHall: DiningHall!
@@ -33,6 +32,14 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
     /*
      UITableView functions
     */
+
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
+        header.contentView.backgroundColor = Style.primaryColor
+        header.textLabel!.textColor = UIColor.yellowColor()
+        header.alpha = 0.9
+    }
+
 
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let keys = foodDictionary.getMealTimesForDiningHall(selectedDiningHall)
