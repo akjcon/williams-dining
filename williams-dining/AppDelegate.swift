@@ -43,14 +43,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MenuLoader.fetchMenusFromAPI(completionHandler)
     }
 
-    private func updateData() {
+/*    private func updateData() {
         MenuLoader.fetchMenusFromAPI({(result: UIBackgroundFetchResult) in
             if result == .NewData {
-                (self.window?.rootViewController as! ViewController).pushToMenus()
+                (self.window?.rootViewController as! LoadingViewController).pushToMenus()
                 print("ahaaa")
             }
         })
-    }
+    }*/
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 //        foodDictionary = FoodDictionary()
@@ -74,11 +74,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if (defaults.valueForKey(lastUpdatedAtKey) as! NSDate).dayIsEarlierThan(NSDate()) {
             controller = storyboard.instantiateViewControllerWithIdentifier("LoadingViewController")
-            (controller as! ViewController).initializeLabelTimer()
+            (controller as! LoadingViewController).initializeLabelTimer()
 
            updateData() {(result: UIBackgroundFetchResult) in
                 if result == .NewData {
-                    (controller as! ViewController).pushToMenus()
+                    (controller as! LoadingViewController).pushToMenus()
                 } else {
                     // data failed
                     // .. maybe try again?

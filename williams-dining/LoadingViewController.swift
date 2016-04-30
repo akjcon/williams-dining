@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LoadingViewController.swift
 //  williams-dining
 //
 //  Created by Nathan Andersen on 4/13/16.
@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController {
+class LoadingViewController: UIViewController {
 
     var diningHallCounter = 5
     @IBOutlet var activityLabel: UILabel!
@@ -34,12 +34,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.pushToMenus), name: "dataIsReady", object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoadingViewController.pushToMenus), name: "dataIsReady", object: nil)
         activityLabel.text = orderedActivityLabels[0]
     }
 
     internal func initializeLabelTimer() {
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(ViewController.changeActivityLabel), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(LoadingViewController.changeActivityLabel), userInfo: nil, repeats: true)
     }
 
     internal func pushToMenus() {

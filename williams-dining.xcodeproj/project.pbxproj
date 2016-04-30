@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */; };
-		243A94A31CBF328B00A7C3B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A21CBF328B00A7C3B3 /* ViewController.swift */; };
+		243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */; };
 		243A94A61CBF328B00A7C3B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243A94A41CBF328B00A7C3B3 /* Main.storyboard */; };
 		243A94A81CBF328B00A7C3B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 243A94A71CBF328B00A7C3B3 /* Assets.xcassets */; };
 		243A94B61CBF328B00A7C3B3 /* williams_diningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94B51CBF328B00A7C3B3 /* williams_diningTests.swift */; };
@@ -46,7 +46,7 @@
 /* Begin PBXFileReference section */
 		243A949D1CBF328B00A7C3B3 /* williams-dining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "williams-dining.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		243A94A21CBF328B00A7C3B3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		243A94A51CBF328B00A7C3B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		243A94A71CBF328B00A7C3B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		243A94AC1CBF328B00A7C3B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */,
-				243A94A21CBF328B00A7C3B3 /* ViewController.swift */,
+				243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */,
 				243A94A41CBF328B00A7C3B3 /* Main.storyboard */,
 				243A94A71CBF328B00A7C3B3 /* Assets.xcassets */,
 				243A94AC1CBF328B00A7C3B3 /* Info.plist */,
@@ -365,7 +365,7 @@
 			files = (
 				24DD9C8A1CD3C06A00E2777C /* CoreDataMenuItem.swift in Sources */,
 				244CE8401CD301CA0028D376 /* MealsViewController.swift in Sources */,
-				243A94A31CBF328B00A7C3B3 /* ViewController.swift in Sources */,
+				243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */,
 				244CE8441CD3065B0028D376 /* FoodTableViewCell.swift in Sources */,
 				244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */,
 				244CE8461CD30B0E0028D376 /* MenuReader.swift in Sources */,
