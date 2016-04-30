@@ -84,9 +84,8 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         let menuItem = menuItems[activeDiningHalls[section]]![indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("FoodItemViewCell") as! FoodItemViewCell
         cell.nameLabel.text = menuItem.name
-
-
-        
+        cell.glutenFreeLabel.hidden = !menuItem.isGlutenFree
+        cell.veganLabel.hidden = !menuItem.isVegan
         return cell;
     }
 

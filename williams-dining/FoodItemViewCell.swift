@@ -12,7 +12,7 @@ import UIKit
 class FoodItemViewCell: UITableViewCell {
 
     @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var veganLabel: NSLayoutConstraint!
-    @IBOutlet var glutenFreeLabel: NSLayoutConstraint!
+    @IBOutlet var veganLabel: UILabel!
+    @IBOutlet var glutenFreeLabel: UILabel!
 
 }

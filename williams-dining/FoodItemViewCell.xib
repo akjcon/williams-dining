@@ -53,9 +53,9 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
-                <outlet property="glutenFreeLabel" destination="OwQ-af-ftv" id="2aK-x0-yZ1"/>
+                <outlet property="glutenFreeLabel" destination="iQh-G3-rsZ" id="UFm-an-f6c"/>
                 <outlet property="nameLabel" destination="Xk0-Ph-baK" id="cUp-Vv-UtS"/>
-                <outlet property="veganLabel" destination="OwQ-af-ftv" id="m7m-Hz-wGF"/>
+                <outlet property="veganLabel" destination="ZRE-yY-Mdm" id="u0c-jf-IEB"/>
             </connections>
             <point key="canvasLocation" x="136" y="4"/>
         </tableViewCell>

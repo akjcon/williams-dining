@@ -86,8 +86,9 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
         let section = indexPath.section
         let menuItem: CoreDataMenuItem = menuItems[activeMealTimes[section]]![indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("FoodItemViewCell") as! FoodItemViewCell
-        print(cell)
         cell.nameLabel.text = menuItem.name
+        cell.glutenFreeLabel.hidden = !menuItem.isGlutenFree
+        cell.veganLabel.hidden = !menuItem.isVegan
         return cell;
     }
 
