@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		24010CC91CD54815008046BD /* FoodItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CC81CD54815008046BD /* FoodItemViewCell.swift */; };
 		24010CCC1CD54865008046BD /* FoodItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24010CCB1CD54865008046BD /* FoodItemViewCell.xib */; };
+		24010CCF1CD5558B008046BD /* PurpleStatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CCE1CD5558B008046BD /* PurpleStatusBarViewController.swift */; };
+		24010CD11CD55635008046BD /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CD01CD55635008046BD /* FavoritesViewController.swift */; };
 		243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */; };
 		243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */; };
 		243A94A61CBF328B00A7C3B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243A94A41CBF328B00A7C3B3 /* Main.storyboard */; };
@@ -17,7 +19,6 @@
 		243A94C11CBF328B00A7C3B3 /* williams_diningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94C01CBF328B00A7C3B3 /* williams_diningUITests.swift */; };
 		244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE83D1CD301B20028D376 /* DiningHallViewController.swift */; };
 		244CE8401CD301CA0028D376 /* MealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE83F1CD301CA0028D376 /* MealsViewController.swift */; };
-		244CE8441CD3065B0028D376 /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8431CD3065B0028D376 /* FoodTableViewCell.swift */; };
 		244CE8461CD30B0E0028D376 /* MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8451CD30B0E0028D376 /* MenuHandler.swift */; };
 		244CE8481CD326A50028D376 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8471CD326A50028D376 /* Style.swift */; };
 		248070F61CD5277900CFF98B /* MenuLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F51CD5277900CFF98B /* MenuLoader.swift */; };
@@ -50,6 +51,8 @@
 /* Begin PBXFileReference section */
 		24010CC81CD54815008046BD /* FoodItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodItemViewCell.swift; sourceTree = "<group>"; };
 		24010CCB1CD54865008046BD /* FoodItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoodItemViewCell.xib; sourceTree = "<group>"; };
+		24010CCE1CD5558B008046BD /* PurpleStatusBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurpleStatusBarViewController.swift; sourceTree = "<group>"; };
+		24010CD01CD55635008046BD /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		243A949D1CBF328B00A7C3B3 /* williams-dining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "williams-dining.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -64,7 +67,6 @@
 		243A94C21CBF328B00A7C3B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		244CE83D1CD301B20028D376 /* DiningHallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHallViewController.swift; sourceTree = "<group>"; };
 		244CE83F1CD301CA0028D376 /* MealsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsViewController.swift; sourceTree = "<group>"; };
-		244CE8431CD3065B0028D376 /* FoodTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
 		244CE8451CD30B0E0028D376 /* MenuHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHandler.swift; sourceTree = "<group>"; };
 		244CE8471CD326A50028D376 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		248070F51CD5277900CFF98B /* MenuLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuLoader.swift; sourceTree = "<group>"; };
@@ -120,6 +122,18 @@
 			name = CoreData;
 			sourceTree = "<group>";
 		};
+		24010CCD1CD54FAD008046BD /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */,
+				244CE83D1CD301B20028D376 /* DiningHallViewController.swift */,
+				244CE83F1CD301CA0028D376 /* MealsViewController.swift */,
+				24010CCE1CD5558B008046BD /* PurpleStatusBarViewController.swift */,
+				24010CD01CD55635008046BD /* FavoritesViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		243A94941CBF328B00A7C3B3 = {
 			isa = PBXGroup;
 			children = (
@@ -145,15 +159,12 @@
 		243A949F1CBF328B00A7C3B3 /* williams-dining */ = {
 			isa = PBXGroup;
 			children = (
+				24010CCD1CD54FAD008046BD /* ViewControllers */,
 				24010CCA1CD54819008046BD /* CoreData */,
 				243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */,
-				243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */,
 				243A94A41CBF328B00A7C3B3 /* Main.storyboard */,
 				243A94A71CBF328B00A7C3B3 /* Assets.xcassets */,
 				243A94AC1CBF328B00A7C3B3 /* Info.plist */,
-				244CE83D1CD301B20028D376 /* DiningHallViewController.swift */,
-				244CE83F1CD301CA0028D376 /* MealsViewController.swift */,
-				244CE8431CD3065B0028D376 /* FoodTableViewCell.swift */,
 				244CE8471CD326A50028D376 /* Style.swift */,
 				24010CC81CD54815008046BD /* FoodItemViewCell.swift */,
 				24010CCB1CD54865008046BD /* FoodItemViewCell.xib */,
@@ -384,12 +395,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24010CCF1CD5558B008046BD /* PurpleStatusBarViewController.swift in Sources */,
 				24DD9C8A1CD3C06A00E2777C /* CoreDataMenuItem.swift in Sources */,
 				244CE8401CD301CA0028D376 /* MealsViewController.swift in Sources */,
 				248070FA1CD53BF600CFF98B /* FavoriteFood.swift in Sources */,
 				24010CC91CD54815008046BD /* FoodItemViewCell.swift in Sources */,
 				243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */,
-				244CE8441CD3065B0028D376 /* FoodTableViewCell.swift in Sources */,
 				244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */,
 				244CE8461CD30B0E0028D376 /* MenuHandler.swift in Sources */,
 				248070F61CD5277900CFF98B /* MenuLoader.swift in Sources */,
@@ -397,6 +408,7 @@
 				24DD9C841CD3B10C00E2777C /* williams-dining.xcdatamodeld in Sources */,
 				243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */,
 				244CE8481CD326A50028D376 /* Style.swift in Sources */,
+				24010CD11CD55635008046BD /* FavoritesViewController.swift in Sources */,
 				248070F91CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

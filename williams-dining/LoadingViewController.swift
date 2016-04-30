@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class LoadingViewController: UIViewController {
+class LoadingViewController: PurpleStatusBarViewController {
 
     var diningHallCounter = 5
     @IBOutlet var activityLabel: UILabel!

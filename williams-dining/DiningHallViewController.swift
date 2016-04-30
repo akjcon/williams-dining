@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
+class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var pickerView: UIPickerView!
     @IBOutlet var titleLabel: UILabel!
@@ -34,9 +34,9 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
         selectedDiningHall = pickerDataSource[0]
         fetchData()
-        let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
+/*        let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
         view.backgroundColor = Style.primaryColor
-        self.view.addSubview(view)
+        self.view.addSubview(view)*/
 
         let nib = UINib(nibName: "FoodItemViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "FoodItemViewCell")

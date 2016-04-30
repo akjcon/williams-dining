@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
+class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
 
     var pickerDataSource = MenuHandler.fetchActiveMealTimes()
 
@@ -30,9 +30,9 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.tableView.delegate = self
         selectedMealTime = pickerDataSource[0]
         fetchData()
-        let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
+/*        let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
         view.backgroundColor = Style.primaryColor
-        self.view.addSubview(view)
+        self.view.addSubview(view)*/
 
 
         let nib = UINib(nibName: "FoodItemViewCell", bundle: nil)
