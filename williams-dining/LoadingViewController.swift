@@ -14,6 +14,9 @@ class LoadingViewController: UIViewController {
     var diningHallCounter = 5
     @IBOutlet var activityLabel: UILabel!
 
+    /**
+     Some Williams-themed loading labels.
+    */
     var orderedActivityLabels: [String] = ["Climbing the purple mountains...",
                                            "Yodeling...",
                                            "Herding the cows...",
@@ -33,8 +36,6 @@ class LoadingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoadingViewController.pushToMenus), name: "dataIsReady", object: nil)
         activityLabel.text = orderedActivityLabels[0]
     }
 

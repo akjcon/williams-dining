@@ -6,7 +6,11 @@
         <attribute name="mealTime" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="FavoriteFood" representedClassName=".FavoriteFood" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="CoreDataMenuItem" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="FavoriteFood" positionX="-207" positionY="-18" width="128" height="58"/>
     </elements>
 </model>

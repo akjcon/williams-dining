@@ -27,17 +27,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="D31-pR-PnF">
-                                <rect key="frame" x="282" y="281.5" width="37" height="37"/>
+                                <rect key="frame" x="282" y="269" width="37" height="37"/>
                                 <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for purple air" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0c8-ac-Ucx">
-                                <rect key="frame" x="221" y="230.5" width="159.5" height="21"/>
+                                <rect key="frame" x="221" y="218" width="159.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wmsdining-logo-300x126" translatesAutoresizingMaskIntoConstraints="NO" id="ByU-R4-QnI">
-                                <rect key="frame" x="180" y="368.5" width="240" height="128"/>
+                                <rect key="frame" x="180" y="356" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="SIm-fk-Xv4"/>
                                     <constraint firstAttribute="height" constant="128" id="cvo-nu-fXb"/>
@@ -53,6 +53,7 @@
                         <constraints>
                             <constraint firstItem="D31-pR-PnF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8T2-or-cM1"/>
                             <constraint firstItem="TmX-tu-wXe" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="8TI-gc-pDq"/>
+                            <constraint firstItem="0c8-ac-Ucx" firstAttribute="top" secondItem="zQZ-Tf-H2J" secondAttribute="bottom" constant="150" id="Hj3-ru-POe"/>
                             <constraint firstItem="zQZ-Tf-H2J" firstAttribute="top" secondItem="TmX-tu-wXe" secondAttribute="bottom" id="La5-ra-Jd2"/>
                             <constraint firstItem="zQZ-Tf-H2J" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NCZ-mQ-nri"/>
                             <constraint firstItem="0c8-ac-Ucx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Wk1-jg-AWF"/>
@@ -72,6 +73,7 @@
                             <mask key="constraints">
                                 <exclude reference="f8C-Rq-9Lh"/>
                                 <exclude reference="ilq-1d-yVV"/>
+                                <exclude reference="saV-63-ly1"/>
                             </mask>
                         </variation>
                     </view>
@@ -120,14 +122,26 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Food title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MFp-GE-Qzw">
-                                                    <rect key="frame" x="8" y="11" width="321" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MFp-GE-Qzw">
+                                                    <rect key="frame" x="18" y="11" width="72" height="21"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="foodTitleLabel"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MFp-GE-Qzw" firstAttribute="centerX" secondItem="lQ9-bZ-yTH" secondAttribute="centerX" id="DTb-K2-R9K"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="MFp-GE-Qzw" secondAttribute="leading" constant="5" id="GuR-Nb-geW"/>
+                                                <constraint firstItem="MFp-GE-Qzw" firstAttribute="centerY" secondItem="lQ9-bZ-yTH" secondAttribute="centerY" id="WIX-cf-GWb"/>
+                                                <constraint firstItem="MFp-GE-Qzw" firstAttribute="leading" secondItem="lQ9-bZ-yTH" secondAttribute="leadingMargin" constant="10" id="eym-NF-DtY"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="DTb-K2-R9K"/>
+                                                    <exclude reference="GuR-Nb-geW"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="titleLabel" destination="MFp-GE-Qzw" id="DT8-Lw-IUI"/>
@@ -216,8 +230,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Food Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfg-5I-ICH">
-                                                    <rect key="frame" x="8" y="11" width="334" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfg-5I-ICH">
+                                                    <rect key="frame" x="18" y="11" width="334" height="21"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="foodTitleLabel"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="334" id="DId-NE-YkS"/>
@@ -227,6 +241,16 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="leadingMargin" secondItem="mfg-5I-ICH" secondAttribute="leading" id="axo-AK-sQU"/>
+                                                <constraint firstItem="mfg-5I-ICH" firstAttribute="centerY" secondItem="TXi-cM-bPS" secondAttribute="centerY" id="sFB-KS-MJG"/>
+                                                <constraint firstItem="mfg-5I-ICH" firstAttribute="leading" secondItem="TXi-cM-bPS" secondAttribute="leadingMargin" constant="10" id="u1f-cN-hY1"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="axo-AK-sQU"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="titleLabel" destination="mfg-5I-ICH" id="XAX-Nk-8Tk"/>

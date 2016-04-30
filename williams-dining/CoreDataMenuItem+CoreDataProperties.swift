@@ -2,7 +2,7 @@
 //  CoreDataMenuItem+CoreDataProperties.swift
 //  williams-dining
 //
-//  Created by Nathan Andersen on 4/29/16.
+//  Created by Nathan Andersen on 4/30/16.
 //  Copyright © 2016 Gladden Labs. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -20,7 +20,10 @@ extension CoreDataMenuItem {
     @NSManaged var diningHall: NSNumber
     @NSManaged var course: String
 
+
 }
+
+
 
 
 enum DiningHall {
@@ -138,7 +141,7 @@ enum MealTime {
         case .Error:
             return ""
         }
-    }
+}
 
     func intValue() -> Int {
         switch(self) {
@@ -155,7 +158,7 @@ enum MealTime {
         case .Error:
             return 10
         }
-    }
+}
 
     static let allCases = [Breakfast,Lunch,Dinner,Brunch,Dessert]
 
