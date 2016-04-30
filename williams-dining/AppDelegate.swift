@@ -9,48 +9,28 @@
 import UIKit
 import CoreData
 
-class Date: NSObject {
-    var year: Int
-    var month: Int
-    var day: Int
 
-    init(date: NSDate) {
+
+extension NSDate {
+
+    func dayIsEarlierThan(otherDate: NSDate) -> Bool {
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+        let thisComponents = calendar.components([.Day, .Month, .Year], fromDate: self)
+        let otherComponents = calendar.components([.Day, .Month, .Year], fromDate: otherDate)
 
-        self.year = components.year
-        self.month = components.month
-        self.day = components.day
-        super.init()
-    }
-
-    init(dateString: String) {
-        let string = dateString.componentsSeparatedByString("-")
-        self.year = Int(string[0])!
-        self.month = Int(string[1])!
-        self.day = Int(string[2])!
-    }
-
-    func stringValue() -> String {
-        return String(year) + "-" + String(month) + "-" + String(day)
-    }
-
-    func isEarlierThan(date: Date) -> Bool {
-        // perhaps collapse this if possible
-        if self.year > date.year {
+        if thisComponents.year > otherComponents.year {
             return false
         } else {
-            if self.month > date.month {
+            if thisComponents.month > otherComponents.month {
                 return false
             } else {
-                if self.day >= date.day {
-                    return false
-                }
+                return thisComponents.day < otherComponents.day
             }
         }
-        return true
     }
 }
+
+let lastUpdatedAtKey = "lastUpdatedAt"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -59,9 +39,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
+    private func updateData(completionHandler: (UIBackgroundFetchResult) -> Void) {
+        MenuLoader.fetchMenusFromAPI(completionHandler)
+    }
 
-    func updateData() {
-        foodDictionary.fetchMenusFromAPI()
+    private func updateData() {
+        MenuLoader.fetchMenusFromAPI({(result: UIBackgroundFetchResult) in
+            if result == .NewData {
+                (self.window?.rootViewController as! ViewController).pushToMenus()
+                print("ahaaa")
+            }
+        })
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -78,17 +66,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(
             UIApplicationBackgroundFetchIntervalMinimum)
 
-        let dateStr = "0000-00-00"
-        defaults.registerDefaults(["lastUpdatedAt":dateStr])
-
-
+        let yesterday = NSDate(timeInterval: -86400, sinceDate: NSDate())
+        defaults.registerDefaults([lastUpdatedAtKey:yesterday])
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller: UIViewController!
-        if Date(dateString: defaults.valueForKey("lastUpdatedAt") as! String).isEarlierThan(Date(date: NSDate())) {
-            updateData()
+
+        if (defaults.valueForKey(lastUpdatedAtKey) as! NSDate).dayIsEarlierThan(NSDate()) {
             controller = storyboard.instantiateViewControllerWithIdentifier("LoadingViewController")
             (controller as! ViewController).initializeLabelTimer()
+
+           updateData() {(result: UIBackgroundFetchResult) in
+                if result == .NewData {
+                    (controller as! ViewController).pushToMenus()
+                } else {
+                    // data failed
+                    // .. maybe try again?
+                    exit(1)
+                }
+            }
         } else {
             controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController")
         }
@@ -96,22 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = controller
         self.window?.makeKeyAndVisible()
         return true
-
-/*
-
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if Date(dateString: defaults.valueForKey("lastUpdatedAt") as! String).isEarlierThan(Date(date: NSDate())) {
-            updateData()
-            let controller = storyboard.instantiateViewControllerWithIdentifier("LoadingViewController")
-            self.window?.rootViewController = controller
-        } else {
-            // maybe instantiate loading, but yeah?
-//            let controller = storyboard.instantiateViewControllerWithIdentifier("LoadingViewController")
-            let controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController")
-            self.window?.rootViewController = controller
-//            NSNotificationCenter.defaultCenter().postNotificationName("dataIsReady", object: nil)
-        }
-        return true*/
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -141,9 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Support for background fetch
     func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-
-        updateData()
-
+        updateData(completionHandler)
     }
 
     // MARK: - Core Data stack
@@ -196,23 +174,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Core Data Saving support
 
     func saveContext () {
-//        print("save was called")
         if managedObjectContext.hasChanges {
-//            print("attempting to save")
             do {
                 try managedObjectContext.save()
-
-                let date = NSDate()
-                let calendar = NSCalendar.currentCalendar()
-                let components = calendar.components([.Day , .Month , .Year], fromDate: date)
-                let dateStr = String(components.year) + "-" + String(components.month) + "-" + String(components.day)
-                defaults.setValue(dateStr, forKey: "lastUpdatedAt")
+                defaults.setValue(NSDate(), forKey: lastUpdatedAtKey)
             } catch {
                 print("not saved")
-                // if not saved, that's ok, just don't update the defaults!
-                let dateStr = "0000-00-00"
-                defaults.setValue(dateStr,forKey: "lastUpdatedAt")
-
+                let yesterday = NSDate(timeInterval: -86400, sinceDate: NSDate())
+                defaults.setValue(yesterday, forKey: lastUpdatedAtKey)
                 let nserror = error as NSError
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
 //                abort()

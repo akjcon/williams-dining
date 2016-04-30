@@ -36,8 +36,6 @@ class ViewController: UIViewController {
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.pushToMenus), name: "dataIsReady", object: nil)
         activityLabel.text = orderedActivityLabels[0]
-
-//        initializeLabelTimer()
     }
 
     internal func initializeLabelTimer() {
@@ -59,6 +57,14 @@ class ViewController: UIViewController {
      */
     internal func changeActivityLabel() {
         let curIndex: Int = orderedActivityLabels.indexOf(activityLabel.text!)!
+
+        if curIndex == orderedActivityLabels.count - 1 {
+            timer?.invalidate()
+            // alert that the fetch must have failed
+            self.presentViewController(UIAlertController(title: "Error", message: "Loading the menus timed out.\n\nPlease close the app and try again.", preferredStyle: .Alert),animated: true,completion: nil)
+
+            return
+        }
         activityLabel.text = orderedActivityLabels[curIndex + 1]
     }
 }

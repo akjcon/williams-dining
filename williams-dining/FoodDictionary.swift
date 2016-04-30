@@ -7,14 +7,15 @@
 //
 
 import Foundation
-import SwiftyJSON
-import Alamofire
-
 import CoreData
+import UIKit
 
 var foodDictionary: FoodDictionary!
 
 class FoodDictionary: NSObject {
+
+
+    private let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 
     /**
      TODO
@@ -41,9 +42,6 @@ class FoodDictionary: NSObject {
     
 
 
-
-
-    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 
     /**
      Fetch all menu items for a given diningHall and a given mealTime
@@ -184,76 +182,4 @@ class FoodDictionary: NSObject {
     }*/
 
 
-    /**
-     There are 5 dining halls
-    */
-    private var menuCounter = 5
-
-    /**
-     Each time a menu is loaded into memory, decrement the counter.
-     When we have loaded all menus, tell the app that the data is ready.
-    */
-    private func decrementMenuCounter() {
-        menuCounter -= 1
-        print(menuCounter)
-
-        if menuCounter == 0 {
-            (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
-            NSNotificationCenter.defaultCenter().postNotificationName("dataIsReady", object: nil)
-        }
     }
-
-    /**
-     This queries the API, one dining hall at a time, loading the results into CoreData in memory.
-     
-     This should only be called once a day
-    */
-    internal func fetchMenusFromAPI() {
-        menuCounter = 5
-        let sc = NSPersistentStoreCoordinator()
-        let stores = sc.persistentStores
-//        NSArray *stores = [persistentStoreCoordinator persistentStores];
-        for store in stores {
-            try? sc.removePersistentStore(store)
-            try? NSFileManager.defaultManager().removeItemAtPath((store.URL?.path)!)
-        }
-
-
-        for diningHall in DiningHall.allCases {
-            self.getMenu(diningHall)
-        }
-    }
-
-    /**
-     This method queries the API for a given dining hall
-     - parameters:
-        - diningHall: the given dining hall
-    */
-    private func getMenu(diningHall: DiningHall) {
-        Alamofire.request(.GET, "https://dining.williams.edu/wp-json/dining/service_units/" + String(diningHall.getAPIValue())).responseJSON { (response) in
-            guard response.result.error == nil else {
-                print("Error occurred during menu request")
-                print(response.result.error!)
-                return
-            }
-            if let value: AnyObject = response.result.value {
-                self.parseMenu(JSON(value), diningHall: diningHall)
-            }
-        }
-    }
-
-    /**
-     This method parses the JSON returned from the API and inserts it into CoreData
-     
-     - parameters:
-        - jsonMenu: a JSON object with the menu information
-        - diningHall: the DiningHall enum that the menu corresponds to
-    */
-    private func parseMenu(jsonMenu: JSON, diningHall: DiningHall) {
-        let moc = self.managedObjectContext
-        for (_,itemDictionary):(String,JSON) in jsonMenu {
-            CoreDataMenuItem.createInManagedObjectContext(moc, menuItem: MenuItem(itemDict: itemDictionary, diningHall: diningHall))
-        }
-        self.decrementMenuCounter()
-    }
-}
