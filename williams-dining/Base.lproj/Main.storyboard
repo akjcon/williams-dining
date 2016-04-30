@@ -44,16 +44,24 @@
                                     <constraint firstAttribute="width" secondItem="ByU-R4-QnI" secondAttribute="height" multiplier="15:8" id="tvc-CI-2ga"/>
                                 </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TmX-tu-wXe">
+                                <rect key="frame" x="20" y="0.0" width="560" height="20"/>
+                                <color key="backgroundColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="D31-pR-PnF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8T2-or-cM1"/>
+                            <constraint firstItem="TmX-tu-wXe" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="8TI-gc-pDq"/>
+                            <constraint firstItem="zQZ-Tf-H2J" firstAttribute="top" secondItem="TmX-tu-wXe" secondAttribute="bottom" id="La5-ra-Jd2"/>
                             <constraint firstItem="zQZ-Tf-H2J" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NCZ-mQ-nri"/>
                             <constraint firstItem="0c8-ac-Ucx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Wk1-jg-AWF"/>
                             <constraint firstItem="ByU-R4-QnI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Y8e-N8-HP5"/>
+                            <constraint firstItem="TmX-tu-wXe" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="aHt-aV-tdV"/>
                             <constraint firstItem="zQZ-Tf-H2J" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="cUp-r9-2iR"/>
                             <constraint firstItem="0c8-ac-Ucx" firstAttribute="top" secondItem="D31-pR-PnF" secondAttribute="bottom" constant="30" id="f8C-Rq-9Lh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zQZ-Tf-H2J" secondAttribute="trailing" constant="-20" id="f8U-o8-ueQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TmX-tu-wXe" secondAttribute="trailing" id="h6S-vo-7xd"/>
                             <constraint firstItem="D31-pR-PnF" firstAttribute="leading" secondItem="0c8-ac-Ucx" secondAttribute="trailing" constant="30" id="ilq-1d-yVV"/>
                             <constraint firstItem="zQZ-Tf-H2J" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="mjR-Lv-H2K"/>
                             <constraint firstItem="D31-pR-PnF" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="saV-63-ly1"/>
@@ -74,7 +82,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-404" y="137"/>
+            <point key="canvasLocation" x="-425" y="104"/>
         </scene>
         <!--Meals View Controller-->
         <scene sceneID="xfW-q2-nRo">

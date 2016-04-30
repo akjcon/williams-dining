@@ -115,12 +115,12 @@ class FoodDictionary: NSObject {
 
         if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
 
-            print(fetchResults)
+//            print(fetchResults)
             var diningHalls = Set<DiningHall>()
             fetchResults!.forEach({
                 diningHalls.insert(DiningHall(num: $0.diningHall))
             })
-            print(diningHalls)
+//            print(diningHalls)
             return Array(diningHalls).sort({$0.intValue() < $1.intValue() })
         }
         return []
@@ -179,11 +179,9 @@ class FoodDictionary: NSObject {
         return fetchActiveDiningHalls(predicate)
     }
 
-    override init() {
+/*    override init() {
         super.init()
-        print(managedObjectContext)
-
-    }
+    }*/
 
 
     /**
@@ -200,6 +198,7 @@ class FoodDictionary: NSObject {
         print(menuCounter)
 
         if menuCounter == 0 {
+            (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
             NSNotificationCenter.defaultCenter().postNotificationName("dataIsReady", object: nil)
         }
     }
@@ -223,8 +222,6 @@ class FoodDictionary: NSObject {
         for diningHall in DiningHall.allCases {
             self.getMenu(diningHall)
         }
-        try? managedObjectContext.save()
-//        (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
     }
 
     /**

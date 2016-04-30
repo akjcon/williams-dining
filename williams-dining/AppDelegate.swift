@@ -62,11 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func updateData() {
         foodDictionary.fetchMenusFromAPI()
-        let date = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
-        let dateStr = String(components.year) + "-" + String(components.month) + "-" + String(components.day)
-        defaults.setValue(dateStr, forKey: "lastUpdatedAt")
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -86,16 +81,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dateStr = "0000-00-00"
         defaults.registerDefaults(["lastUpdatedAt":dateStr])
 
+
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller: UIViewController!
+        if Date(dateString: defaults.valueForKey("lastUpdatedAt") as! String).isEarlierThan(Date(date: NSDate())) {
+            updateData()
+            controller = storyboard.instantiateViewControllerWithIdentifier("LoadingViewController")
+            (controller as! ViewController).initializeLabelTimer()
+        } else {
+            controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController")
+        }
+
+        self.window?.rootViewController = controller
+        self.window?.makeKeyAndVisible()
+        return true
+
+/*
+
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if Date(dateString: defaults.valueForKey("lastUpdatedAt") as! String).isEarlierThan(Date(date: NSDate())) {
             updateData()
             let controller = storyboard.instantiateViewControllerWithIdentifier("LoadingViewController")
             self.window?.rootViewController = controller
         } else {
+            // maybe instantiate loading, but yeah?
+//            let controller = storyboard.instantiateViewControllerWithIdentifier("LoadingViewController")
             let controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController")
             self.window?.rootViewController = controller
+//            NSNotificationCenter.defaultCenter().postNotificationName("dataIsReady", object: nil)
         }
-        return true
+        return true*/
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -119,7 +135,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 
-//        self.saveContext()
+        print("attempting to save")
+        self.saveContext()
     }
 
     // Support for background fetch
@@ -179,15 +196,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Core Data Saving support
 
     func saveContext () {
+//        print("save was called")
         if managedObjectContext.hasChanges {
+//            print("attempting to save")
             do {
                 try managedObjectContext.save()
+
+                let date = NSDate()
+                let calendar = NSCalendar.currentCalendar()
+                let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+                let dateStr = String(components.year) + "-" + String(components.month) + "-" + String(components.day)
+                defaults.setValue(dateStr, forKey: "lastUpdatedAt")
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                print("not saved")
+                // if not saved, that's ok, just don't update the defaults!
+                let dateStr = "0000-00-00"
+                defaults.setValue(dateStr,forKey: "lastUpdatedAt")
+
                 let nserror = error as NSError
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
-                abort()
+//                abort()
             }
         }
     }

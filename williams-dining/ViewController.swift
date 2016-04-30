@@ -25,7 +25,7 @@ class ViewController: UIViewController {
                                            "Mixing the salads...",
                                            "Loading menus..."]
 
-    var timer: NSTimer!
+    var timer: NSTimer?
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -37,11 +37,17 @@ class ViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.pushToMenus), name: "dataIsReady", object: nil)
         activityLabel.text = orderedActivityLabels[0]
 
+//        initializeLabelTimer()
+    }
+
+    internal func initializeLabelTimer() {
         timer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(ViewController.changeActivityLabel), userInfo: nil, repeats: true)
     }
 
-    func pushToMenus() {
-        timer.invalidate()
+    internal func pushToMenus() {
+        if timer != nil {
+            timer!.invalidate()
+        }
         performSegueWithIdentifier("EnterApplicationSegue", sender: self)
     }
 
