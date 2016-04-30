@@ -34,9 +34,6 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
 
         selectedDiningHall = pickerDataSource[0]
         fetchData()
-/*        let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
-        view.backgroundColor = Style.primaryColor
-        self.view.addSubview(view)*/
 
         let nib = UINib(nibName: "FoodItemViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "FoodItemViewCell")
@@ -89,15 +86,29 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
         cell.nameLabel.text = menuItem.name
         cell.glutenFreeLabel.hidden = !menuItem.isGlutenFree
         cell.veganLabel.hidden = !menuItem.isVegan
+
+        if MenuHandler.isAFavoriteFood(menuItem.name) {
+            cell.backgroundColor = Style.yellowColor
+        }
+
         return cell;
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // if in favorites, remove from favorites
         // if not in favorites, add to favorites
+        let section = indexPath.section
+        let menuItem: CoreDataMenuItem = menuItems[activeMealTimes[section]]![indexPath.row]
 
-        
 
+        if MenuHandler.isAFavoriteFood(menuItem.name){
+            // remove from favorites
+        } else {
+            // add to favorites
+            MenuHandler.addItemToFavorites(menuItem.name)
+        }
+
+        tableView.reloadData()
     }
 
 

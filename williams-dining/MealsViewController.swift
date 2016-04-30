@@ -30,10 +30,6 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
         self.tableView.delegate = self
         selectedMealTime = pickerDataSource[0]
         fetchData()
-/*        let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
-        view.backgroundColor = Style.primaryColor
-        self.view.addSubview(view)*/
-
 
         let nib = UINib(nibName: "FoodItemViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "FoodItemViewCell")

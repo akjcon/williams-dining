@@ -20,8 +20,53 @@ class MenuHandler: NSObject {
     /**
      Insert a favorite food into the database
     */
-    private static func addItemToFavorites(name: String) {
+    internal static func addItemToFavorites(name: String) {
         FavoriteFood.createInManagedObjectContext(managedObjectContext, name: name)
+        updateFavorites()
+    }
+
+    internal static func removeItemFromFavorites(name: String) {
+        // remove???
+        updateFavorites()
+    }
+
+    internal static func isAFavoriteFood(name: String) -> Bool {
+        if favorites == nil {
+            favorites = fetchFavorites()
+        }
+        return favorites.contains(name)
+    }
+
+    private static var favorites: Set<String>!
+
+    internal static func getFavorites() -> [String] {
+        if favorites == nil {
+            favorites = fetchFavorites()
+        }
+        return favorites.sort()
+    }
+
+    internal static func updateFavorites() {
+        favorites = fetchFavorites()
+    }
+
+    /**
+     Fetch the user favorites from memory
+    */
+    private static func fetchFavorites() -> Set<String> {
+        let fetchRequest = NSFetchRequest(entityName: "FavoriteFood")
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
+        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [FavoriteFood] {
+
+            var favoriteFoods = Set<String>()
+            fetchResults!.forEach({
+                favoriteFoods.insert($0.name!)
+            })
+            return favoriteFoods
+        }
+        return Set<String>()
     }
 
 
