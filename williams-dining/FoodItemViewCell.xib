@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -15,37 +16,66 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Food Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xk0-Ph-baK">
-                        <rect key="frame" x="18" y="11" width="97" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xk0-Ph-baK">
+                        <rect key="frame" x="18" y="11" width="88.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="V" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRE-yY-Mdm">
-                        <rect key="frame" x="258" y="12" width="11.5" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQh-G3-rsZ">
+                        <rect key="frame" x="274" y="8" width="27.5" height="27.5"/>
                         <color key="backgroundColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="iQh-G3-rsZ" secondAttribute="height" multiplier="1:1" id="te4-VQ-j1p"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQh-G3-rsZ">
-                        <rect key="frame" x="280" y="11" width="22" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="V" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRE-yY-Mdm">
+                        <rect key="frame" x="238" y="8" width="27.5" height="27.5"/>
                         <color key="backgroundColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="ZRE-yY-Mdm" secondAttribute="height" multiplier="1:1" id="ZiI-8h-clJ"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="ZRE-yY-Mdm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Xk0-Ph-baK" secondAttribute="trailing" id="3r4-gB-CwB"/>
                     <constraint firstItem="Xk0-Ph-baK" firstAttribute="centerY" secondItem="58Z-fl-GRz" secondAttribute="centerY" id="OwQ-af-ftv"/>
                     <constraint firstItem="Xk0-Ph-baK" firstAttribute="leading" secondItem="58Z-fl-GRz" secondAttribute="leadingMargin" constant="10" id="QnC-bw-wPE"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="iQh-G3-rsZ" secondAttribute="bottom" id="Sgh-XI-ubC"/>
                     <constraint firstAttribute="trailingMargin" secondItem="iQh-G3-rsZ" secondAttribute="trailing" constant="10" id="VQl-Gj-7hh"/>
                     <constraint firstItem="ZRE-yY-Mdm" firstAttribute="centerY" secondItem="58Z-fl-GRz" secondAttribute="centerY" id="Vsc-N9-MyM"/>
                     <constraint firstAttribute="leadingMargin" secondItem="Xk0-Ph-baK" secondAttribute="leading" constant="10" id="i67-nf-oh5"/>
                     <constraint firstItem="iQh-G3-rsZ" firstAttribute="centerY" secondItem="58Z-fl-GRz" secondAttribute="centerY" id="jYb-bT-5Q0"/>
+                    <constraint firstItem="iQh-G3-rsZ" firstAttribute="top" secondItem="58Z-fl-GRz" secondAttribute="topMargin" id="joL-OD-Ip9"/>
+                    <constraint firstItem="ZRE-yY-Mdm" firstAttribute="top" secondItem="58Z-fl-GRz" secondAttribute="topMargin" id="qxC-HB-WO7"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="ZRE-yY-Mdm" secondAttribute="bottom" id="rLE-ei-yyW"/>
+                    <constraint firstItem="iQh-G3-rsZ" firstAttribute="width" secondItem="ZRE-yY-Mdm" secondAttribute="width" id="sk0-Oa-ROK"/>
                     <constraint firstItem="iQh-G3-rsZ" firstAttribute="leading" secondItem="ZRE-yY-Mdm" secondAttribute="trailing" constant="10" id="uT8-Jl-q9E"/>
                 </constraints>
+                <userDefinedRuntimeAttributes>
+                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                        <integer key="value" value="5"/>
+                    </userDefinedRuntimeAttribute>
+                </userDefinedRuntimeAttributes>
                 <variation key="default">
                     <mask key="constraints">
                         <exclude reference="i67-nf-oh5"/>
