@@ -33,6 +33,10 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
         view.backgroundColor = Style.primaryColor
         self.view.addSubview(view)
+
+
+        let nib = UINib(nibName: "FoodItemViewCell", bundle: nil)
+        tableView.registerNib(nib, forCellReuseIdentifier: "FoodItemViewCell")
     }
 
     func fetchData() {
@@ -78,8 +82,11 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let section = indexPath.section
         let menuItem = menuItems[activeDiningHalls[section]]![indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("DiningHallTableCell") as! FoodTableViewCell
-        cell.titleLabel.text = menuItem.name
+        let cell = tableView.dequeueReusableCellWithIdentifier("FoodItemViewCell") as! FoodItemViewCell
+        cell.nameLabel.text = menuItem.name
+
+
+        
         return cell;
     }
 

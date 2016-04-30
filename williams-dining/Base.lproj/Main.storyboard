@@ -114,40 +114,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GSm-hv-pA2">
                                 <rect key="frame" x="0.0" y="168" width="600" height="383"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DiningHallTableCell" id="naa-Lz-gLC" customClass="FoodTableViewCell" customModule="williams_dining" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="naa-Lz-gLC" id="lQ9-bZ-yTH">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MFp-GE-Qzw">
-                                                    <rect key="frame" x="18" y="11" width="72" height="21"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="foodTitleLabel"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="MFp-GE-Qzw" firstAttribute="centerX" secondItem="lQ9-bZ-yTH" secondAttribute="centerX" id="DTb-K2-R9K"/>
-                                                <constraint firstAttribute="leadingMargin" secondItem="MFp-GE-Qzw" secondAttribute="leading" constant="5" id="GuR-Nb-geW"/>
-                                                <constraint firstItem="MFp-GE-Qzw" firstAttribute="centerY" secondItem="lQ9-bZ-yTH" secondAttribute="centerY" id="WIX-cf-GWb"/>
-                                                <constraint firstItem="MFp-GE-Qzw" firstAttribute="leading" secondItem="lQ9-bZ-yTH" secondAttribute="leadingMargin" constant="10" id="eym-NF-DtY"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="DTb-K2-R9K"/>
-                                                    <exclude reference="GuR-Nb-geW"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="titleLabel" destination="MFp-GE-Qzw" id="DT8-Lw-IUI"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -222,41 +188,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4O2-aA-9HQ">
                                 <rect key="frame" x="0.0" y="168" width="600" height="383"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DiningHallTableCell" id="46q-f8-14i" customClass="FoodTableViewCell" customModule="williams_dining" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="46q-f8-14i" id="TXi-cM-bPS">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfg-5I-ICH">
-                                                    <rect key="frame" x="18" y="11" width="334" height="21"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="foodTitleLabel"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="334" id="DId-NE-YkS"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="leadingMargin" secondItem="mfg-5I-ICH" secondAttribute="leading" id="axo-AK-sQU"/>
-                                                <constraint firstItem="mfg-5I-ICH" firstAttribute="centerY" secondItem="TXi-cM-bPS" secondAttribute="centerY" id="sFB-KS-MJG"/>
-                                                <constraint firstItem="mfg-5I-ICH" firstAttribute="leading" secondItem="TXi-cM-bPS" secondAttribute="leadingMargin" constant="10" id="u1f-cN-hY1"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="axo-AK-sQU"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="titleLabel" destination="mfg-5I-ICH" id="XAX-Nk-8Tk"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
