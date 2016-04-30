@@ -16,7 +16,7 @@
 		244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE83D1CD301B20028D376 /* DiningHallViewController.swift */; };
 		244CE8401CD301CA0028D376 /* MealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE83F1CD301CA0028D376 /* MealsViewController.swift */; };
 		244CE8441CD3065B0028D376 /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8431CD3065B0028D376 /* FoodTableViewCell.swift */; };
-		244CE8461CD30B0E0028D376 /* MenuReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8451CD30B0E0028D376 /* MenuReader.swift */; };
+		244CE8461CD30B0E0028D376 /* MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8451CD30B0E0028D376 /* MenuHandler.swift */; };
 		244CE8481CD326A50028D376 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8471CD326A50028D376 /* Style.swift */; };
 		248070F61CD5277900CFF98B /* MenuLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F51CD5277900CFF98B /* MenuLoader.swift */; };
 		248070F91CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F71CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift */; };
@@ -61,7 +61,7 @@
 		244CE83D1CD301B20028D376 /* DiningHallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHallViewController.swift; sourceTree = "<group>"; };
 		244CE83F1CD301CA0028D376 /* MealsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsViewController.swift; sourceTree = "<group>"; };
 		244CE8431CD3065B0028D376 /* FoodTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
-		244CE8451CD30B0E0028D376 /* MenuReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuReader.swift; sourceTree = "<group>"; };
+		244CE8451CD30B0E0028D376 /* MenuHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHandler.swift; sourceTree = "<group>"; };
 		244CE8471CD326A50028D376 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		248070F51CD5277900CFF98B /* MenuLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuLoader.swift; sourceTree = "<group>"; };
 		248070F71CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FavoriteFood+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 				244CE83D1CD301B20028D376 /* DiningHallViewController.swift */,
 				244CE83F1CD301CA0028D376 /* MealsViewController.swift */,
 				244CE8431CD3065B0028D376 /* FoodTableViewCell.swift */,
-				244CE8451CD30B0E0028D376 /* MenuReader.swift */,
+				244CE8451CD30B0E0028D376 /* MenuHandler.swift */,
 				244CE8471CD326A50028D376 /* Style.swift */,
 				24DD9C821CD3B10C00E2777C /* williams-dining.xcdatamodeld */,
 				24DD9C871CD3C06A00E2777C /* CoreDataMenuItem+CoreDataProperties.swift */,
@@ -375,7 +375,7 @@
 				243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */,
 				244CE8441CD3065B0028D376 /* FoodTableViewCell.swift in Sources */,
 				244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */,
-				244CE8461CD30B0E0028D376 /* MenuReader.swift in Sources */,
+				244CE8461CD30B0E0028D376 /* MenuHandler.swift in Sources */,
 				248070F61CD5277900CFF98B /* MenuLoader.swift in Sources */,
 				24DD9C891CD3C06A00E2777C /* CoreDataMenuItem+CoreDataProperties.swift in Sources */,
 				24DD9C841CD3B10C00E2777C /* williams-dining.xcdatamodeld in Sources */,

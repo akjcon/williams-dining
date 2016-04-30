@@ -15,12 +15,12 @@ import SwiftyJSON
 
 extension CoreDataMenuItem {
 
+    @NSManaged var isVegan: Bool
+    @NSManaged var isGlutenFree: Bool
     @NSManaged var name: String
     @NSManaged var mealTime: NSNumber
     @NSManaged var diningHall: NSNumber
     @NSManaged var course: String
-
-
 }
 
 
@@ -182,22 +182,36 @@ enum MealTime {
 
 
 struct MenuItem {
-    var mealTime: MealTime
-    var food: String
-    var diningHall: DiningHall
-    var course: String
-
-    init() {
-        self.mealTime = .Error
-        food = ""
-        diningHall = .Error
-        course = ""
-    }
+    var mealTime: MealTime = .Error
+    var name: String = ""
+    var diningHall: DiningHall = .Error
+    var course: String = ""
+    var isVegan: Bool = false
+    var isGlutenFree: Bool = false
 
     init(itemDict: JSON, diningHall: DiningHall) {
+        let foodString = itemDict["formal_name"].string!
+
+        self.isGlutenFree = foodString.containsString(" GF")
+        self.isVegan = foodString.containsString(" V")
+
+        if isGlutenFree {
+            self.name = foodString.substringToIndex(foodString.indexOf(" GF"))
+        } else if isVegan {
+            self.name = foodString.substringToIndex(foodString.indexOf(" V"))
+        } else {
+            self.name = foodString
+        }
+
         self.mealTime = MealTime(mealTime: itemDict["meal"].string!)
-        self.food = itemDict["formal_name"].string!
+//        self.name = foodString
         self.diningHall = diningHall
         self.course = itemDict["course"].string!
+    }
+}
+
+extension String {
+    func indexOf(string: String) -> String.Index {
+        return rangeOfString(string, options: .LiteralSearch, range: nil, locale: nil)?.startIndex ?? startIndex
     }
 }

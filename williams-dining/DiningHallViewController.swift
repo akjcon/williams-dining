@@ -15,7 +15,7 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
 
-    var pickerDataSource = MenuReader.fetchActiveDiningHalls()
+    var pickerDataSource = MenuHandler.fetchActiveDiningHalls()
 
     var selectedDiningHall: DiningHall!
 
@@ -42,10 +42,10 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
     func fetchData() {
         menuItems = [MealTime:[CoreDataMenuItem]]()
 
-        activeMealTimes = MenuReader.fetchMealTimesForDiningHall(selectedDiningHall)
+        activeMealTimes = MenuHandler.fetchMealTimesForDiningHall(selectedDiningHall)
 
         for mealTime in activeMealTimes {
-            let mealItems = MenuReader.fetchByMealTimeAndDiningHall(mealTime, diningHall: selectedDiningHall)
+            let mealItems = MenuHandler.fetchByMealTimeAndDiningHall(mealTime, diningHall: selectedDiningHall)
 
             menuItems[mealTime] = mealItems
         }
@@ -80,10 +80,18 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let section = indexPath.section
-        let menuItem = menuItems[activeMealTimes[section]]![indexPath.row]
+        let menuItem: CoreDataMenuItem = menuItems[activeMealTimes[section]]![indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("DiningHallTableCell") as! FoodTableViewCell
         cell.titleLabel.text = menuItem.name
         return cell;
+    }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // if in favorites, remove from favorites
+        // if not in favorites, add to favorites
+
+        
+
     }
 
 

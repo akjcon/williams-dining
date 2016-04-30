@@ -3,6 +3,8 @@
     <entity name="CoreDataMenuItem" representedClassName=".CoreDataMenuItem" syncable="YES">
         <attribute name="course" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="diningHall" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="isGlutenFree" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isVegan" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="mealTime" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -10,7 +12,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CoreDataMenuItem" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="CoreDataMenuItem" positionX="-63" positionY="-18" width="128" height="133"/>
         <element name="FavoriteFood" positionX="-207" positionY="-18" width="128" height="58"/>
     </elements>
 </model>

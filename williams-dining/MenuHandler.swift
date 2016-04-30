@@ -13,9 +13,19 @@ import UIKit
 /**
 MenuReader statically reads the menus in from Core Data memory.
  */
-class MenuReader: NSObject {
+class MenuHandler: NSObject {
 
     private static let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+
+    /**
+     Insert a favorite food into the database
+    */
+    private static func addItemToFavorites(name: String) {
+        FavoriteFood.createInManagedObjectContext(managedObjectContext, name: name)
+    }
+
+
+
     /**
      Fetch all menu items for a given diningHall and a given mealTime
      

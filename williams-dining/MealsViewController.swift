@@ -11,7 +11,7 @@ import UIKit
 
 class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
 
-    var pickerDataSource = MenuReader.fetchActiveMealTimes()
+    var pickerDataSource = MenuHandler.fetchActiveMealTimes()
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
@@ -40,10 +40,10 @@ class MealsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         // cache this?
 
         activeDiningHalls =
-            MenuReader.fetchDiningHallsForMealTime(selectedMealTime)
+            MenuHandler.fetchDiningHallsForMealTime(selectedMealTime)
 
         for diningHall in activeDiningHalls {
-            let mealItems = MenuReader.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: diningHall)
+            let mealItems = MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: diningHall)
 
             menuItems[diningHall] = mealItems
         }

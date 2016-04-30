@@ -43,17 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MenuLoader.fetchMenusFromAPI(completionHandler)
     }
 
-/*    private func updateData() {
-        MenuLoader.fetchMenusFromAPI({(result: UIBackgroundFetchResult) in
-            if result == .NewData {
-                (self.window?.rootViewController as! LoadingViewController).pushToMenus()
-                print("ahaaa")
-            }
-        })
-    }*/
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-//        foodDictionary = FoodDictionary()
         // Override point for customization after application launch.
 
         // set the status bar to white, and add a purple BG
