@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        foodDictionary = FoodDictionary()
+//        foodDictionary = FoodDictionary()
         // Override point for customization after application launch.
 
         // set the status bar to white, and add a purple BG

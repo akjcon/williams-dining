@@ -15,7 +15,7 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
 
-    var pickerDataSource = foodDictionary.fetchActiveDiningHalls()
+    var pickerDataSource = MenuReader.fetchActiveDiningHalls()
 
     var selectedDiningHall: DiningHall!
 
@@ -42,10 +42,10 @@ class DiningHallViewController: UIViewController, UIPickerViewDelegate, UIPicker
     func fetchData() {
         menuItems = [MealTime:[CoreDataMenuItem]]()
 
-        activeMealTimes = foodDictionary.fetchMealTimesForDiningHall(selectedDiningHall)
+        activeMealTimes = MenuReader.fetchMealTimesForDiningHall(selectedDiningHall)
 
         for mealTime in activeMealTimes {
-            let mealItems = foodDictionary.fetchByMealTimeAndDiningHall(mealTime, diningHall: selectedDiningHall)
+            let mealItems = MenuReader.fetchByMealTimeAndDiningHall(mealTime, diningHall: selectedDiningHall)
 
             menuItems[mealTime] = mealItems
         }
