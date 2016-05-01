@@ -11,7 +11,7 @@ import UIKit
 
 class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
 
-    var pickerDataSource = MenuHandler.fetchActiveMealTimes()
+    var pickerDataSource = MenuHandler.fetchMealTimes(nil)
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
@@ -19,7 +19,6 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
     var selectedMealTime: MealTime!
 
     var activeDiningHalls: [DiningHall]!
-    var menuItems: [DiningHall:[CoreDataMenuItem]]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,29 +28,14 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
         self.tableView.dataSource = self
         self.tableView.delegate = self
         selectedMealTime = pickerDataSource[0]
-        fetchData()
+        activeDiningHalls = MenuHandler.fetchDiningHalls(selectedMealTime)
+        tableView.reloadData()
 
         let nib = UINib(nibName: "FoodItemViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "FoodItemViewCell")
 
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MealsViewController.reloadTable), name: "reloadMealTable", object: nil)
-    }
-
-    func fetchData() {
-        menuItems = [DiningHall:[CoreDataMenuItem]]()
-        // cache this?
-
-        activeDiningHalls =
-            MenuHandler.fetchDiningHallsForMealTime(selectedMealTime)
-
-        for diningHall in activeDiningHalls {
-            let mealItems = MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: diningHall)
-
-            menuItems[diningHall] = mealItems
-        }
-        
-        tableView.reloadData()
     }
 
 
@@ -80,12 +64,12 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
 
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return menuItems[activeDiningHalls[section]]!.count
+        return MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: activeDiningHalls[section]).count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let section = indexPath.section
-        let menuItem = menuItems[activeDiningHalls[section]]![indexPath.row]
+        let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: activeDiningHalls[section])[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("FoodItemViewCell") as! FoodItemViewCell
         cell.nameLabel.text = menuItem.name
         cell.glutenFreeLabel.hidden = !menuItem.isGlutenFree
@@ -103,9 +87,7 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
         // if in favorites, remove from favorites
         // if not in favorites, add to favorites
         let section = indexPath.section
-        let menuItem: CoreDataMenuItem = menuItems[activeDiningHalls[section]]![indexPath.row]
-
-
+        let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: activeDiningHalls[section])[indexPath.row]
         if MenuHandler.isAFavoriteFood(menuItem.name){
             MenuHandler.removeItemFromFavorites(menuItem.name)
             // remove from favorites
@@ -113,8 +95,6 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
             // add to favorites
             MenuHandler.addItemToFavorites(menuItem.name)
         }
-
-//        tableView.reloadData()
     }
 
 
@@ -136,7 +116,8 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         selectedMealTime = pickerDataSource[row]
-        fetchData()
+        activeDiningHalls = MenuHandler.fetchDiningHalls(selectedMealTime)
+        tableView.reloadData()
     }
     
     

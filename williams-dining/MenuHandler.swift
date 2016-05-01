@@ -18,35 +18,6 @@ class MenuHandler: NSObject {
     private static let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 
     /**
-     Insert a favorite food into the database
-    */
-    internal static func addItemToFavorites(name: String) {
-        FavoritesHandler.addItemToFavorites(name)
-    }
-
-    /**
-     Remove a favorite food from the database
-    */
-    internal static func removeItemFromFavorites(name: String) {
-        FavoritesHandler.removeItemFromFavorites(name)
-    }
-
-    /**
-     Returns whether the given food is a favorite or not. Constant time performance
-    */
-    internal static func isAFavoriteFood(name: String) -> Bool {
-        return FavoritesHandler.isAFavoriteFood(name)
-    }
-
-    /**
-     Fetch the user favorites as an array
-     - returns: [String] of favorites
-    */
-    internal static func getFavorites() -> [String] {
-        return FavoritesHandler.getFavorites()
-    }
-
-    /**
      Fetch all menu items for a given diningHall and a given mealTime
      
      - parameters:
@@ -73,45 +44,21 @@ class MenuHandler: NSObject {
         return []
     }
 
-    /**
-     Fetch all active dining halls from Core Data
-     
-     SELECT UNIQUE diningHall
-     FROM CoreData
-    */
-    internal static func fetchActiveDiningHalls() -> [DiningHall] {
-        return fetchActiveDiningHalls(nil)
-    }
 
     /**
-     Fetch active dining halls for a given meal time
+     Fetch all active dining halls of the mealTime (optional)
+
+     SELECT UNIQUE diningHall
+     FROM CoreData
+     WHERE mealTime = mealTime (optional)
 
      - parameters:
-     - mealTime: the selected MealTime
-
-     SELECT UNIQUE diningHall
-     FROM CoreData
-     WHERE mealTime = mealTime
+     - mealTime: the MealTime according to which, to fetch the dining halls
      */
-    internal static func fetchDiningHallsForMealTime (mealTime: MealTime) -> [DiningHall] {
-        let predicate = NSPredicate(format: "%K == %@", "mealTime", NSNumber(integer: mealTime.intValue()))
-        return fetchActiveDiningHalls(predicate)
-    }
-
-    /**
-     Fetch all active dining halls according to the predicate
-     
-     SELECT UNIQUE diningHall
-     FROM CoreData
-     WHERE predicate
-
-     - parameters: 
-        - predicate: the NSPredicate according to which, to fetch the dining halls
-    */
-    private static func fetchActiveDiningHalls(predicate: NSPredicate?) -> [DiningHall] {
+    internal static func fetchDiningHalls(mealTime: MealTime?) -> [DiningHall] {
         let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
-        if predicate != nil {
-            fetchRequest.predicate = predicate!
+        if mealTime != nil {
+            fetchRequest.predicate = NSPredicate(format: "%K == %@", "mealTime", NSNumber(integer: mealTime!.intValue()))
         }
 
         if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
@@ -126,43 +73,17 @@ class MenuHandler: NSObject {
 
     /**
      Fetch all active meal times from Core Data
+    - parameters: 
+        - diningHall: the optional dining hall
 
      SELECT UNIQUE mealTime
      FROM CoreData
+     WHERE diningHall = diningHall (optional)
      */
-    internal static func fetchActiveMealTimes() -> [MealTime] {
-        return fetchActiveMealTimes(nil)
-    }
-
-    /**
-     Fetch active meal times for a given dining hall
-
-     - parameters:
-     - diningHall: the selected diningHall
-
-     SELECT UNIQUE mealTime
-     FROM CoreData
-     WHERE diningHall = diningHall
-     */
-    internal static func fetchMealTimesForDiningHall(diningHall: DiningHall) -> [MealTime] {
-        let predicate = NSPredicate(format: "%K == %@", "diningHall", NSNumber(integer: diningHall.intValue()))
-        return fetchActiveMealTimes(predicate)
-    }
-
-    /**
-     Fetch active meal times for a given dining hall
-
-     - parameters:
-     - diningHall: the selected diningHall
-
-     SELECT UNIQUE mealTime
-     FROM CoreData
-     WHERE predicate
-     */
-    private static func fetchActiveMealTimes(predicate: NSPredicate?) -> [MealTime] {
+    internal static func fetchMealTimes(diningHall: DiningHall?) -> [MealTime] {
         let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
-        if predicate != nil {
-            fetchRequest.predicate = predicate!
+        if diningHall != nil {
+            fetchRequest.predicate = NSPredicate(format: "%K == %@", "diningHall", NSNumber(integer: diningHall!.intValue()))
         }
         if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
 
@@ -175,5 +96,35 @@ class MenuHandler: NSObject {
         return []
     }
 
+    // MARK: favorites handling
 
+
+    /**
+     Insert a favorite food into the database
+     */
+    internal static func addItemToFavorites(name: String) {
+        FavoritesHandler.addItemToFavorites(name)
+    }
+
+    /**
+     Remove a favorite food from the database
+     */
+    internal static func removeItemFromFavorites(name: String) {
+        FavoritesHandler.removeItemFromFavorites(name)
+    }
+
+    /**
+     Returns whether the given food is a favorite or not. Constant time performance
+     */
+    internal static func isAFavoriteFood(name: String) -> Bool {
+        return FavoritesHandler.isAFavoriteFood(name)
+    }
+
+    /**
+     Fetch the user favorites as an array
+     - returns: [String] of favorites
+     */
+    internal static func getFavorites() -> [String] {
+        return FavoritesHandler.getFavorites()
+    }
 }

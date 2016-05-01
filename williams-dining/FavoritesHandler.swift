@@ -11,7 +11,7 @@ import CoreData
 import UIKit
 
 /**
- A class to manage the user's favorite foods in CoreData through abstraction
+ This class implements local caching and fetching of user Favorites.
  */
 class FavoritesHandler: NSObject {
 

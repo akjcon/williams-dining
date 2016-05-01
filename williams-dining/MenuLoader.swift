@@ -28,8 +28,9 @@ class MenuLoader: NSObject {
     */
     internal static func fetchMenusFromAPI(completionHandler: (UIBackgroundFetchResult) -> Void) {
         var menusRemaining = 5
-        managedObjectContext.reset()
-//        self.wipeStores()
+        self.clearCachedData()
+
+
 
         func completion() {
             menusRemaining -= 1
@@ -44,6 +45,24 @@ class MenuLoader: NSObject {
             self.getMenu(diningHall) {
                 completion()
             }
+        }
+    }
+
+    /**
+     Clears the data stored in CoreData for new menu-space.
+    */
+    private static func clearCachedData() {
+        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
+        fetchRequest.includesPropertyValues = false
+        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
+            for item in fetchResults! {
+                managedObjectContext.deleteObject(item)
+            }
+        }
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("save failed")
         }
     }
 
@@ -78,13 +97,7 @@ class MenuLoader: NSObject {
     private static func parseMenu(jsonMenu: JSON, diningHall: DiningHall, completionHandler: () -> ()) {
         let moc = self.managedObjectContext
         for (_,itemDictionary):(String,JSON) in jsonMenu {
-
             CoreDataMenuItem.cacheItem(moc, menuItem: MenuItem(itemDict: itemDictionary, diningHall: diningHall))
-
-//            CoreDataMenuItem.createInManagedObjectContext(moc, menuItem: MenuItem(itemDict: itemDictionary, diningHall: diningHall))
-
-            // here, check if isFavorite, and then setup the notification
-
         }
         completionHandler()
     }

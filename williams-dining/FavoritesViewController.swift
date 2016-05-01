@@ -27,8 +27,12 @@ class FavoritesViewController: PurpleStatusBarViewController, UITableViewDelegat
     }
 
     @IBAction func refreshButtonWasClicked(sender: AnyObject) {
-        MenuLoader.fetchMenusFromAPI({result in print(result)})
-
+        MenuLoader.fetchMenusFromAPI({result in
+            print(result)
+            NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTable", object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTable", object: nil)
+        })
     }
     /*
      UITableView functions
