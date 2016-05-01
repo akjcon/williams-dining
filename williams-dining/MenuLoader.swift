@@ -28,7 +28,8 @@ class MenuLoader: NSObject {
     */
     internal static func fetchMenusFromAPI(completionHandler: (UIBackgroundFetchResult) -> Void) {
         var menusRemaining = 5
-        self.wipeStores()
+        managedObjectContext.reset()
+//        self.wipeStores()
 
         func completion() {
             menusRemaining -= 1
@@ -77,28 +78,14 @@ class MenuLoader: NSObject {
     private static func parseMenu(jsonMenu: JSON, diningHall: DiningHall, completionHandler: () -> ()) {
         let moc = self.managedObjectContext
         for (_,itemDictionary):(String,JSON) in jsonMenu {
-            CoreDataMenuItem.createInManagedObjectContext(moc, menuItem: MenuItem(itemDict: itemDictionary, diningHall: diningHall))
+
+            CoreDataMenuItem.cacheItem(moc, menuItem: MenuItem(itemDict: itemDictionary, diningHall: diningHall))
+
+//            CoreDataMenuItem.createInManagedObjectContext(moc, menuItem: MenuItem(itemDict: itemDictionary, diningHall: diningHall))
+
+            // here, check if isFavorite, and then setup the notification
+
         }
         completionHandler()
-    }
-
-    /**
-     Wipe the CoreData (yesterday's menus).
-    */
-    private static func wipeStores() {
-
-        // make sure that this runs correctly
-
-        let sc = NSPersistentStoreCoordinator()
-        let stores = sc.persistentStores
-        for store in stores {
-            do {
-                try sc.removePersistentStore(store)
-                try NSFileManager.defaultManager().removeItemAtPath(store.URL!.path!)
-                print("data was wiped")
-            } catch {
-                print("there was an error")
-            }
-        }
     }
 }

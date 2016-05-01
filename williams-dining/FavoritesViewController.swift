@@ -26,6 +26,10 @@ class FavoritesViewController: PurpleStatusBarViewController, UITableViewDelegat
         dispatch_async(dispatch_get_main_queue(), {self.tableView.reloadData()})
     }
 
+    @IBAction func refreshButtonWasClicked(sender: AnyObject) {
+        MenuLoader.fetchMenusFromAPI({result in print(result)})
+
+    }
     /*
      UITableView functions
      */

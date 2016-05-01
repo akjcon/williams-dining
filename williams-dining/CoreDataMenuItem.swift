@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 
 class CoreDataMenuItem: NSManagedObject {
@@ -24,6 +25,20 @@ class CoreDataMenuItem: NSManagedObject {
         newItem.isVegan = menuItem.isVegan
 
         return newItem
+    }
+
+    class func cacheItem(moc: NSManagedObjectContext,menuItem: MenuItem) -> CoreDataMenuItem {
+        // if a favorite food, register a local notification
+        if MenuHandler.isAFavoriteFood(menuItem.name) {
+            print("was a favorite food")
+            let notification = UILocalNotification()
+            notification.alertBody = "\(menuItem.name) is being served at \(menuItem.diningHall) at \(menuItem.mealTime.stringValue()) today" // text that will be displayed in the notification
+            notification.alertAction = "view"
+            notification.fireDate = NSDate()
+            UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        }
+
+        return CoreDataMenuItem.createInManagedObjectContext(moc, menuItem: menuItem)
     }
     
 
