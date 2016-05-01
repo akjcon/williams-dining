@@ -61,6 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller: UIViewController!
 
+        registerForPushNotifications(application)
+
         let lastUpdatedAt = defaults.valueForKey(lastUpdatedAtKey) as! NSDate
 
         if lastUpdatedAt.dayIsEarlierThan(NSDate()) {
@@ -178,6 +180,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                abort()
             }
         }
+    }
+
+    /**
+     Push notifications settings
+    */
+
+    func registerForPushNotifications(application: UIApplication) {
+        let notificationSettings = UIUserNotificationSettings(
+            forTypes: [.Badge, .Sound, .Alert], categories: nil)
+        application.registerUserNotificationSettings(notificationSettings)
+    }
+
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != .None {
+            application.registerForRemoteNotifications()
+        }
+    }
+
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+        var tokenString = ""
+
+        for i in 0..<deviceToken.length {
+            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
+        }
+
+        print("Device Token:", tokenString)
+    }
+
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("Failed to register:", error)
     }
 }
 
