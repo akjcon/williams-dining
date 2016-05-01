@@ -34,7 +34,7 @@ class CoreDataMenuItem: NSManagedObject {
             let notification = UILocalNotification()
             notification.alertBody = "\(menuItem.name) is being served at \(menuItem.diningHall) at \(menuItem.mealTime.stringValue()) today" // text that will be displayed in the notification
             notification.alertAction = "view"
-            notification.fireDate = NSDate()
+            notification.fireDate = NSDate(timeInterval: 15, sinceDate: NSDate())
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
 

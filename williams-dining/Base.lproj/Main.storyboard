@@ -207,6 +207,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="one_finger_tap" translatesAutoresizingMaskIntoConstraints="NO" id="0Ix-aY-04A">
                                 <rect key="frame" x="525.5" y="121" width="50" height="45"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zrj-Fy-wb7">
+                                <rect key="frame" x="319" y="77" width="117" height="30"/>
+                                <state key="normal" title="Refresh data... "/>
+                                <connections>
+                                    <action selector="refreshButtonWasClicked:" destination="Q2e-MM-F7c" eventType="touchUpInside" id="P1K-Yq-maw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
