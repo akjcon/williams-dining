@@ -33,6 +33,9 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
 
         let nib = UINib(nibName: "FoodItemViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "FoodItemViewCell")
+
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MealsViewController.reloadTable), name: "reloadMealTable", object: nil)
     }
 
     func fetchData() {
@@ -49,6 +52,11 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
         }
         
         tableView.reloadData()
+    }
+
+
+    func reloadTable() {
+        dispatch_async(dispatch_get_main_queue(), {self.tableView.reloadData()})
     }
 
     /*
@@ -106,7 +114,7 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
             MenuHandler.addItemToFavorites(menuItem.name)
         }
 
-        tableView.reloadData()
+//        tableView.reloadData()
     }
 
 

@@ -82,6 +82,11 @@ class MenuHandler: NSObject {
         favoriteFoods = fetchFavorites()
         favorites = Set<String>()
         favoriteFoods.forEach({favorites.insert($0.name!)})
+
+        NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTable", object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTable", object: nil)
+
     }
 
     /**

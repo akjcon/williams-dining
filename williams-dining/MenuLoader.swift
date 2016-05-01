@@ -86,6 +86,9 @@ class MenuLoader: NSObject {
      Wipe the CoreData (yesterday's menus).
     */
     private static func wipeStores() {
+
+        // make sure that this runs correctly
+
         let sc = NSPersistentStoreCoordinator()
         let stores = sc.persistentStores
         for store in stores {
