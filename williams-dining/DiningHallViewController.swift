@@ -89,6 +89,8 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
 
         if MenuHandler.isAFavoriteFood(menuItem.name) {
             cell.backgroundColor = Style.yellowColor
+        } else {
+            cell.backgroundColor = UIColor.clearColor()
         }
 
         return cell;
@@ -101,7 +103,9 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
         let menuItem: CoreDataMenuItem = menuItems[activeMealTimes[section]]![indexPath.row]
 
 
+
         if MenuHandler.isAFavoriteFood(menuItem.name){
+            MenuHandler.removeItemFromFavorites(menuItem.name)
             // remove from favorites
         } else {
             // add to favorites

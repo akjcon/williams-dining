@@ -17,12 +17,11 @@ extension NSDate {
         let calendar = NSCalendar.currentCalendar()
         let thisComponents = calendar.components([.Day, .Month, .Year], fromDate: self)
         let otherComponents = calendar.components([.Day, .Month, .Year], fromDate: otherDate)
-
-        if thisComponents.year > otherComponents.year {
-            return false
+        if thisComponents.year < otherComponents.year {
+            return true
         } else {
-            if thisComponents.month > otherComponents.month {
-                return false
+            if thisComponents.month < otherComponents.month {
+                return true
             } else {
                 return thisComponents.day < otherComponents.day
             }
@@ -62,7 +61,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller: UIViewController!
 
-        if (defaults.valueForKey(lastUpdatedAtKey) as! NSDate).dayIsEarlierThan(NSDate()) {
+        let lastUpdatedAt = defaults.valueForKey(lastUpdatedAtKey) as! NSDate
+
+        if lastUpdatedAt.dayIsEarlierThan(NSDate()) {
             controller = storyboard.instantiateViewControllerWithIdentifier("LoadingViewController")
             (controller as! LoadingViewController).initializeLabelTimer()
 

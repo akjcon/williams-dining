@@ -82,7 +82,31 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
         cell.nameLabel.text = menuItem.name
         cell.glutenFreeLabel.hidden = !menuItem.isGlutenFree
         cell.veganLabel.hidden = !menuItem.isVegan
+        if MenuHandler.isAFavoriteFood(menuItem.name) {
+            cell.backgroundColor = Style.yellowColor
+        } else {
+            cell.backgroundColor = UIColor.clearColor()
+        }
+
         return cell;
+    }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // if in favorites, remove from favorites
+        // if not in favorites, add to favorites
+        let section = indexPath.section
+        let menuItem: CoreDataMenuItem = menuItems[activeDiningHalls[section]]![indexPath.row]
+
+
+        if MenuHandler.isAFavoriteFood(menuItem.name){
+            MenuHandler.removeItemFromFavorites(menuItem.name)
+            // remove from favorites
+        } else {
+            // add to favorites
+            MenuHandler.addItemToFavorites(menuItem.name)
+        }
+
+        tableView.reloadData()
     }
 
 

@@ -88,10 +88,14 @@ class MenuLoader: NSObject {
     private static func wipeStores() {
         let sc = NSPersistentStoreCoordinator()
         let stores = sc.persistentStores
-        //        NSArray *stores = [persistentStoreCoordinator persistentStores];
         for store in stores {
-            try? sc.removePersistentStore(store)
-            try? NSFileManager.defaultManager().removeItemAtPath((store.URL?.path)!)
+            do {
+                try sc.removePersistentStore(store)
+                try NSFileManager.defaultManager().removeItemAtPath(store.URL!.path!)
+                print("data was wiped")
+            } catch {
+                print("there was an error")
+            }
         }
     }
 }
