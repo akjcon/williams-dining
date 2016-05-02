@@ -26,6 +26,8 @@ class LoadingViewController: PurpleStatusBarViewController {
                                            "Grilling steaks...",
                                            "Picking the vegetables...",
                                            "Mixing the salads...",
+                                           "Wandering the steam tunnels",
+                                           "Swimming in the Green River",
                                            "Loading menus..."]
 
     var timer: NSTimer?
@@ -62,7 +64,9 @@ class LoadingViewController: PurpleStatusBarViewController {
         if curIndex == orderedActivityLabels.count - 1 {
             timer?.invalidate()
             // alert that the fetch must have failed
-            self.presentViewController(UIAlertController(title: "Error", message: "Loading the menus timed out.\n\nPlease close the app and try again.", preferredStyle: .Alert),animated: true,completion: nil)
+
+            (UIApplication.sharedApplication().delegate as! AppDelegate).loadingDataHadError()
+//            self.presentViewController(UIAlertController(title: "Error", message: "Loading the menus timed out.\n\nPlease close the app and try again.", preferredStyle: .Alert),animated: true,completion: nil)
 
             return
         }

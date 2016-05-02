@@ -66,6 +66,8 @@ class MenuLoader: NSObject {
             guard response.result.error == nil else {
                 print("Error occurred during menu request")
                 print(response.result.error!)
+
+                (UIApplication.sharedApplication().delegate as! AppDelegate).loadingDataHadError()
                 return
             }
             if let value: AnyObject = response.result.value {

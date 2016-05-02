@@ -37,6 +37,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
+    internal func loadingDataHadError() {
+        print("not saved")
+        let yesterday = NSDate(timeInterval: -86400, sinceDate: NSDate())
+        defaults.setValue(yesterday, forKey: lastUpdatedAtKey)
+
+        // Create an alert popup
+        let alertController = UIAlertController(title: "Data Error", message: "Loading the menus timed out.\n\nPlease reload the data.", preferredStyle: .Alert)
+        // with options:
+        // a 'cancel' action that just does nothing
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .Destructive) {
+            (action) in
+            // navigate to favorites
+            print(action)
+        })
+
+        // an 'end' action that leaves the playlist
+//        let endAction = UIAlertAction(title: "I'm out", style: .Destructive) {
+//            (action) in self.leavePlaylist()
+//        }
+//        alertController.addAction(endAction)
+
+        dispatch_async(dispatch_get_main_queue(), {
+            self.window!.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
+        })
+
+
+//        let alertController = UIAlertController()
+
+
+//        self.window?.rootViewController!.presentViewController(UIAlertController(title: "Error", message: "Loading the menus timed out.\n\nPlease close the app and try again.", preferredStyle: .Alert),animated: true,completion: nil)
+    }
+
     private func updateData(completionHandler: (UIBackgroundFetchResult) -> Void) {
         MenuLoader.fetchMenusFromAPI(completionHandler)
     }
