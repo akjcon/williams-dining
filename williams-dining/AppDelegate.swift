@@ -37,6 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
+    /**
+     This function is called when loading the data had an error.
+     */
     internal func loadingDataHadError() {
         print("not saved")
         let yesterday = NSDate(timeInterval: -86400, sinceDate: NSDate())
@@ -49,24 +52,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .Destructive) {
             (action) in
             // navigate to favorites
-            print(action)
-        })
 
-        // an 'end' action that leaves the playlist
-//        let endAction = UIAlertAction(title: "I'm out", style: .Destructive) {
-//            (action) in self.leavePlaylist()
-//        }
-//        alertController.addAction(endAction)
+
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController")
+            (controller as! UITabBarController).selectedIndex = 2
+            self.window?.rootViewController = controller
+            self.window?.makeKeyAndVisible()
+        })
 
         dispatch_async(dispatch_get_main_queue(), {
             self.window!.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
         })
-
-
-//        let alertController = UIAlertController()
-
-
-//        self.window?.rootViewController!.presentViewController(UIAlertController(title: "Error", message: "Loading the menus timed out.\n\nPlease close the app and try again.", preferredStyle: .Alert),animated: true,completion: nil)
     }
 
     private func updateData(completionHandler: (UIBackgroundFetchResult) -> Void) {
