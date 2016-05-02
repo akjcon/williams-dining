@@ -95,7 +95,7 @@ enum DiningHall {
         } else if self == .GrabAndGo {
             return "Grab and Go"
         } else if self == .Whitmans {
-            return "Whitman's"
+            return "Whitmans"
         }
         return ""
     }
