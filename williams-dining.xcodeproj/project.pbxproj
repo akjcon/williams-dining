@@ -18,6 +18,8 @@
 		243A94A81CBF328B00A7C3B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 243A94A71CBF328B00A7C3B3 /* Assets.xcassets */; };
 		243A94B61CBF328B00A7C3B3 /* williams_diningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94B51CBF328B00A7C3B3 /* williams_diningTests.swift */; };
 		243A94C11CBF328B00A7C3B3 /* williams_diningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94C01CBF328B00A7C3B3 /* williams_diningUITests.swift */; };
+		244627151CD7B9F300F3664F /* CentralTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244627141CD7B9F300F3664F /* CentralTabBarController.swift */; };
+		244627171CD7C88900F3664F /* CentralNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244627161CD7C88900F3664F /* CentralNavigationController.swift */; };
 		244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE83D1CD301B20028D376 /* DiningHallViewController.swift */; };
 		244CE8401CD301CA0028D376 /* MealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE83F1CD301CA0028D376 /* MealsViewController.swift */; };
 		244CE8461CD30B0E0028D376 /* MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8451CD30B0E0028D376 /* MenuHandler.swift */; };
@@ -69,6 +71,8 @@
 		243A94BC1CBF328B00A7C3B3 /* williams-diningUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "williams-diningUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		243A94C01CBF328B00A7C3B3 /* williams_diningUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = williams_diningUITests.swift; sourceTree = "<group>"; };
 		243A94C21CBF328B00A7C3B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		244627141CD7B9F300F3664F /* CentralTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralTabBarController.swift; sourceTree = "<group>"; };
+		244627161CD7C88900F3664F /* CentralNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralNavigationController.swift; sourceTree = "<group>"; };
 		244CE83D1CD301B20028D376 /* DiningHallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHallViewController.swift; sourceTree = "<group>"; };
 		244CE83F1CD301CA0028D376 /* MealsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsViewController.swift; sourceTree = "<group>"; };
 		244CE8451CD30B0E0028D376 /* MenuHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHandler.swift; sourceTree = "<group>"; };
@@ -138,6 +142,8 @@
 				244CE83F1CD301CA0028D376 /* MealsViewController.swift */,
 				24010CCE1CD5558B008046BD /* PurpleStatusBarViewController.swift */,
 				24010CD01CD55635008046BD /* FavoritesViewController.swift */,
+				244627141CD7B9F300F3664F /* CentralTabBarController.swift */,
+				244627161CD7C88900F3664F /* CentralNavigationController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -288,6 +294,7 @@
 				TargetAttributes = {
 					243A949C1CBF328B00A7C3B3 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 272YLCVN8R;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -411,11 +418,13 @@
 				248070FA1CD53BF600CFF98B /* FavoriteFood.swift in Sources */,
 				24010CC91CD54815008046BD /* FoodItemViewCell.swift in Sources */,
 				243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */,
+				244627171CD7C88900F3664F /* CentralNavigationController.swift in Sources */,
 				24D5C36F1CD6D4CB0096C255 /* FavoritesNotifier.swift in Sources */,
 				244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */,
 				244CE8461CD30B0E0028D376 /* MenuHandler.swift in Sources */,
 				248070F61CD5277900CFF98B /* MenuLoader.swift in Sources */,
 				24DD9C891CD3C06A00E2777C /* CoreDataMenuItem+CoreDataProperties.swift in Sources */,
+				244627151CD7B9F300F3664F /* CentralTabBarController.swift in Sources */,
 				24DD9C841CD3B10C00E2777C /* williams-dining.xcdatamodeld in Sources */,
 				243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */,
 				244CE8481CD326A50028D376 /* Style.swift in Sources */,
@@ -559,10 +568,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "williams-dining/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AndersenLabs.WilliamsDining;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -572,10 +583,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "williams-dining/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AndersenLabs.WilliamsDining;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -27,7 +27,12 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
         self.pickerView.delegate = self
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        selectedMealTime = pickerDataSource[0]
+        if pickerDataSource == [] {
+            // we must be updating the data
+            selectedMealTime = .Dinner
+        } else {
+            selectedMealTime = pickerDataSource[0]
+        }
         activeDiningHalls = MenuHandler.fetchDiningHalls(selectedMealTime)
         tableView.reloadData()
 
@@ -35,12 +40,17 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
         tableView.registerNib(nib, forCellReuseIdentifier: "FoodItemViewCell")
 
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MealsViewController.reloadTable), name: "reloadMealTable", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MealsViewController.refreshView), name: "reloadMealTable", object: nil)
     }
 
-
-    func reloadTable() {
-        dispatch_async(dispatch_get_main_queue(), {self.tableView.reloadData()})
+    func refreshView() {
+        activeDiningHalls = MenuHandler.fetchDiningHalls(selectedMealTime)
+        pickerDataSource = MenuHandler.fetchMealTimes(nil)
+        selectedMealTime = pickerDataSource[0]
+        dispatch_async(dispatch_get_main_queue(), {
+            self.tableView.reloadData()
+            self.pickerView.reloadAllComponents()
+        })
     }
 
     /*

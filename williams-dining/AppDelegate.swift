@@ -34,6 +34,8 @@ let lastUpdatedAtKey = "lastUpdatedAt"
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var controller: CentralNavigationController?
+//    var controller: CentralTabBarController?
 
     var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
@@ -45,25 +47,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let yesterday = NSDate(timeInterval: -86400, sinceDate: NSDate())
         defaults.setValue(yesterday, forKey: lastUpdatedAtKey)
 
-        // Create an alert popup
-        let alertController = UIAlertController(title: "Data Error", message: "Loading the menus timed out.\n\nPlease reload the data.", preferredStyle: .Alert)
-        // with options:
-        // a 'cancel' action that just does nothing
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: .Destructive) {
-            (action) in
-            // navigate to favorites
+        if controller != nil {
+            controller!.hideLoadingScreenWithError()
+        }
+    }
 
+    internal func updateData() {
+        print("starting update")
+        controller!.displayLoadingScreen()
+        updateData() {(result: UIBackgroundFetchResult) in
+            if result == .NewData {
+                self.controller!.hideLoadingScreen()
+                
+                NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTable", object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTable", object: nil)
 
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController")
-            (controller as! UITabBarController).selectedIndex = 2
-            self.window?.rootViewController = controller
-            self.window?.makeKeyAndVisible()
-        })
-
-        dispatch_async(dispatch_get_main_queue(), {
-            self.window!.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
-        })
+            } else {
+                self.loadingDataHadError()
+            }
+        }
     }
 
     private func updateData(completionHandler: (UIBackgroundFetchResult) -> Void) {
@@ -84,34 +87,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplicationBackgroundFetchIntervalMinimum)
 
         let yesterday = NSDate(timeInterval: -86400, sinceDate: NSDate())
-
-
         defaults.registerDefaults([lastUpdatedAtKey:yesterday])
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller: UIViewController!
 
+        controller = (storyboard.instantiateViewControllerWithIdentifier("CentralController") as? CentralNavigationController)!
         registerForPushNotifications(application)
-
-        let lastUpdatedAt = defaults.valueForKey(lastUpdatedAtKey) as! NSDate
-
-        if lastUpdatedAt.dayIsEarlierThan(NSDate()) {
-            controller = storyboard.instantiateViewControllerWithIdentifier("LoadingViewController")
-            (controller as! LoadingViewController).initializeLabelTimer()
-
-           updateData() {(result: UIBackgroundFetchResult) in
-                if result == .NewData {
-                    (controller as! LoadingViewController).pushToMenus()
-                } else {
-                    // data failed
-                    // .. maybe try again?
-                    exit(1)
-                }
-            }
-        } else {
-            controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController")
-        }
-
         self.window?.rootViewController = controller
         self.window?.makeKeyAndVisible()
         return true
@@ -133,6 +114,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
+        if (defaults.valueForKey(lastUpdatedAtKey) as! NSDate).dayIsEarlierThan(NSDate()) {
+            print("updating data")
+            self.updateData()
+        }
     }
 
     func applicationWillTerminate(application: UIApplication) {

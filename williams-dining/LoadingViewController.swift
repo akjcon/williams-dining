@@ -45,11 +45,8 @@ class LoadingViewController: PurpleStatusBarViewController {
         timer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(LoadingViewController.changeActivityLabel), userInfo: nil, repeats: true)
     }
 
-    internal func pushToMenus() {
-        if timer != nil {
-            timer!.invalidate()
-        }
-        performSegueWithIdentifier("EnterApplicationSegue", sender: self)
+    internal func stopTimer() {
+        timer?.invalidate()
     }
 
 
@@ -60,14 +57,10 @@ class LoadingViewController: PurpleStatusBarViewController {
      */
     internal func changeActivityLabel() {
         let curIndex: Int = orderedActivityLabels.indexOf(activityLabel.text!)!
-
         if curIndex == orderedActivityLabels.count - 1 {
             timer?.invalidate()
             // alert that the fetch must have failed
-
             (UIApplication.sharedApplication().delegate as! AppDelegate).loadingDataHadError()
-//            self.presentViewController(UIAlertController(title: "Error", message: "Loading the menus timed out.\n\nPlease close the app and try again.", preferredStyle: .Alert),animated: true,completion: nil)
-
             return
         }
         activityLabel.text = orderedActivityLabels[curIndex + 1]

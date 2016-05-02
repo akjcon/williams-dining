@@ -27,18 +27,9 @@ class FavoritesViewController: PurpleStatusBarViewController, UITableViewDelegat
     }
 
     @IBAction func refreshButtonWasClicked(sender: AnyObject) {
-        activityIndicator.startAnimating()
-
-        MenuLoader.fetchMenusFromAPI({(result: UIBackgroundFetchResult) in
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTable", object: nil)
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTable", object: nil)
-            self.activityIndicator.stopAnimating()
-            if result == .NewData {
-                print("ta da!")
-            }
-        })
+        (UIApplication.sharedApplication().delegate as! AppDelegate).updateData()
     }
+
     /*
      UITableView functions
      */
@@ -70,12 +61,18 @@ class FavoritesViewController: PurpleStatusBarViewController, UITableViewDelegat
         return cell;
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // if in favorites, remove from favorites
-        // if not in favorites, add to favorites
-        
-        
-        
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
     }
+
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let favorite = MenuHandler.getFavorites()[indexPath.row]
+            MenuHandler.removeItemFromFavorites(favorite)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+
+    }
+
 
 }
