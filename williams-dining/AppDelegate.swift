@@ -12,7 +12,6 @@ import CoreData
 
 
 extension NSDate {
-
     func dayIsEarlierThan(otherDate: NSDate) -> Bool {
         let calendar = NSCalendar.currentCalendar()
         let thisComponents = calendar.components([.Day, .Month, .Year], fromDate: self)
@@ -56,6 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplicationBackgroundFetchIntervalMinimum)
 
         let yesterday = NSDate(timeInterval: -86400, sinceDate: NSDate())
+
+
         defaults.registerDefaults([lastUpdatedAtKey:yesterday])
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -205,8 +206,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         for i in 0..<deviceToken.length {
             tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
         }
-
-        print("Device Token:", tokenString)
+//        print("Device Token:", tokenString)
     }
 
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

@@ -12,8 +12,8 @@ import UIKit
 class FavoritesViewController: PurpleStatusBarViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var notificationSwitch: UISwitch!
 
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -27,11 +27,16 @@ class FavoritesViewController: PurpleStatusBarViewController, UITableViewDelegat
     }
 
     @IBAction func refreshButtonWasClicked(sender: AnyObject) {
-        MenuLoader.fetchMenusFromAPI({result in
-            print(result)
+        activityIndicator.startAnimating()
+
+        MenuLoader.fetchMenusFromAPI({(result: UIBackgroundFetchResult) in
             NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
             NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTable", object: nil)
             NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTable", object: nil)
+            self.activityIndicator.stopAnimating()
+            if result == .NewData {
+                print("ta da!")
+            }
         })
     }
     /*

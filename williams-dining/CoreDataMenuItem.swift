@@ -26,20 +26,6 @@ class CoreDataMenuItem: NSManagedObject {
 
         return newItem
     }
-
-    class func cacheItem(moc: NSManagedObjectContext,menuItem: MenuItem) -> CoreDataMenuItem {
-        // if a favorite food, register a local notification
-        if MenuHandler.isAFavoriteFood(menuItem.name) {
-            print("was a favorite food")
-            let notification = UILocalNotification()
-            notification.alertBody = "\(menuItem.name) is being served at \(menuItem.diningHall) at \(menuItem.mealTime.stringValue()) today" // text that will be displayed in the notification
-            notification.alertAction = "view"
-            notification.fireDate = NSDate(timeInterval: 15, sinceDate: NSDate())
-            UIApplication.sharedApplication().scheduleLocalNotification(notification)
-        }
-
-        return CoreDataMenuItem.createInManagedObjectContext(moc, menuItem: menuItem)
-    }
     
 
 }
