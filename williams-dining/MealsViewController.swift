@@ -41,6 +41,14 @@ class MealsViewController: PurpleStatusBarViewController, UIPickerViewDelegate, 
 
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MealsViewController.refreshView), name: "reloadMealTable", object: nil)
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MealsViewController.refreshTable), name: "reloadMealTableView", object: nil)
+    }
+
+    func refreshTable() {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.tableView.reloadData()
+        })
     }
 
     func refreshView() {

@@ -83,8 +83,8 @@ class FavoritesHandler: NSObject {
         favoriteFoods.forEach({favorites.insert($0.name!)})
 
         NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
-        NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTable", object: nil)
-        NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTable", object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTableView", object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTableView", object: nil)
 
     }
 

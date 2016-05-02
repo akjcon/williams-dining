@@ -36,7 +36,7 @@ class FavoritesNotifier: NSObject {
         var dessertNotificationStr: String = ""
 
         for item in favoritesOnMenu {
-            let itemStr = "\(item.name) is being served at \(item.diningHall)"
+            let itemStr = "\(item.name) is being served at \(item.diningHall)\n"
             switch(item.mealTime) {
             case .Breakfast:
                 breakfastNotificationStr.appendContentsOf(itemStr)
@@ -58,9 +58,11 @@ class FavoritesNotifier: NSObject {
         if NSDate().compare(fourPmWilliamstown) != .OrderedAscending {
             return
         } else if !dinnerNotificationStr.isEmpty {
+            let trimmedstr = dinnerNotificationStr.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+            print("scheduled a notification")
             let notification = UILocalNotification()
             notification.alertTitle = "Dinner"
-            notification.alertBody = dinnerNotificationStr
+            notification.alertBody = trimmedstr
             notification.alertAction = "view"
             notification.fireDate = fourPmWilliamstown
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
@@ -71,9 +73,13 @@ class FavoritesNotifier: NSObject {
         if NSDate().compare(tenThirtyAmWilliamstown) != .OrderedAscending {
             return
         } else if !lunchNotificationStr.isEmpty {
+
+            let trimmedstr = lunchNotificationStr.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+
+
             let notification = UILocalNotification()
             notification.alertTitle = "Lunch"
-            notification.alertBody = lunchNotificationStr
+            notification.alertBody = trimmedstr
             notification.alertAction = "view"
             notification.fireDate = tenThirtyAmWilliamstown
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
@@ -85,17 +91,22 @@ class FavoritesNotifier: NSObject {
             return
         } else {
             if !brunchNotificationStr.isEmpty {
+
+                let trimmedstr = brunchNotificationStr.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+
                 let notification = UILocalNotification()
                 notification.alertTitle = "Brunch"
-                notification.alertBody = brunchNotificationStr
+                notification.alertBody = trimmedstr
                 notification.alertAction = "view"
                 notification.fireDate = tenAmWilliamstown
                 UIApplication.sharedApplication().scheduleLocalNotification(notification)
             }
             if !dessertNotificationStr.isEmpty {
+                let trimmedstr = dessertNotificationStr.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+
                 let notification = UILocalNotification()
                 notification.alertTitle = "Dessert"
-                notification.alertBody = dessertNotificationStr
+                notification.alertBody = trimmedstr
                 notification.alertAction = "view"
                 notification.fireDate = tenAmWilliamstown
                 UIApplication.sharedApplication().scheduleLocalNotification(notification)
@@ -106,9 +117,12 @@ class FavoritesNotifier: NSObject {
         if NSDate().compare(sevenAmWilliamstown) != .OrderedAscending {
             return
         } else if !breakfastNotificationStr.isEmpty {
+
+            let trimmedstr = breakfastNotificationStr.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+
             let notification = UILocalNotification()
             notification.alertTitle = "Breakfast"
-            notification.alertBody = breakfastNotificationStr
+            notification.alertBody = trimmedstr
             notification.alertAction = "view"
             notification.fireDate = sevenAmWilliamstown
             UIApplication.sharedApplication().scheduleLocalNotification(notification)

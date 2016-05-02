@@ -41,6 +41,15 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
         tableView.registerNib(nib, forCellReuseIdentifier: "FoodItemViewCell")
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiningHallViewController.refreshView), name: "reloadDiningHallTable", object: nil)
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiningHallViewController.refreshTable), name: "reloadDiningHallTableView", object: nil)
+    }
+
+
+    func refreshTable() {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.tableView.reloadData()
+        })
     }
 
     func refreshView() {
