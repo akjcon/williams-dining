@@ -558,6 +558,7 @@
 			baseConfigurationReference = A564556DEBF5A07FAC690AB0 /* Pods-williams-dining.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "williams-dining/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AndersenLabs.WilliamsDining;
@@ -570,6 +571,7 @@
 			baseConfigurationReference = A2EA4F1F83C1B8B116D1C407 /* Pods-williams-dining.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "williams-dining/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AndersenLabs.WilliamsDining;
