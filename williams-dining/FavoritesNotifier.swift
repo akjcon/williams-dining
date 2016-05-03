@@ -19,7 +19,7 @@ class FavoritesNotifier: NSObject {
      Add an item to the favorites list
     */
     internal func addToFavoritesList(item: MenuItem) {
-        print("was a favorite food")
+//        print("was a favorite food")
         favoritesOnMenu.append(item)
     }
 
@@ -59,7 +59,6 @@ class FavoritesNotifier: NSObject {
             return
         } else if !dinnerNotificationStr.isEmpty {
             let trimmedstr = dinnerNotificationStr.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
-            print("scheduled a notification")
             let notification = UILocalNotification()
             notification.alertTitle = "Dinner"
             notification.alertBody = trimmedstr

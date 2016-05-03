@@ -58,14 +58,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         updateData() {(result: UIBackgroundFetchResult) in
             if result == .NewData {
                 self.controller!.hideLoadingScreen()
-                
+
+
                 NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTable", object: nil)
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTable", object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTableView", object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTableView", object: nil)
+//                NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
+//                NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTable", object: nil)
+//                NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTable", object: nil)
 
             } else {
                 self.loadingDataHadError()
             }
+            self.registerForPushNotifications(self.controller!.application)
         }
     }
 
@@ -82,6 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         view.backgroundColor = Style.primaryColor
         self.window?.rootViewController!.view.addSubview(view)
 
+
         // set the background fetching interval
         UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(
             UIApplicationBackgroundFetchIntervalMinimum)
@@ -92,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
         controller = (storyboard.instantiateViewControllerWithIdentifier("CentralController") as? CentralNavigationController)!
-        registerForPushNotifications(application)
+        controller!.application = application
         self.window?.rootViewController = controller
         self.window?.makeKeyAndVisible()
         return true

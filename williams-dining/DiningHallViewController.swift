@@ -16,8 +16,6 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
     @IBOutlet var tableView: UITableView!
 
     var pickerDataSource = MenuHandler.fetchDiningHalls(nil)
-    var selectedDiningHall: DiningHall!
-    var activeMealTimes: [MealTime]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,19 +26,15 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
         self.tableView.delegate = self
 
         if pickerDataSource == [] {
-            // we must be updating the data
-            selectedDiningHall = .Driscoll
-        } else {
-            selectedDiningHall = pickerDataSource[0]
+            // temp placeholder
+            pickerDataSource = [.Driscoll]
         }
-
-        activeMealTimes = MenuHandler.fetchMealTimes(selectedDiningHall)
         tableView.reloadData()
 
         let nib = UINib(nibName: "FoodItemViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "FoodItemViewCell")
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiningHallViewController.refreshView), name: "reloadDiningHallTable", object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiningHallViewController.refreshView), name: "reloadDiningHallTable", object: nil)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiningHallViewController.refreshTable), name: "reloadDiningHallTableView", object: nil)
     }
@@ -53,9 +47,8 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
     }
 
     func refreshView() {
-        activeMealTimes = MenuHandler.fetchMealTimes(selectedDiningHall)
         pickerDataSource = MenuHandler.fetchDiningHalls(nil)
-        selectedDiningHall = pickerDataSource[0]
+        pickerView.selectRow(0, inComponent: 0, animated: true)
         dispatch_async(dispatch_get_main_queue(), {
             self.tableView.reloadData()
             self.pickerView.reloadAllComponents()
@@ -75,21 +68,27 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
 
 
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return activeMealTimes[section].stringValue()
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
+        return MenuHandler.fetchMealTimes(selectedDiningHall)[section].stringValue()
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return activeMealTimes.count
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
+        return MenuHandler.fetchMealTimes(selectedDiningHall).count
     }
 
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MenuHandler.fetchByMealTimeAndDiningHall(activeMealTimes[section], diningHall: selectedDiningHall).count
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
+        let selectedMealTime = MenuHandler.fetchMealTimes(selectedDiningHall)[section]
+        return MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: selectedDiningHall).count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let section = indexPath.section
-        let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(activeMealTimes[section], diningHall: selectedDiningHall)[indexPath.row]
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
+        let selectedMealTime = MenuHandler.fetchMealTimes(selectedDiningHall)[section]
+        let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("FoodItemViewCell") as! FoodItemViewCell
         cell.nameLabel.text = menuItem.name
         cell.glutenFreeLabel.hidden = !menuItem.isGlutenFree
@@ -108,8 +107,10 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
         // if in favorites, remove from favorites
         // if not in favorites, add to favorites
         let section = indexPath.section
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
+        let selectedMealTime = MenuHandler.fetchMealTimes(selectedDiningHall)[section]
         let menuItem: CoreDataMenuItem =
-            MenuHandler.fetchByMealTimeAndDiningHall(activeMealTimes[section], diningHall: selectedDiningHall)[indexPath.row]
+            MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
         if MenuHandler.isAFavoriteFood(menuItem.name){
             MenuHandler.removeItemFromFavorites(menuItem.name)
             // remove from favorites
@@ -137,8 +138,6 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
 
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        selectedDiningHall = pickerDataSource[row]
-        activeMealTimes = MenuHandler.fetchMealTimes(selectedDiningHall)
         tableView.reloadData()
     }
 

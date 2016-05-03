@@ -11,6 +11,8 @@ import UIKit
 
 class CentralNavigationController: UINavigationController, UINavigationControllerDelegate {
 
+    internal var application: UIApplication!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
