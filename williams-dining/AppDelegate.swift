@@ -63,10 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
                 NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTableView", object: nil)
                 NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTableView", object: nil)
-//                NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
-//                NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTable", object: nil)
-//                NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTable", object: nil)
-
             } else {
                 self.loadingDataHadError()
             }
@@ -135,7 +131,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Support for background fetch
     func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        updateData(completionHandler)
+        if (defaults.valueForKey(lastUpdatedAtKey) as! NSDate).dayIsEarlierThan(NSDate()) {
+            print("updating data")
+            updateData(completionHandler)
+        } else {
+            completionHandler(.NoData)
+        }
+
     }
 
     // MARK: - Core Data stack
