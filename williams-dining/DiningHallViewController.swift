@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
+
+class DiningHallViewController: PurpleStatusBarViewController {
 
     @IBOutlet var pickerView: UIPickerView!
     @IBOutlet var titleLabel: UILabel!
@@ -32,114 +33,109 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
         tableView.reloadData()
 
         let nib = UINib(nibName: "FoodItemViewCell", bundle: nil)
-        tableView.registerNib(nib, forCellReuseIdentifier: "FoodItemViewCell")
+        tableView.register(nib, forCellReuseIdentifier: "FoodItemViewCell")
 
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiningHallViewController.refreshView), name: "reloadDiningHallTable", object: nil)
-
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiningHallViewController.refreshTable), name: "reloadDiningHallTableView", object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(DiningHallViewController.refreshTable), name: reloadDiningHallTableViewKey, object: nil)
     }
 
 
     func refreshTable() {
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
         })
     }
 
     func refreshView() {
-        pickerDataSource = MenuHandler.fetchDiningHalls(nil)
+        pickerDataSource = MenuHandler.fetchDiningHalls(mealTime: nil)
         pickerView.selectRow(0, inComponent: 0, animated: true)
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
             self.pickerView.reloadAllComponents()
         })
     }
-    
-    /*
-     UITableView functions
-    */
 
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+}
+
+extension DiningHallViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
         header.contentView.backgroundColor = Style.primaryColor
-        header.textLabel!.textColor = UIColor.yellowColor()
+        header.textLabel!.textColor = UIColor.yellow()
         header.alpha = 0.9
     }
 
-
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
-        return MenuHandler.fetchMealTimes(selectedDiningHall)[section].stringValue()
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
+        return MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[section].stringValue()
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
-        return MenuHandler.fetchMealTimes(selectedDiningHall).count
+    private func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
+        return MenuHandler.fetchMealTimes(diningHall: selectedDiningHall).count
     }
 
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
-        let selectedMealTime = MenuHandler.fetchMealTimes(selectedDiningHall)[section]
-        return MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: selectedDiningHall).count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
+        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[section]
+        return MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall).count
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
-        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
-        let selectedMealTime = MenuHandler.fetchMealTimes(selectedDiningHall)[section]
-        let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("FoodItemViewCell") as! FoodItemViewCell
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
+        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[section]
+        let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodItemViewCell") as! FoodItemViewCell
         cell.nameLabel.text = menuItem.name
-        cell.glutenFreeLabel.hidden = !menuItem.isGlutenFree
-        cell.veganLabel.hidden = !menuItem.isVegan
+        cell.glutenFreeLabel.isHidden = !menuItem.isGlutenFree
+        cell.veganLabel.isHidden = !menuItem.isVegan
 
-        if MenuHandler.isAFavoriteFood(menuItem.name) {
+        if MenuHandler.isAFavoriteFood(name: menuItem.name) {
             cell.backgroundColor = Style.yellowColor
         } else {
-            cell.backgroundColor = UIColor.clearColor()
+            cell.backgroundColor = UIColor.clear()
         }
 
         return cell;
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // if in favorites, remove from favorites
         // if not in favorites, add to favorites
         let section = indexPath.section
-        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
-        let selectedMealTime = MenuHandler.fetchMealTimes(selectedDiningHall)[section]
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
+        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[section]
         let menuItem: CoreDataMenuItem =
-            MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
-        if MenuHandler.isAFavoriteFood(menuItem.name){
-            MenuHandler.removeItemFromFavorites(menuItem.name)
+            MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
+        if MenuHandler.isAFavoriteFood(name: menuItem.name){
+            MenuHandler.removeItemFromFavorites(name: menuItem.name)
             // remove from favorites
         } else {
             // add to favorites
-            MenuHandler.addItemToFavorites(menuItem.name)
+            MenuHandler.addItemToFavorites(name: menuItem.name)
         }
     }
 
+}
 
-    /*
-     UIPickerView functions
-    */
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+extension DiningHallViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerDataSource.count;
     }
 
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerDataSource[row].stringValue()
     }
 
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         tableView.reloadData()
     }
-
-
 }

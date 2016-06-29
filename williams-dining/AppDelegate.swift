@@ -37,14 +37,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var controller: CentralNavigationController?
 //    var controller: CentralTabBarController?
 
-    var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    var defaults: UserDefaults = UserDefaults.standard()
 
     /**
      This function is called when loading the data had an error.
      */
     internal func loadingDataHadError() {
         print("not saved")
-        let yesterday = NSDate(timeInterval: -86400, sinceDate: NSDate())
+        let yesterday = Date(timeInterval: -86400, since: Date())
         defaults.setValue(yesterday, forKey: lastUpdatedAtKey)
 
         if controller != nil {
@@ -56,13 +56,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("starting update")
         controller!.displayLoadingScreen()
         updateData() {(result: UIBackgroundFetchResult) in
-            if result == .NewData {
+            if result == .newData {
                 self.controller!.hideLoadingScreen()
 
 
-                NSNotificationCenter.defaultCenter().postNotificationName(reloadFavoritesTableKey, object: nil)
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTableView", object: nil)
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTableView", object: nil)
+                NotificationCenter.default().post(name: reloadFavoritesTableKey, object: nil)
+                NotificationCenter.default().post(name: reloadMealTableViewKey as NSNotification.Name, object: nil)
+                NotificationCenter.default().postNotificationName(reloadDiningHallTableViewKey as NSNotification.Name, object: nil)
             } else {
                 self.loadingDataHadError()
             }
@@ -144,13 +144,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "uk.co.plymouthsoftware.core_data" in the application's documents Application Support directory.
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        let urls = FileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = NSBundle.mainBundle().URLForResource("williams-dining", withExtension: "momd")!
+        let modelURL = Bundle.mainBundle().URLForResource("williams-dining", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
 
@@ -158,10 +158,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("PROJECTNAME.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("PROJECTNAME.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            try coordinator.addPersistentStore(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -182,7 +182,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var managedObjectContext: NSManagedObjectContext = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
