@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class FavoritesViewController: PurpleStatusBarViewController, UITableViewDelegate, UITableViewDataSource {
+class FavoritesViewController: PurpleStatusBarViewController {
     
     @IBOutlet var tableView: UITableView!
 
@@ -23,53 +23,59 @@ class FavoritesViewController: PurpleStatusBarViewController, UITableViewDelegat
     }
 
     func reloadTable() {
-        dispatch_async(dispatch_get_main_queue(), {self.tableView.reloadData()})
+        DispatchQueue.main.async(execute: {
+            self.tableView.reloadData()
+        })
+//        dispatch_async(dispatch_get_main_queue(), {self.tableView.reloadData()})
     }
 
     @IBAction func refreshButtonWasClicked(sender: AnyObject) {
-        (UIApplication.sharedApplication().delegate as! AppDelegate).updateData()
+        (UIApplication.shared().delegate as! AppDelegate).updateData()
     }
+}
+
+extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
 
     /*
      UITableView functions
      */
 
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
         header.contentView.backgroundColor = Style.primaryColor
-        header.textLabel!.textColor = UIColor.yellowColor()
+        header.textLabel!.textColor = UIColor.yellow()
         header.alpha = 0.9
     }
 
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Favorites"
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MenuHandler.getFavorites().count
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let favorites = MenuHandler.getFavorites()
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("FavoritesTableViewCell") as! FavoritesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FavoritesTableViewCell") as! FavoritesTableViewCell
         cell.nameLabel.text = favorites[indexPath.row]
         return cell;
     }
 
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             let favorite = MenuHandler.getFavorites()[indexPath.row]
-            MenuHandler.removeItemFromFavorites(favorite)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            MenuHandler.removeItemFromFavorites(name: favorite)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
 
     }

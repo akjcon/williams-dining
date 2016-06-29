@@ -1,3 +1,4 @@
+
 //
 //  CentralTabBarController.swift
 //  williams-dining
@@ -12,11 +13,11 @@ import UIKit
 class CentralTabBarController: UITabBarController {
 
     func displayLoadingError() {
-        let alertController = UIAlertController(title: "Data Error", message: "Loading the menus timed out.\n\nPlease reload the data.", preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: .Destructive) {
+        let alertController = UIAlertController(title: "Data Error", message: "Loading the menus timed out.\n\nPlease reload the data.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .destructive) {
             (action) in
             self.selectedIndex = 2
         })
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
