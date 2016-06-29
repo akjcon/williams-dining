@@ -11,7 +11,7 @@
 
 import Foundation
 import CoreData
-import SwiftyJSON
+//import SwiftyJSON
 
 extension CoreDataMenuItem {
 
@@ -163,7 +163,7 @@ enum MealTime {
     static let allCases = [Breakfast,Lunch,Dinner,Brunch,Dessert]
 
     init(mealTime: String) {
-        switch(mealTime.lowercaseString) {
+        switch(mealTime.lowercased()) {
         case "breakfast":
             self = .Breakfast
         case "lunch":
@@ -189,29 +189,55 @@ struct MenuItem {
     var isVegan: Bool = false
     var isGlutenFree: Bool = false
 
-    init(itemDict: JSON, diningHall: DiningHall) {
-        let foodString = itemDict["formal_name"].string!
+    let foodNameKey = "formal_name"
+    let glutenFreeKey = " GF"
+    let veganKey = " V"
+    let mealKey = "meal"
+    let courseKey = "course"
 
-        self.isGlutenFree = foodString.containsString(" GF")
-        self.isVegan = foodString.containsString(" V")
+    init(itemDict: [String:AnyObject], diningHall: DiningHall) {
+        let foodString = itemDict[foodNameKey] as! String
+        self.isGlutenFree = foodString.contains(glutenFreeKey)
+        self.isVegan = foodString.contains(veganKey)
 
         if isGlutenFree {
-            self.name = foodString.substringToIndex(foodString.indexOf(" GF"))
+            self.name = foodString.substring(to: foodString.indexOf(string: glutenFreeKey))
+//            self.name = foodString.substringToIndex(foodString.indexOf(glutenFreeKey))
         } else if isVegan {
-            self.name = foodString.substringToIndex(foodString.indexOf(" V"))
+            self.name = foodString.substring(to: foodString.indexOf(string: veganKey))
+//            self.name = foodString.substringToIndex(foodString.indexOf(veganKey))
+        } else {
+            self.name = foodString
+        }
+        self.mealTime = MealTime(mealTime: itemDict[mealKey] as! String)
+        self.diningHall = diningHall
+        self.course = itemDict[courseKey] as! String
+
+    }
+
+/*    init(itemDict: JSON, diningHall: DiningHall) {
+        let foodString = itemDict[foodNameKey].string!
+
+        self.isGlutenFree = foodString.containsString(glutenFreeKey)
+        self.isVegan = foodString.containsString(veganKey))
+
+        if isGlutenFree {
+            self.name = foodString.substringToIndex(foodString.indexOf(glutenFreeKey))
+        } else if isVegan {
+            self.name = foodString.substringToIndex(foodString.indexOf(veganKey))
         } else {
             self.name = foodString
         }
 
-        self.mealTime = MealTime(mealTime: itemDict["meal"].string!)
+        self.mealTime = MealTime(mealTime: itemDict[mealKey].string!)
 //        self.name = foodString
         self.diningHall = diningHall
-        self.course = itemDict["course"].string!
-    }
+        self.course = itemDict[courseKey].string!
+    }*/
 }
 
 extension String {
     func indexOf(string: String) -> String.Index {
-        return rangeOfString(string, options: .LiteralSearch, range: nil, locale: nil)?.startIndex ?? startIndex
+        return range(of: string, options: .literalSearch, range: nil, locale: nil)?.lowerBound ?? startIndex
     }
 }

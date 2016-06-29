@@ -28,7 +28,7 @@ class FavoritesNotifier: NSObject {
     */
     internal func sendNotifications() {
         let date = NSDate()
-        let dateAtStartOfDay = NSCalendar.currentCalendar().startOfDayForDate(date)
+        let dateAtStartOfDay = Calendar.currentCalendar().startOfDayForDate(date)
         var breakfastNotificationStr: String = ""
         var brunchNotificationStr: String = ""
         var lunchNotificationStr: String = ""
@@ -39,11 +39,11 @@ class FavoritesNotifier: NSObject {
             let itemStr = "\(item.name) is being served at \(item.diningHall)\n"
             switch(item.mealTime) {
             case .Breakfast:
-                breakfastNotificationStr.appendContentsOf(itemStr)
+                breakfastNotificationStr.append(itemStr)
             case .Brunch:
-                brunchNotificationStr.appendContentsOf(itemStr)
+                brunchNotificationStr.append(itemStr)
             case .Lunch:
-                lunchNotificationStr.appendContentsOf(itemStr)
+                lunchNotificationStr.append(itemStr)
             case .Dinner:
                 dinnerNotificationStr.appendContentsOf(itemStr)
             case .Dessert:

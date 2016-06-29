@@ -10,12 +10,18 @@ import Foundation
 import CoreData
 import UIKit
 
+
+let reloadFavoritesTableKey: NSNotification.Name = NSNotification.Name("reloadFavoritesTable")
+let reloadMealTableViewKey = NSNotification.Name("reloadMealTableView")
+let reloadDiningHallTableViewKey = NSNotification.Name("reloadDiningHallTableView")
+
+
 /**
  This class implements local caching and fetching of user Favorites.
  */
 class FavoritesHandler: NSObject {
 
-    private static let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    private static let managedObjectContext = (UIApplication.shared().delegate as! AppDelegate).managedObjectContext
     private static var favorites: Set<String>!
     private static var favoriteFoods: [FavoriteFood]!
     
@@ -23,7 +29,7 @@ class FavoritesHandler: NSObject {
      Insert a favorite food into the database
      */
     internal static func addItemToFavorites(name: String) {
-        FavoriteFood.createInManagedObjectContext(managedObjectContext, name: name)
+        _ = FavoriteFood.createInManagedObjectContext(moc: managedObjectContext, name: name)
         do {
             try managedObjectContext.save()
         } catch {
@@ -43,7 +49,7 @@ class FavoritesHandler: NSObject {
                 break
             }
         }
-        managedObjectContext.deleteObject(food)
+        managedObjectContext.delete(food)
         do {
             try managedObjectContext.save()
         } catch {
@@ -71,7 +77,12 @@ class FavoritesHandler: NSObject {
         if favorites == nil {
             updateFavorites()
         }
-        return favorites.sort()
+        var favs: [String] = []
+        for f in favorites {
+            favs.append(f)
+        }
+        return favs.sorted()
+//        return favorites.sort()
     }
 
     /**
@@ -82,9 +93,9 @@ class FavoritesHandler: NSObject {
         favorites = Set<String>()
         favoriteFoods.forEach({favorites.insert($0.name!)})
 
-        NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
-        NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTableView", object: nil)
-        NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTableView", object: nil)
+        NotificationCenter.default().post(name: reloadFavoritesTableKey, object: nil)
+        NotificationCenter.default().post(name: reloadMealTableViewKey, object: nil)
+        NotificationCenter.default().post(name: reloadDiningHallTableViewKey, object: nil)
 
     }
 
@@ -92,11 +103,11 @@ class FavoritesHandler: NSObject {
      Fetch the user favorites from memory
      */
     private static func fetchFavorites() -> [FavoriteFood] {
-        let fetchRequest = NSFetchRequest(entityName: "FavoriteFood")
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteFood")
+        let sortDescriptor = SortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
 
-        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [FavoriteFood] {
+        if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [FavoriteFood] {
 
             return fetchResults!
         }

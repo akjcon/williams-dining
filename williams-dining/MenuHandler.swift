@@ -15,7 +15,7 @@ MenuReader statically reads the menus in from Core Data memory.
  */
 class MenuHandler: NSObject {
 
-    private static let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    private static let managedObjectContext = (UIApplication.shared().delegate as! AppDelegate).managedObjectContext
 
     /**
      Fetch all menu items for a given diningHall and a given mealTime
@@ -30,15 +30,15 @@ class MenuHandler: NSObject {
         AND mealTime = mealTime
     */
     internal static func fetchByMealTimeAndDiningHall(mealTime: MealTime, diningHall: DiningHall) -> [CoreDataMenuItem] {
-        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
-        let sortDescriptor = NSSortDescriptor(key: "course", ascending: true)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
+        let sortDescriptor = SortDescriptor(key: "course", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        let firstPredicate = NSPredicate(format: "%K == %@", "diningHall", NSNumber(integer: diningHall.intValue()))
-        let secondPredicate = NSPredicate(format: "%K == %@", "mealTime", NSNumber(integer: mealTime.intValue()))
+        let firstPredicate = Predicate(format: "%K == %@", "diningHall", NSNumber(value: diningHall.intValue()))
+        let secondPredicate = Predicate(format: "%K == %@", "mealTime", NSNumber(value: mealTime.intValue()))
 
-        fetchRequest.predicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [firstPredicate,secondPredicate])
+        fetchRequest.predicate = CompoundPredicate(type: .and, subpredicates: [firstPredicate,secondPredicate])
 
-        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
+        if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [CoreDataMenuItem] {
             return fetchResults!
         }
         return []
@@ -56,17 +56,17 @@ class MenuHandler: NSObject {
      - mealTime: the MealTime according to which, to fetch the dining halls
      */
     internal static func fetchDiningHalls(mealTime: MealTime?) -> [DiningHall] {
-        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
         if mealTime != nil {
-            fetchRequest.predicate = NSPredicate(format: "%K == %@", "mealTime", NSNumber(integer: mealTime!.intValue()))
+            fetchRequest.predicate = Predicate(format: "%K == %@", "mealTime", NSNumber(value: mealTime!.intValue()))
         }
 
-        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
+        if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [CoreDataMenuItem] {
             var diningHalls = Set<DiningHall>()
             fetchResults!.forEach({
                 diningHalls.insert(DiningHall(num: $0.diningHall))
             })
-            return Array(diningHalls).sort({$0.intValue() < $1.intValue() })
+            return Array(diningHalls).sorted(isOrderedBefore: {$0.intValue() < $1.intValue() })
         }
         return []
     }
@@ -81,17 +81,17 @@ class MenuHandler: NSObject {
      WHERE diningHall = diningHall (optional)
      */
     internal static func fetchMealTimes(diningHall: DiningHall?) -> [MealTime] {
-        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
         if diningHall != nil {
-            fetchRequest.predicate = NSPredicate(format: "%K == %@", "diningHall", NSNumber(integer: diningHall!.intValue()))
+            fetchRequest.predicate = Predicate(format: "%K == %@", "diningHall", NSNumber(value: diningHall!.intValue()))
         }
-        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
+        if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [CoreDataMenuItem] {
 
             var mealTimes = Set<MealTime>()
             fetchResults!.forEach({
                 mealTimes.insert(MealTime(num: $0.mealTime))
             })
-            return Array(mealTimes).sort({$0.intValue() < $1.intValue() })
+            return Array(mealTimes).sorted(isOrderedBefore: {$0.intValue() < $1.intValue() })
         }
         return []
     }
@@ -103,21 +103,21 @@ class MenuHandler: NSObject {
      Insert a favorite food into the database
      */
     internal static func addItemToFavorites(name: String) {
-        FavoritesHandler.addItemToFavorites(name)
+        FavoritesHandler.addItemToFavorites(name: name)
     }
 
     /**
      Remove a favorite food from the database
      */
     internal static func removeItemFromFavorites(name: String) {
-        FavoritesHandler.removeItemFromFavorites(name)
+        FavoritesHandler.removeItemFromFavorites(name: name)
     }
 
     /**
      Returns whether the given food is a favorite or not. Constant time performance
      */
     internal static func isAFavoriteFood(name: String) -> Bool {
-        return FavoritesHandler.isAFavoriteFood(name)
+        return FavoritesHandler.isAFavoriteFood(name: name)
     }
 
     /**

@@ -1,6 +1,0 @@
-framework module Pods_williams_dining {
-  umbrella header "Pods-williams-dining-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -19,7 +19,7 @@ class FavoritesViewController: PurpleStatusBarViewController, UITableViewDelegat
         tableView.delegate = self
         tableView.dataSource = self
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FavoritesViewController.reloadTable), name: "reloadFavoritesTable", object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(FavoritesViewController.reloadTable), name: reloadFavoritesTableKey, object: nil)
     }
 
     func reloadTable() {

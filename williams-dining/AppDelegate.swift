@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.controller!.hideLoadingScreen()
 
 
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadFavoritesTable", object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName(reloadFavoritesTableKey, object: nil)
                 NSNotificationCenter.defaultCenter().postNotificationName("reloadMealTableView", object: nil)
                 NSNotificationCenter.defaultCenter().postNotificationName("reloadDiningHallTableView", object: nil)
             } else {

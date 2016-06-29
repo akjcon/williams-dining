@@ -30,9 +30,9 @@ class LoadingViewController: PurpleStatusBarViewController {
                                            "Swimming in the Green River",
                                            "Loading menus..."]
 
-    var timer: NSTimer?
+    var timer: Timer?
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
@@ -42,7 +42,7 @@ class LoadingViewController: PurpleStatusBarViewController {
     }
 
     internal func initializeLabelTimer() {
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(LoadingViewController.changeActivityLabel), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(LoadingViewController.changeActivityLabel), userInfo: nil, repeats: true)
     }
 
     internal func stopTimer() {
@@ -56,11 +56,11 @@ class LoadingViewController: PurpleStatusBarViewController {
      - postcondition: The activity label text has moved forward one in progression.
      */
     internal func changeActivityLabel() {
-        let curIndex: Int = orderedActivityLabels.indexOf(activityLabel.text!)!
+        let curIndex: Int = orderedActivityLabels.index(of: activityLabel.text!)!
         if curIndex == orderedActivityLabels.count - 1 {
             timer?.invalidate()
             // alert that the fetch must have failed
-            (UIApplication.sharedApplication().delegate as! AppDelegate).loadingDataHadError()
+            (UIApplication.shared().delegate as! AppDelegate).loadingDataHadError()
             return
         }
         activityLabel.text = orderedActivityLabels[curIndex + 1]

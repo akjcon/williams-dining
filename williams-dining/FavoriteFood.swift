@@ -14,7 +14,7 @@ class FavoriteFood: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
     class func createInManagedObjectContext(moc: NSManagedObjectContext, name: String) -> FavoriteFood {
-        let newItem = NSEntityDescription.insertNewObjectForEntityForName("FavoriteFood", inManagedObjectContext: moc) as! FavoriteFood
+        let newItem = NSEntityDescription.insertNewObject(forEntityName: "FavoriteFood", into: moc) as! FavoriteFood
         newItem.name = name
         return newItem
     }

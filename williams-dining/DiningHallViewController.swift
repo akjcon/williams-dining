@@ -15,7 +15,7 @@ class DiningHallViewController: PurpleStatusBarViewController, UIPickerViewDeleg
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
 
-    var pickerDataSource = MenuHandler.fetchDiningHalls(nil)
+    var pickerDataSource = MenuHandler.fetchDiningHalls(mealTime: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()

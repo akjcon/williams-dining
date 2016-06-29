@@ -13,8 +13,8 @@ class PurpleStatusBarViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let view = UIView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,20))
+        let frame: CGRect = CGRect(x: 0, y: 0, width: UIScreen.main().bounds.size.width, height: 20)
+        let view = UIView(frame: frame)
         view.backgroundColor = Style.primaryColor
         self.view.addSubview(view)
 
