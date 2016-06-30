@@ -3,7 +3,7 @@
 //  williams-dining
 //
 //  Created by Nathan Andersen on 4/30/16.
-//  Copyright © 2016 Gladden Labs. All rights reserved.
+//  Copyright © 2016 Andersen Labs. All rights reserved.
 //
 
 import Foundation
@@ -26,7 +26,6 @@ class FavoritesViewController: PurpleStatusBarViewController {
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
         })
-//        dispatch_async(dispatch_get_main_queue(), {self.tableView.reloadData()})
     }
 
     @IBAction func refreshButtonWasClicked(sender: AnyObject) {

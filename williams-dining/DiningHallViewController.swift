@@ -3,7 +3,7 @@
 //  williams-dining
 //
 //  Created by Nathan Andersen on 4/28/16.
-//  Copyright © 2016 Gladden Labs. All rights reserved.
+//  Copyright © 2016 Andersen Labs. All rights reserved.
 //
 
 import Foundation
@@ -67,7 +67,11 @@ extension DiningHallViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        return MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[section].stringValue()
+        let mealTimes: [MealTime] = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)
+        guard mealTimes != [] else {
+            return ""
+        }
+        return mealTimes[section].stringValue()
     }
 
     private func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -78,8 +82,11 @@ extension DiningHallViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[section]
-        return MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall).count
+        let mealTimes: [MealTime] = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)
+        guard mealTimes != [] else {
+            return 0
+        }
+        return MenuHandler.fetchByMealTimeAndDiningHall(mealTime: mealTimes[section], diningHall: selectedDiningHall).count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -27,6 +27,9 @@
 		248070F61CD5277900CFF98B /* MenuLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F51CD5277900CFF98B /* MenuLoader.swift */; };
 		248070F91CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F71CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift */; };
 		248070FA1CD53BF600CFF98B /* FavoriteFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F81CD53BF600CFF98B /* FavoriteFood.swift */; };
+		2497A61A1D24951300DD81DD /* DiningHall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A6191D24951300DD81DD /* DiningHall.swift */; };
+		2497A61C1D24957500DD81DD /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A61B1D24957500DD81DD /* MenuItem.swift */; };
+		2497A61E1D24958300DD81DD /* MealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A61D1D24958300DD81DD /* MealTime.swift */; };
 		24D5C3691CD680A30096C255 /* FavoritesHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D5C3681CD680A30096C255 /* FavoritesHandler.swift */; };
 		24D5C36F1CD6D4CB0096C255 /* FavoritesNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D5C36E1CD6D4CB0096C255 /* FavoritesNotifier.swift */; };
 		24DD9C841CD3B10C00E2777C /* williams-dining.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 24DD9C821CD3B10C00E2777C /* williams-dining.xcdatamodeld */; };
@@ -79,6 +82,9 @@
 		248070F51CD5277900CFF98B /* MenuLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuLoader.swift; sourceTree = "<group>"; };
 		248070F71CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FavoriteFood+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		248070F81CD53BF600CFF98B /* FavoriteFood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteFood.swift; sourceTree = "<group>"; };
+		2497A6191D24951300DD81DD /* DiningHall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHall.swift; sourceTree = "<group>"; };
+		2497A61B1D24957500DD81DD /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		2497A61D1D24958300DD81DD /* MealTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTime.swift; sourceTree = "<group>"; };
 		24D5C3681CD680A30096C255 /* FavoritesHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesHandler.swift; sourceTree = "<group>"; };
 		24D5C36E1CD6D4CB0096C255 /* FavoritesNotifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesNotifier.swift; sourceTree = "<group>"; };
 		24DD9C831CD3B10C00E2777C /* williams-dining.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "williams-dining.xcdatamodel"; sourceTree = "<group>"; };
@@ -167,6 +173,7 @@
 		243A949F1CBF328B00A7C3B3 /* williams-dining */ = {
 			isa = PBXGroup;
 			children = (
+				2497A6201D24960C00DD81DD /* Objects */,
 				24010CCD1CD54FAD008046BD /* ViewControllers */,
 				24010CCA1CD54819008046BD /* CoreData */,
 				243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */,
@@ -197,6 +204,16 @@
 				243A94C21CBF328B00A7C3B3 /* Info.plist */,
 			);
 			path = "williams-diningUITests";
+			sourceTree = "<group>";
+		};
+		2497A6201D24960C00DD81DD /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				2497A6191D24951300DD81DD /* DiningHall.swift */,
+				2497A61B1D24957500DD81DD /* MenuItem.swift */,
+				2497A61D1D24958300DD81DD /* MealTime.swift */,
+			);
+			name = Objects;
 			sourceTree = "<group>";
 		};
 		8E940E72CCC38AFBC3EDF524 /* Frameworks */ = {
@@ -271,7 +288,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0800;
-				ORGANIZATIONNAME = "Gladden Labs";
+				ORGANIZATIONNAME = "Andersen Labs";
 				TargetAttributes = {
 					243A949C1CBF328B00A7C3B3 = {
 						CreatedOnToolsVersion = 7.3;
@@ -356,6 +373,7 @@
 				243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */,
 				244627171CD7C88900F3664F /* CentralNavigationController.swift in Sources */,
 				24D5C36F1CD6D4CB0096C255 /* FavoritesNotifier.swift in Sources */,
+				2497A61A1D24951300DD81DD /* DiningHall.swift in Sources */,
 				244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */,
 				244CE8461CD30B0E0028D376 /* MenuHandler.swift in Sources */,
 				248070F61CD5277900CFF98B /* MenuLoader.swift in Sources */,
@@ -365,6 +383,8 @@
 				243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */,
 				244CE8481CD326A50028D376 /* Style.swift in Sources */,
 				24010CD31CD55868008046BD /* FavoritesTableViewCell.swift in Sources */,
+				2497A61C1D24957500DD81DD /* MenuItem.swift in Sources */,
+				2497A61E1D24958300DD81DD /* MealTime.swift in Sources */,
 				24010CD11CD55635008046BD /* FavoritesViewController.swift in Sources */,
 				248070F91CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift in Sources */,
 			);
@@ -450,7 +470,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -490,7 +510,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

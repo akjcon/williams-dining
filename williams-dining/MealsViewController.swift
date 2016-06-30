@@ -3,7 +3,7 @@
 //  williams-dining
 //
 //  Created by Nathan Andersen on 4/28/16.
-//  Copyright © 2016 Gladden Labs. All rights reserved.
+//  Copyright © 2016 Andersen Labs. All rights reserved.
 //
 
 import Foundation
@@ -42,9 +42,6 @@ class MealsViewController: PurpleStatusBarViewController {
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
         })
-/*        dispatch_async(dispatch_get_main_queue(), {
-            self.tableView.reloadData()
-        })*/
     }
 
     func refreshView() {
@@ -54,11 +51,6 @@ class MealsViewController: PurpleStatusBarViewController {
             self.tableView.reloadData()
             self.pickerView.reloadAllComponents()
         })
-
-/*        dispatch_async(dispatch_get_main_queue(), {
-            self.tableView.reloadData()
-            self.pickerView.reloadAllComponents()
-        })*/
     }
 }
 

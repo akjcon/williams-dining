@@ -3,7 +3,7 @@
 //  williams-dining
 //
 //  Created by Nathan Andersen on 4/30/16.
-//  Copyright © 2016 Gladden Labs. All rights reserved.
+//  Copyright © 2016 Andersen Labs. All rights reserved.
 //
 
 import Foundation
@@ -35,9 +35,9 @@ class MenuLoader: NSObject {
     internal static func fetchMenusFromAPI(completionHandler: (UIBackgroundFetchResult) -> Void) {
         var menusRemaining = 5
         self.clearCachedData()
-        var favoritesNotifier = FavoritesNotifier()
+        let favoritesNotifier = FavoritesNotifier()
 
-        func completion() {
+/*        func completion() {
             menusRemaining -= 1
             print(menusRemaining)
             if menusRemaining == 0 {
@@ -45,11 +45,17 @@ class MenuLoader: NSObject {
                 appDelegate.saveContext()
                 favoritesNotifier.sendNotifications()
             }
-        }
+        }*/
 
         for diningHall in DiningHall.allCases {
             self.getMenu(diningHall: diningHall,favoritesNotifier: favoritesNotifier) {
-                completion()
+                menusRemaining -= 1
+                print(menusRemaining)
+                if menusRemaining == 0 {
+                    completionHandler(.newData)
+                    appDelegate.saveContext()
+                    favoritesNotifier.sendNotifications()
+                }
             }
         }
     }
@@ -71,31 +77,20 @@ class MenuLoader: NSObject {
             (data, response, error) in
             guard error == nil && (response as! HTTPURLResponse).statusCode == 200 else {
                 print(error)
+                self.appDelegate.loadingDataHadError()
                 return
             }
-            print(data)
-            self.parseMenu(menu: data!, diningHall: diningHall, favoritesNotifier: favoritesNotifier) {
-                completionHandler()
+            if let jsonObject: AnyObject = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) {
+                self.parseMenu(menu: jsonObject, diningHall: diningHall, favoritesNotifier: favoritesNotifier) {
+                    print("started completion")
+                    completionHandler()
+                }
+            } else {
+                self.appDelegate.loadingDataHadError()
             }
 
         })
         task.resume()
-
-/*
-        Alamofire.request(.GET, apiBaseUrl + String(diningHall.getAPIValue())).responseJSON { (response) in
-            guard response.result.error == nil else {
-                print("Error occurred during menu request")
-                print(response.result.error!)
-
-                (UIApplication.sharedApplication().delegate as! AppDelegate).loadingDataHadError()
-                return
-            }
-            if let value: AnyObject = response.result.value {
-                self.parseMenu(JSON(value), diningHall: diningHall, favoritesNotifier: favoritesNotifier) {
-                    completionHandler()
-                }
-            }
-        }*/
     }
 
     /**
@@ -109,36 +104,21 @@ class MenuLoader: NSObject {
      */
     private static func parseMenu(menu: AnyObject, diningHall: DiningHall, favoritesNotifier: FavoritesNotifier, completionHandler: () -> ()) {
         let moc = self.appDelegate.managedObjectContext
-        print(menu)
         if let menuItems: [[String:AnyObject]] = menu as? [[String:AnyObject]] {
             for itemDict in menuItems {
-                print(itemDict)
                 let menuItem = MenuItem(itemDict: itemDict, diningHall: diningHall)
-                CoreDataMenuItem.createInManagedObjectContext(moc: moc, menuItem: menuItem)
+                _ = CoreDataMenuItem.createInManagedObjectContext(moc: moc, menuItem: menuItem)
                 if MenuHandler.isAFavoriteFood(name: menuItem.name) {
                     favoritesNotifier.addToFavoritesList(item: menuItem)
                 }
             }
             completionHandler()
         } else {
+            print("error!!!")
             print(menu)
         }
 
     }
-
-/*
-    private static func parseMenu(jsonMenu: JSON, diningHall: DiningHall, favoritesNotifier: FavoritesNotifier, completionHandler: () -> ()) {
-        let moc = self.appDelegate.managedObjectContext
-//        let moc = self.managedObjectContext
-        for (_,itemDictionary):(String,JSON) in jsonMenu {
-            let menuItem = MenuItem(itemDict: itemDictionary, diningHall: diningHall)
-            CoreDataMenuItem.createInManagedObjectContext(moc, menuItem: menuItem)
-            if MenuHandler.isAFavoriteFood(menuItem.name) {
-                favoritesNotifier.addToFavoritesList(menuItem)
-            }
-        }
-        completionHandler()
-    }*/
 
     /**
      Clears the data stored in CoreData for new menu-space.

@@ -3,7 +3,7 @@
 //  williams-dining
 //
 //  Created by Nathan Andersen on 5/1/16.
-//  Copyright © 2016 Gladden Labs. All rights reserved.
+//  Copyright © 2016 Andersen Labs. All rights reserved.
 //
 
 import Foundation
@@ -19,7 +19,6 @@ class FavoritesNotifier: NSObject {
      Add an item to the favorites list
     */
     internal func addToFavoritesList(item: MenuItem) {
-//        print("was a favorite food")
         favoritesOnMenu.append(item)
     }
 
@@ -58,7 +57,7 @@ class FavoritesNotifier: NSObject {
         if NSDate().compare(fourPmWilliamstown as Date) != .orderedAscending {
             return
         } else if !dinnerNotificationStr.isEmpty {
-            let trimmedstr = dinnerNotificationStr.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+            let trimmedstr = dinnerNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             let notification = UILocalNotification()
             notification.alertTitle = "Dinner"
             notification.alertBody = trimmedstr
@@ -73,7 +72,7 @@ class FavoritesNotifier: NSObject {
             return
         } else if !lunchNotificationStr.isEmpty {
 
-            let trimmedstr = lunchNotificationStr.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+            let trimmedstr = lunchNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
 
             let notification = UILocalNotification()
@@ -91,7 +90,7 @@ class FavoritesNotifier: NSObject {
         } else {
             if !brunchNotificationStr.isEmpty {
 
-                let trimmedstr = brunchNotificationStr.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+                let trimmedstr = brunchNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
                 let notification = UILocalNotification()
                 notification.alertTitle = "Brunch"
@@ -101,7 +100,7 @@ class FavoritesNotifier: NSObject {
                 UIApplication.shared().scheduleLocalNotification(notification)
             }
             if !dessertNotificationStr.isEmpty {
-                let trimmedstr = dessertNotificationStr.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+                let trimmedstr = dessertNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
                 let notification = UILocalNotification()
                 notification.alertTitle = "Dessert"
@@ -117,7 +116,7 @@ class FavoritesNotifier: NSObject {
             return
         } else if !breakfastNotificationStr.isEmpty {
 
-            let trimmedstr = breakfastNotificationStr.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+            let trimmedstr = breakfastNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
             let notification = UILocalNotification()
             notification.alertTitle = "Breakfast"

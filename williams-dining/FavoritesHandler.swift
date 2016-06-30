@@ -3,7 +3,7 @@
 //  williams-dining
 //
 //  Created by Nathan Andersen on 5/1/16.
-//  Copyright © 2016 Gladden Labs. All rights reserved.
+//  Copyright © 2016 Andersen Labs. All rights reserved.
 //
 
 import Foundation
@@ -82,7 +82,6 @@ class FavoritesHandler: NSObject {
             favs.append(f)
         }
         return favs.sorted()
-//        return favorites.sort()
     }
 
     /**

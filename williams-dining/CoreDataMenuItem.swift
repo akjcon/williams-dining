@@ -3,7 +3,7 @@
 //  williams-dining
 //
 //  Created by Nathan Andersen on 4/29/16.
-//  Copyright © 2016 Gladden Labs. All rights reserved.
+//  Copyright © 2016 Andersen Labs. All rights reserved.
 //
 
 import Foundation
@@ -21,8 +21,9 @@ class CoreDataMenuItem: NSManagedObject {
         newItem.course = menuItem.course
         newItem.diningHall = menuItem.diningHall.intValue()
         newItem.mealTime = menuItem.mealTime.intValue()
-        newItem.isGlutenFree = menuItem.isGlutenFree
-        newItem.isVegan = menuItem.isVegan
+        // somehow, when setting isGlutenFree, we bounce.
+//        newItem.isGlutenFree = menuItem.isGlutenFree
+//        newItem.isVegan = menuItem.isVegan
 
         return newItem
     }
