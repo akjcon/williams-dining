@@ -21,7 +21,7 @@ let reloadDiningHallTableViewKey = NSNotification.Name("reloadDiningHallTableVie
  */
 class FavoritesHandler: NSObject {
 
-    private static let managedObjectContext = (UIApplication.shared().delegate as! AppDelegate).managedObjectContext
+    private static let appDelegate = UIApplication.shared().delegate as! AppDelegate
     private static var favorites: Set<String>!
     private static var favoriteFoods: [FavoriteFood]!
     
@@ -29,12 +29,8 @@ class FavoritesHandler: NSObject {
      Insert a favorite food into the database
      */
     internal static func addItemToFavorites(name: String) {
-        _ = FavoriteFood.createInManagedObjectContext(moc: managedObjectContext, name: name)
-        do {
-            try managedObjectContext.save()
-        } catch {
-            print("The save failed")
-        }
+        _ = FavoriteFood.createInManagedObjectContext(moc: appDelegate.managedObjectContext, name: name)
+        appDelegate.saveContext()
         updateFavorites()
     }
 
@@ -42,20 +38,18 @@ class FavoritesHandler: NSObject {
      Remove a favorite food from the database
      */
     internal static func removeItemFromFavorites(name: String) {
-        var food: FavoriteFood!
+        var food: FavoriteFood?
         for favorite in favoriteFoods {
             if favorite.name == name {
                 food = favorite
                 break
             }
         }
-        managedObjectContext.delete(food)
-        do {
-            try managedObjectContext.save()
-        } catch {
-            print("The save failed")
+        guard let favFood = food else {
+            return
         }
-
+        appDelegate.managedObjectContext.delete(favFood)
+        appDelegate.saveContext()
         updateFavorites()
     }
 
@@ -105,7 +99,7 @@ class FavoritesHandler: NSObject {
         let sortDescriptor = SortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
 
-        if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [FavoriteFood] {
+        if let fetchResults = try? appDelegate.managedObjectContext.fetch(fetchRequest) as? [FavoriteFood] {
 
             return fetchResults!
         }

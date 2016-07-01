@@ -29,13 +29,11 @@ class MealsViewController: DefaultTableViewController {
         super.viewDidAppear(animated)
         NotificationCenter.default().addObserver(self, selector: #selector(MealsViewController.refreshTable), name: reloadMealTableViewKey, object: nil)
         self.refreshView()
-//        self.refreshTable()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default().removeObserver(self, name: reloadMealTableViewKey, object: nil)
-//        self.refreshTable()
         self.refreshView()
     }
 
