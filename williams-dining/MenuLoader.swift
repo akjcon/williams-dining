@@ -37,20 +37,11 @@ class MenuLoader: NSObject {
         self.clearCachedData()
         let favoritesNotifier = FavoritesNotifier()
 
-/*        func completion() {
-            menusRemaining -= 1
-            print(menusRemaining)
-            if menusRemaining == 0 {
-                completionHandler(.newData)
-                appDelegate.saveContext()
-                favoritesNotifier.sendNotifications()
-            }
-        }*/
-
         for diningHall in DiningHall.allCases {
             self.getMenu(diningHall: diningHall,favoritesNotifier: favoritesNotifier) {
                 menusRemaining -= 1
-                print(menusRemaining)
+                NotificationCenter.default().post(name: incrementLoadingProgressBarKey, object: nil)
+                print("Fetched a menu. There are " + String(menusRemaining) + " menus remaining.")
                 if menusRemaining == 0 {
                     completionHandler(.newData)
                     appDelegate.saveContext()
@@ -82,7 +73,6 @@ class MenuLoader: NSObject {
             }
             if let jsonObject: AnyObject = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) {
                 self.parseMenu(menu: jsonObject, diningHall: diningHall, favoritesNotifier: favoritesNotifier) {
-                    print("started completion")
                     completionHandler()
                 }
             } else {
@@ -114,7 +104,7 @@ class MenuLoader: NSObject {
             }
             completionHandler()
         } else {
-            print("error!!!")
+            print("Error in menu parsing. Here is the menu")
             print(menu)
         }
 
@@ -135,7 +125,7 @@ class MenuLoader: NSObject {
         do {
             try moc.save()
         } catch {
-            print("save failed")
+            print("While clearing the menus, the save failed")
         }
     }
 }

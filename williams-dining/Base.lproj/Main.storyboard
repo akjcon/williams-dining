@@ -20,10 +20,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="D31-pR-PnF">
+                            <activityIndicatorView contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="D31-pR-PnF">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="U6j-bB-iFN"/>
+                                    <constraint firstAttribute="width" secondItem="D31-pR-PnF" secondAttribute="height" multiplier="1:1" id="siR-LR-jir"/>
+                                </constraints>
                                 <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wmsdining-logo-300x126" translatesAutoresizingMaskIntoConstraints="NO" id="ByU-R4-QnI">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Climbing the purple mountains..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0c8-ac-Ucx">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="wmsdining-logo-300x126" translatesAutoresizingMaskIntoConstraints="NO" id="ByU-R4-QnI">
+                                <frame key="frameInset" minX="64" minY="374" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="SIm-fk-Xv4"/>
                                     <constraint firstAttribute="height" constant="128" id="cvo-nu-fXb"/>
@@ -39,28 +49,31 @@
                                 <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Climbing the purple mountains..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0c8-ac-Ucx">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2vk-Tb-q9e">
+                                <frame key="frameInset" minX="109" minY="147" width="150" height="2"/>
+                                <color key="progressTintColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                            </progressView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="2vk-Tb-q9e" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6w8-kD-2kL"/>
                             <constraint firstItem="D31-pR-PnF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8T2-or-cM1"/>
                             <constraint firstItem="0c8-ac-Ucx" firstAttribute="top" secondItem="zQZ-Tf-H2J" secondAttribute="bottom" constant="150" id="Hj3-ru-POe"/>
                             <constraint firstItem="zQZ-Tf-H2J" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NCZ-mQ-nri"/>
+                            <constraint firstItem="0c8-ac-Ucx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="2vk-Tb-q9e" secondAttribute="bottom" constant="20" id="VT6-as-8XU"/>
                             <constraint firstItem="0c8-ac-Ucx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Wk1-jg-AWF"/>
                             <constraint firstItem="ByU-R4-QnI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Y8e-N8-HP5"/>
                             <constraint firstItem="zQZ-Tf-H2J" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="cUp-r9-2iR"/>
                             <constraint firstItem="0c8-ac-Ucx" firstAttribute="top" secondItem="D31-pR-PnF" secondAttribute="bottom" constant="30" id="f8C-Rq-9Lh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zQZ-Tf-H2J" secondAttribute="trailing" constant="-20" id="f8U-o8-ueQ"/>
                             <constraint firstItem="D31-pR-PnF" firstAttribute="leading" secondItem="0c8-ac-Ucx" secondAttribute="trailing" constant="30" id="ilq-1d-yVV"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ByU-R4-QnI" secondAttribute="bottom" constant="116" id="lPW-5e-dyl"/>
+                            <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="2vk-Tb-q9e" secondAttribute="trailing" constant="50" id="jKU-iY-buJ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ByU-R4-QnI" secondAttribute="bottom" constant="50" id="lPW-5e-dyl"/>
                             <constraint firstItem="zQZ-Tf-H2J" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="mjR-Lv-H2K"/>
                             <constraint firstItem="D31-pR-PnF" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="saV-63-ly1"/>
-                            <constraint firstItem="D31-pR-PnF" firstAttribute="top" secondItem="0c8-ac-Ucx" secondAttribute="bottom" constant="30" id="xUd-ff-XT1"/>
-                            <constraint firstItem="ByU-R4-QnI" firstAttribute="top" secondItem="D31-pR-PnF" secondAttribute="bottom" constant="50" id="y42-nN-zFw"/>
+                            <constraint firstItem="D31-pR-PnF" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="vxv-OH-bvE"/>
+                            <constraint firstItem="D31-pR-PnF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="0c8-ac-Ucx" secondAttribute="bottom" constant="10" id="xUd-ff-XT1"/>
+                            <constraint firstItem="ByU-R4-QnI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="D31-pR-PnF" secondAttribute="bottom" constant="10" id="y42-nN-zFw"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -73,6 +86,7 @@
                     <navigationItem key="navigationItem" id="Qmr-70-veK"/>
                     <connections>
                         <outlet property="activityLabel" destination="0c8-ac-Ucx" id="rVA-Rp-MEh"/>
+                        <outlet property="progressBar" destination="2vk-Tb-q9e" id="zN4-xk-Nfs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -104,9 +118,17 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="USk-BK-R9X"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="8tk-jG-9OB" id="Mlx-7S-LUZ"/>
+                                    <outlet property="delegate" destination="8tk-jG-9OB" id="JzE-be-Dcl"/>
+                                </connections>
                             </pickerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GSm-hv-pA2">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="8tk-jG-9OB" id="qgG-NL-7iS"/>
+                                    <outlet property="delegate" destination="8tk-jG-9OB" id="FMP-02-kGk"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -175,7 +197,7 @@
                                         <frame key="frameInset" minY="28" width="383" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DN2-mk-2SN" id="s6W-gu-ngI">
-                                            <frame key="frameInset" width="383" height="43"/>
+                                            <frame key="frameInset" width="383" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rks-iG-9TO">
@@ -194,6 +216,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Q2e-MM-F7c" id="6D0-ho-nzQ"/>
+                                    <outlet property="delegate" destination="Q2e-MM-F7c" id="mFr-ay-3cC"/>
+                                </connections>
                             </tableView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="LUa-Kh-jHx">
                                 <color key="color" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
@@ -201,7 +227,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zrj-Fy-wb7">
                                 <state key="normal" title="Refresh Menus"/>
                                 <connections>
-                                    <action selector="refreshButtonWasClicked:" destination="Q2e-MM-F7c" eventType="touchUpInside" id="P1K-Yq-maw"/>
+                                    <action selector="refreshButtonWasClickedWithSender:" destination="Q2e-MM-F7c" eventType="touchUpInside" id="uA0-OC-C2c"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -234,8 +260,8 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="kb2-lr-PNW"/>
-                                <exclude reference="oTW-Fj-YUL"/>
                                 <exclude reference="nhg-Ol-y5U"/>
+                                <exclude reference="oTW-Fj-YUL"/>
                             </mask>
                         </variation>
                     </view>
@@ -274,9 +300,17 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="m8f-MZ-kDM"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="vz2-Pb-mT1" id="6qf-In-EfA"/>
+                                    <outlet property="delegate" destination="vz2-Pb-mT1" id="x4a-qu-kty"/>
+                                </connections>
                             </pickerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4O2-aA-9HQ">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="vz2-Pb-mT1" id="TqB-dg-Jaa"/>
+                                    <outlet property="delegate" destination="vz2-Pb-mT1" id="ge4-5K-tQ3"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

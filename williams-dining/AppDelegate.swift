@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      This function is called when loading the data had an error.
      */
     internal func loadingDataHadError() {
-        print("not saved")
+        print("Loading the data had an errror.")
         let yesterday = Date(timeInterval: -86400, since: Date())
         defaults.setValue(yesterday, forKey: lastUpdatedAtKey)
 
@@ -54,14 +54,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     internal func updateData() {
-        print("starting update")
+        print("Starting to update the data.")
         controller!.displayLoadingScreen()
         updateData() {(result: UIBackgroundFetchResult) in
-            print(result)
+            // eventually this will have to actually map to "new data" for real
             if result == .newData {
-                print("finished?")
                 self.controller!.hideLoadingScreen()
-
 
                 NotificationCenter.default().post(name: reloadFavoritesTableKey, object: nil)
                 NotificationCenter.default().post(name: reloadMealTableViewKey as NSNotification.Name, object: nil)
@@ -200,12 +198,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 try managedObjectContext.save()
                 defaults.setValue(Date(), forKey: lastUpdatedAtKey)
             } catch {
-                print("not saved")
+                print("Data failed to save. Setting 'last updated' as yesterday to refresh data later.")
                 let yesterday = Date(timeInterval: -86400, since: Date())
                 defaults.setValue(yesterday, forKey: lastUpdatedAtKey)
                 let nserror = error as NSError
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
-//                abort()
             }
         }
     }
@@ -227,7 +224,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("ok..")
         // all this does is prints it...
 /*        let tokenChars = UnsafePointer<CChar>(deviceToken)
         var tokenString = ""

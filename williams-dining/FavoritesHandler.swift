@@ -33,7 +33,7 @@ class FavoritesHandler: NSObject {
         do {
             try managedObjectContext.save()
         } catch {
-            print("save failed")
+            print("The save failed")
         }
         updateFavorites()
     }
@@ -53,7 +53,7 @@ class FavoritesHandler: NSObject {
         do {
             try managedObjectContext.save()
         } catch {
-            print("save failed")
+            print("The save failed")
         }
 
         updateFavorites()
@@ -95,7 +95,6 @@ class FavoritesHandler: NSObject {
         NotificationCenter.default().post(name: reloadFavoritesTableKey, object: nil)
         NotificationCenter.default().post(name: reloadMealTableViewKey, object: nil)
         NotificationCenter.default().post(name: reloadDiningHallTableViewKey, object: nil)
-
     }
 
     /**

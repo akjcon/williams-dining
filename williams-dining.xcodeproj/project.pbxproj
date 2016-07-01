@@ -12,6 +12,7 @@
 		24010CCF1CD5558B008046BD /* PurpleStatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CCE1CD5558B008046BD /* PurpleStatusBarViewController.swift */; };
 		24010CD11CD55635008046BD /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CD01CD55635008046BD /* FavoritesViewController.swift */; };
 		24010CD31CD55868008046BD /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CD21CD55868008046BD /* FavoritesTableViewCell.swift */; };
+		242FED661D26A15600DE6004 /* DefaultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242FED651D26A15600DE6004 /* DefaultTableViewController.swift */; };
 		243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */; };
 		243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */; };
 		243A94A61CBF328B00A7C3B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243A94A41CBF328B00A7C3B3 /* Main.storyboard */; };
@@ -61,6 +62,7 @@
 		24010CCE1CD5558B008046BD /* PurpleStatusBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurpleStatusBarViewController.swift; sourceTree = "<group>"; };
 		24010CD01CD55635008046BD /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		24010CD21CD55868008046BD /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
+		242FED651D26A15600DE6004 /* DefaultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTableViewController.swift; sourceTree = "<group>"; };
 		243A949D1CBF328B00A7C3B3 /* williams-dining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "williams-dining.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				24010CD01CD55635008046BD /* FavoritesViewController.swift */,
 				244627141CD7B9F300F3664F /* CentralTabBarController.swift */,
 				244627161CD7C88900F3664F /* CentralNavigationController.swift */,
+				242FED651D26A15600DE6004 /* DefaultTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				24DD9C8A1CD3C06A00E2777C /* CoreDataMenuItem.swift in Sources */,
 				244CE8401CD301CA0028D376 /* MealsViewController.swift in Sources */,
 				248070FA1CD53BF600CFF98B /* FavoriteFood.swift in Sources */,
+				242FED661D26A15600DE6004 /* DefaultTableViewController.swift in Sources */,
 				24010CC91CD54815008046BD /* FoodItemViewCell.swift in Sources */,
 				243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */,
 				244627171CD7C88900F3664F /* CentralNavigationController.swift in Sources */,

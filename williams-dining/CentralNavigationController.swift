@@ -27,6 +27,7 @@ class CentralNavigationController: UINavigationController, UINavigationControlle
     }
 
     func hideLoadingScreen() {
+        // this is lagging
         loadingViewController.stopTimer()
         self.popViewController(animated: true)
     }

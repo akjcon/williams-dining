@@ -9,17 +9,22 @@
 import Foundation
 import UIKit
 
-class FavoritesViewController: PurpleStatusBarViewController {
+class FavoritesViewController: DefaultTableViewController {
     
     @IBOutlet var tableView: UITableView!
 
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         NotificationCenter.default().addObserver(self, selector: #selector(FavoritesViewController.reloadTable), name: reloadFavoritesTableKey, object: nil)
+        self.reloadTable()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default().removeObserver(self, name: reloadFavoritesTableKey, object: nil)
+        self.reloadTable()
     }
 
     func reloadTable() {
@@ -38,13 +43,6 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     /*
      UITableView functions
      */
-
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
-        header.contentView.backgroundColor = Style.primaryColor
-        header.textLabel!.textColor = UIColor.yellow()
-        header.alpha = 0.9
-    }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Favorites"

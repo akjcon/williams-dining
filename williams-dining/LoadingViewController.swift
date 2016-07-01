@@ -9,11 +9,15 @@
 import UIKit
 import CoreData
 
+let incrementLoadingProgressBarKey = Notification.Name("incrementLoadingProgressBar")
+
 class LoadingViewController: PurpleStatusBarViewController {
 
-    var diningHallCounter = 5
+    var diningHallsReturned: Float = 0
+    let diningHallCount: Float = 5
     @IBOutlet var activityLabel: UILabel!
 
+    @IBOutlet var progressBar: UIProgressView!
     /**
      Some Williams-themed loading labels.
     */
@@ -32,13 +36,18 @@ class LoadingViewController: PurpleStatusBarViewController {
 
     var timer: Timer?
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("view did appear")
+        diningHallsReturned = 0
+        progressBar.setProgress(0, animated: true)
         activityLabel.text = orderedActivityLabels[0]
+        NotificationCenter.default().addObserver(self, selector: #selector(LoadingViewController.incrementProgress), name: incrementLoadingProgressBarKey, object: nil)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default().removeObserver(self, name: incrementLoadingProgressBarKey, object: nil)
     }
 
     internal func initializeLabelTimer() {
@@ -47,6 +56,13 @@ class LoadingViewController: PurpleStatusBarViewController {
 
     internal func stopTimer() {
         timer?.invalidate()
+    }
+
+    internal func incrementProgress() {
+        DispatchQueue.main.sync(execute: {
+            diningHallsReturned += 1
+            progressBar.setProgress(diningHallsReturned/diningHallCount, animated: true)
+        })
     }
 
 
