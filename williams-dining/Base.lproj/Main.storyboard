@@ -304,6 +304,9 @@
                                 <state key="normal" title="Submit">
                                     <color key="titleColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="submitReviews" destination="d8k-7P-h0m" eventType="touchUpInside" id="j5V-3b-yno"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nMP-c1-chd">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -333,6 +336,9 @@
                                                         <segment title="X"/>
                                                     </segments>
                                                     <color key="tintColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="controlChanged:" destination="vCF-M0-6i3" eventType="valueChanged" id="4UM-7u-JF5"/>
+                                                    </connections>
                                                 </segmentedControl>
                                             </subviews>
                                             <constraints>

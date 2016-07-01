@@ -73,13 +73,18 @@ class ReviewsViewController: DefaultTableViewController {
         self.view.window!.frame = UIScreen.main().bounds
     }
 
+    @IBAction func submitReviews() {
+        ReviewHandler.submitReviews(suggestion: suggestionBox.text)
+        tableView.reloadData()
+    }
+
 }
 
-let placeholder = "Enter your feedback for Williams Dining Services here."
+let suggestionBoxPlaceholder = "Enter your feedback for Williams Dining Services here."
 
 extension ReviewsViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == placeholder {
+        if textView.text == suggestionBoxPlaceholder {
             textView.text = ""
             textView.textColor = UIColor.black()
         }
@@ -88,7 +93,7 @@ extension ReviewsViewController: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
-            textView.text = placeholder
+            textView.text = suggestionBoxPlaceholder
             textView.textColor = UIColor.lightGray()
         }
         textView.resignFirstResponder()
@@ -125,7 +130,12 @@ extension ReviewsViewController: UITableViewDataSource, UITableViewDelegate {
         let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
 
         cell.nameLabel.text = menuItem.name
-        cell.ratingControl.selectedSegmentIndex = UISegmentedControlNoSegment
+        let rating = ReviewHandler.ratingForName(name: menuItem.name)
+        if rating == noRating {
+            cell.ratingControl.selectedSegmentIndex = cell.ratingControl.numberOfSegments - 1
+        } else {
+            cell.ratingControl.selectedSegmentIndex = rating - 1
+        }
 
         return cell
     }

@@ -12,7 +12,7 @@ import UIKit
 /**
  A data structure to track which favorite foods are on the menu, then send notifications.
  */
-class FavoritesNotifier: NSObject {
+class FavoritesNotifier {
     private var favoritesOnMenu: [MenuItem] = [MenuItem]()
 
     /**
