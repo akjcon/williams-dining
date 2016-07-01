@@ -288,17 +288,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Feedback to college council / williams dining services goes here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="HoF-yY-cjN">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Enter your feedback for Williams Dining Services here." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="HoF-yY-cjN">
                                 <frame key="frameInset" minY="435" width="375" height="114"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="QRW-nd-xPi"/>
                                 </constraints>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="d8k-7P-h0m" id="jkh-7L-JRD"/>
+                                </connections>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="81M-Tp-625">
-                                <state key="normal" title="SUBMIT FEEDBACK"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="81M-Tp-625" customClass="RoundedBorderedButton" customModule="williams_dining" customModuleProvider="target">
+                                <color key="tintColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                                </state>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MRu-5l-Rwf">
                                 <color key="backgroundColor" red="0.0" green="0.45098039220000002" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -320,7 +327,7 @@
                                 </connections>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Other Suggestions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47q-P1-Au4">
-                                <frame key="frameInset" minX="103" minY="406" width="160" height="21"/>
+                                <frame key="frameInset" minX="16" minY="406" width="355" height="21"/>
                                 <color key="backgroundColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -341,6 +348,7 @@
                             <constraint firstItem="hGU-yI-Mvd" firstAttribute="top" secondItem="81M-Tp-625" secondAttribute="bottom" constant="10" id="Pwq-5Q-dK0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="nMP-c1-chd" secondAttribute="trailing" constant="-16" id="SZn-yx-v3X"/>
                             <constraint firstItem="hGU-yI-Mvd" firstAttribute="leading" secondItem="7mO-P4-b9m" secondAttribute="leadingMargin" constant="-20" id="VBs-9z-99S"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="81M-Tp-625" secondAttribute="trailing" constant="40" id="ahA-bN-rEP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MRu-5l-Rwf" secondAttribute="trailing" constant="-20" id="cTK-AK-Yop"/>
                             <constraint firstItem="47q-P1-Au4" firstAttribute="top" secondItem="nMP-c1-chd" secondAttribute="bottom" constant="5" id="elT-A7-BwY"/>
                             <constraint firstItem="MRu-5l-Rwf" firstAttribute="width" secondItem="7mO-P4-b9m" secondAttribute="width" multiplier="0.5" id="hIl-NA-trg"/>
@@ -360,11 +368,16 @@
                     <tabBarItem key="tabBarItem" title="Reviews" image="rate" id="c5p-OF-xu9"/>
                     <connections>
                         <outlet property="pickerView" destination="qsH-xr-5Lm" id="StJ-en-rgT"/>
+                        <outlet property="suggestionBox" destination="HoF-yY-cjN" id="z49-uF-dqA"/>
                         <outlet property="tableView" destination="nMP-c1-chd" id="aNU-PR-Fal"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UCk-Ut-npb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="O1t-I5-npl"/>
+                <tapGestureRecognizer id="O1t-I5-npl">
+                    <connections>
+                        <action selector="userDidTapOutsideTextArea:" destination="d8k-7P-h0m" id="Len-vc-Uhu"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1765.5999999999999" y="867.61619190404804"/>
         </scene>

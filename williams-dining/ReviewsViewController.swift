@@ -9,20 +9,43 @@
 import Foundation
 import UIKit
 
+class RoundedBorderedButton: UIButton {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        sharedInit()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        sharedInit()
+    }
+
+    private func sharedInit() {
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 5
+        self.layer.borderColor = tintColor.cgColor
+    }
+}
+
 class ReviewsViewController: DefaultTableViewController {
 
     @IBOutlet var tableView: UITableView!
     @IBOutlet var pickerView: UIPickerView!
+    @IBOutlet var suggestionBox: UITextView!
     var pickerDataSource: [DiningHall] = [.Error]
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default().addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeShown(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         self.refreshView()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.refreshView()
+        NotificationCenter.default().removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default().removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     func refreshView() {
@@ -34,6 +57,42 @@ class ReviewsViewController: DefaultTableViewController {
         })
     }
 
+    @IBAction func userDidTapOutsideTextArea(_ sender: UITapGestureRecognizer) {
+        if suggestionBox.isFirstResponder() {
+            suggestionBox.resignFirstResponder()
+        }
+    }
+
+    func keyboardWillBeShown(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue() {
+            self.view.window!.frame.origin.y = -1 * keyboardSize.height
+        }
+    }
+
+    func keyboardWillBeHidden(notification: Notification) {
+        self.view.window!.frame = UIScreen.main().bounds
+    }
+
+}
+
+let placeholder = "Enter your feedback for Williams Dining Services here."
+
+extension ReviewsViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == placeholder {
+            textView.text = ""
+            textView.textColor = UIColor.black()
+        }
+        textView.becomeFirstResponder()
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            textView.text = placeholder
+            textView.textColor = UIColor.lightGray()
+        }
+        textView.resignFirstResponder()
+    }
 }
 
 extension ReviewsViewController: UITableViewDataSource, UITableViewDelegate {
@@ -85,22 +144,6 @@ extension ReviewsViewController: UITableViewDataSource, UITableViewDelegate {
 
         return cell
     }
-
-/*    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // if in favorites, remove from favorites
-        // if not in favorites, add to favorites
-        let section = indexPath.section
-        let selectedMealTime = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        let selectedDiningHall = MenuHandler.fetchDiningHalls(mealTime: selectedMealTime)[section]
-        let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
-        if MenuHandler.isAFavoriteFood(name: menuItem.name){
-            MenuHandler.removeItemFromFavorites(name: menuItem.name)
-            // remove from favorites
-        } else {
-            // add to favorites
-            MenuHandler.addItemToFavorites(name: menuItem.name)
-        }
-    }*/
 }
 
 extension ReviewsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
