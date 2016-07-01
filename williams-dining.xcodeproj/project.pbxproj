@@ -13,6 +13,7 @@
 		24010CD11CD55635008046BD /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CD01CD55635008046BD /* FavoritesViewController.swift */; };
 		24010CD31CD55868008046BD /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CD21CD55868008046BD /* FavoritesTableViewCell.swift */; };
 		2416F1FF1D26BAB8004571D7 /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416F1FE1D26BAB8004571D7 /* ReviewsViewController.swift */; };
+		2416F2021D26E323004571D7 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416F2011D26E323004571D7 /* ReviewTableViewCell.swift */; };
 		242FED661D26A15600DE6004 /* DefaultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242FED651D26A15600DE6004 /* DefaultTableViewController.swift */; };
 		243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */; };
 		243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */; };
@@ -64,6 +65,7 @@
 		24010CD01CD55635008046BD /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		24010CD21CD55868008046BD /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		2416F1FE1D26BAB8004571D7 /* ReviewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewsViewController.swift; sourceTree = "<group>"; };
+		2416F2011D26E323004571D7 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		242FED651D26A15600DE6004 /* DefaultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTableViewController.swift; sourceTree = "<group>"; };
 		243A949D1CBF328B00A7C3B3 /* williams-dining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "williams-dining.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,15 +128,11 @@
 		24010CCA1CD54819008046BD /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				248070F51CD5277900CFF98B /* MenuLoader.swift */,
-				244CE8451CD30B0E0028D376 /* MenuHandler.swift */,
 				248070F81CD53BF600CFF98B /* FavoriteFood.swift */,
 				248070F71CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift */,
 				24DD9C881CD3C06A00E2777C /* CoreDataMenuItem.swift */,
 				24DD9C871CD3C06A00E2777C /* CoreDataMenuItem+CoreDataProperties.swift */,
 				24DD9C821CD3B10C00E2777C /* williams-dining.xcdatamodeld */,
-				24D5C3681CD680A30096C255 /* FavoritesHandler.swift */,
-				24D5C36E1CD6D4CB0096C255 /* FavoritesNotifier.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -153,6 +151,18 @@
 				2416F1FE1D26BAB8004571D7 /* ReviewsViewController.swift */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2416F2001D26E2D9004571D7 /* Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				244CE8451CD30B0E0028D376 /* MenuHandler.swift */,
+				248070F51CD5277900CFF98B /* MenuLoader.swift */,
+				24D5C3681CD680A30096C255 /* FavoritesHandler.swift */,
+				24D5C36E1CD6D4CB0096C255 /* FavoritesNotifier.swift */,
+				244CE8471CD326A50028D376 /* Style.swift */,
+			);
+			name = Handlers;
 			sourceTree = "<group>";
 		};
 		243A94941CBF328B00A7C3B3 = {
@@ -179,6 +189,7 @@
 		243A949F1CBF328B00A7C3B3 /* williams-dining */ = {
 			isa = PBXGroup;
 			children = (
+				2416F2001D26E2D9004571D7 /* Handlers */,
 				2497A6201D24960C00DD81DD /* Objects */,
 				24010CCD1CD54FAD008046BD /* ViewControllers */,
 				24010CCA1CD54819008046BD /* CoreData */,
@@ -186,10 +197,6 @@
 				243A94A41CBF328B00A7C3B3 /* Main.storyboard */,
 				243A94A71CBF328B00A7C3B3 /* Assets.xcassets */,
 				243A94AC1CBF328B00A7C3B3 /* Info.plist */,
-				244CE8471CD326A50028D376 /* Style.swift */,
-				24010CC81CD54815008046BD /* FoodItemViewCell.swift */,
-				24010CCB1CD54865008046BD /* FoodItemViewCell.xib */,
-				24010CD21CD55868008046BD /* FavoritesTableViewCell.swift */,
 			);
 			path = "williams-dining";
 			sourceTree = "<group>";
@@ -215,9 +222,13 @@
 		2497A6201D24960C00DD81DD /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				24010CD21CD55868008046BD /* FavoritesTableViewCell.swift */,
+				24010CCB1CD54865008046BD /* FoodItemViewCell.xib */,
+				24010CC81CD54815008046BD /* FoodItemViewCell.swift */,
 				2497A6191D24951300DD81DD /* DiningHall.swift */,
 				2497A61B1D24957500DD81DD /* MenuItem.swift */,
 				2497A61D1D24958300DD81DD /* MealTime.swift */,
+				2416F2011D26E323004571D7 /* ReviewTableViewCell.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -379,6 +390,7 @@
 				24010CC91CD54815008046BD /* FoodItemViewCell.swift in Sources */,
 				243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */,
 				244627171CD7C88900F3664F /* CentralNavigationController.swift in Sources */,
+				2416F2021D26E323004571D7 /* ReviewTableViewCell.swift in Sources */,
 				24D5C36F1CD6D4CB0096C255 /* FavoritesNotifier.swift in Sources */,
 				2497A61A1D24951300DD81DD /* DiningHall.swift in Sources */,
 				244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */,

@@ -98,25 +98,10 @@ extension ReviewsViewController: UITextViewDelegate {
 extension ReviewsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Ratings"
-/*        guard pickerDataSource != [.Error] && pickerDataSource != [] else {
-            return ""
-        }
-        let selectedMealTime = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        let diningHalls: [DiningHall] = MenuHandler.fetchDiningHalls(mealTime: selectedMealTime)
-        guard diningHalls != [] else {
-            return ""
-        }
-        return diningHalls[section].stringValue()*/
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        // sort this by course??
         return 1
-/*        guard pickerDataSource != [.Error] && pickerDataSource != [] else {
-            return 0
-        }
-        let selectedMealTime = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        return MenuHandler.fetchDiningHalls(mealTime: selectedMealTime).count*/
     }
 
 
@@ -125,22 +110,22 @@ extension ReviewsViewController: UITableViewDataSource, UITableViewDelegate {
             return 0
         }
         let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[pickerView.selectedRow(inComponent: 0)]
-
+        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[pickerView.selectedRow(inComponent: 1)]
         return MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall).count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // have to figure out how to load a cell, what we want it to look like...
-
-        let cell = UITableViewCell()
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reviewTableViewCell") as! ReviewTableViewCell
         guard pickerDataSource != [.Error] && pickerDataSource != [] else {
             return cell
         }
         let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[pickerView.selectedRow(inComponent: 0)]
+        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[pickerView.selectedRow(inComponent: 1)]
 
+        let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
+
+        cell.nameLabel.text = menuItem.name
+        cell.ratingControl.selectedSegmentIndex = UISegmentedControlNoSegment
 
         return cell
     }
@@ -182,8 +167,7 @@ extension ReviewsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     {
         if component == 0 {
             pickerView.reloadComponent(1)
-        } else if component == 1 {
-            tableView.reloadData()
         }
+        tableView.reloadData()
     }
 }
