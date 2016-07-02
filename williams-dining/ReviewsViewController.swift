@@ -25,20 +25,31 @@ class RoundedBorderedButton: UIButton {
         self.layer.cornerRadius = 5
         self.layer.borderColor = tintColor.cgColor
     }
+
 }
 
 class ReviewsViewController: DefaultTableViewController {
 
+    @IBOutlet var submitButton: RoundedBorderedButton!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var pickerView: UIPickerView!
     @IBOutlet var suggestionBox: UITextView!
     var pickerDataSource: [DiningHall] = [.Error]
+
+    private var alertController: UIAlertController?
+
+    private let serverErrorTitle = "Server error"
+    private let serverErrorBody = "Could not connect to the server. Try again?"
+
+    private let userErrorTitle = "No feedback provided"
+    private let userErrorBody = "Please provide ratings or a suggestion before submitting."
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default().addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeShown(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default().addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         self.refreshView()
+        setSubmitButtonTitle(title: "Submit")
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -46,6 +57,7 @@ class ReviewsViewController: DefaultTableViewController {
         self.refreshView()
         NotificationCenter.default().removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default().removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        setSubmitButtonTitle(title: "Submit")
     }
 
     func refreshView() {
@@ -61,6 +73,11 @@ class ReviewsViewController: DefaultTableViewController {
         if suggestionBox.isFirstResponder() {
             suggestionBox.resignFirstResponder()
         }
+        setSubmitButtonTitle(title: "Submit")
+    }
+
+    func setSubmitButtonTitle(title: String) {
+        submitButton.setTitle(title, for: [])
     }
 
     func keyboardWillBeShown(notification: Notification) {
@@ -74,8 +91,45 @@ class ReviewsViewController: DefaultTableViewController {
     }
 
     @IBAction func submitReviews() {
-        ReviewHandler.submitReviews(suggestion: suggestionBox.text)
-        tableView.reloadData()
+
+        submitButton.isUserInteractionEnabled = false
+        submitButton.isSelected = true
+
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
+        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[pickerView.selectedRow(inComponent: 1)]
+
+        ReviewHandler.submitReviews(diningHall: selectedDiningHall, mealTime: selectedMealTime, suggestion: suggestionBox.text) {
+            (userProvidedFeedback: Bool, serverError: Bool) in
+            self.submitButton.isUserInteractionEnabled = true
+            self.submitButton.isSelected = false
+
+            if !userProvidedFeedback {
+                self.displayErrorMessage(title: self.userErrorTitle, body: self.userErrorBody)
+            } else if serverError {
+                self.displayErrorMessage(title: self.serverErrorTitle, body: self.serverErrorBody)
+            } else {
+                ReviewHandler.clearRatings()
+                self.setSubmitButtonTitle(title: "Thank you!")
+                self.resetSuggestionBoxToPlaceholder()
+            }
+            self.tableView.reloadData()
+        }
+    }
+
+    private func displayErrorMessage(title: String, body: String) {
+        if alertController == nil {
+            alertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
+            alertController?.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        } else {
+            alertController?.title = title
+            alertController?.message = body
+        }
+        self.present(alertController!, animated: true, completion: nil)
+    }
+
+    func resetSuggestionBoxToPlaceholder() {
+        suggestionBox.text = suggestionBoxPlaceholder
+        suggestionBox.textColor = UIColor.lightGray()
     }
 
 }
@@ -93,8 +147,7 @@ extension ReviewsViewController: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
-            textView.text = suggestionBoxPlaceholder
-            textView.textColor = UIColor.lightGray()
+            resetSuggestionBoxToPlaceholder()
         }
         textView.resignFirstResponder()
     }

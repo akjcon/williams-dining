@@ -141,6 +141,9 @@ extension DiningHallViewController: UIPickerViewDelegate, UIPickerViewDataSource
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        guard pickerDataSource != [.Error] && pickerDataSource != [] else {
+            return ""
+        }
         return pickerDataSource[row].stringValue()
     }
 

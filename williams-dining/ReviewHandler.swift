@@ -34,13 +34,31 @@ class ReviewHandler {
         }
     }
 
-    internal static func submitReviews(suggestion: String) {
+    internal static func submitReviews(diningHall: DiningHall, mealTime: MealTime, suggestion: String, completion: (userProvidedFeedback: Bool, serverError: Bool) -> ()) {
+        var reviewStr = ""
+
         for key in ratings.keys {
-            print(key)
-            print(ratings[key]!)
+            reviewStr += key + ":" + String(ratings[key]!) + "***"
         }
 
-        clearRatings()
+        if suggestion != suggestionBoxPlaceholder && suggestion != "" {
+            reviewStr += "General feedback:" + suggestion
+        }
+
+        if reviewStr != "" {
+            reviewStr = diningHall.stringValue() + "***" + mealTime.stringValue() + "***" + reviewStr
+            submitReviewString(reviewStr: reviewStr) {
+                (result: Bool) in
+                completion(userProvidedFeedback: true,serverError: result)
+            }
+        } else {
+            completion(userProvidedFeedback: false,serverError: false)
+        }
+    }
+
+    private static func submitReviewString(reviewStr: String, completionHandler: (Bool) -> ()) {
+        print(reviewStr)
+        completionHandler(false)
     }
 
 }

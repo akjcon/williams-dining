@@ -300,10 +300,12 @@
                                 </connections>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="81M-Tp-625" customClass="RoundedBorderedButton" customModule="williams_dining" customModuleProvider="target">
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="tintColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Submit">
                                     <color key="titleColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                 </state>
+                                <state key="selected" title="Submitting...."/>
                                 <connections>
                                     <action selector="submitReviews" destination="d8k-7P-h0m" eventType="touchUpInside" id="j5V-3b-yno"/>
                                 </connections>
@@ -410,6 +412,7 @@
                     <tabBarItem key="tabBarItem" title="Reviews" image="rate" id="c5p-OF-xu9"/>
                     <connections>
                         <outlet property="pickerView" destination="qsH-xr-5Lm" id="StJ-en-rgT"/>
+                        <outlet property="submitButton" destination="81M-Tp-625" id="THc-EY-FC0"/>
                         <outlet property="suggestionBox" destination="HoF-yY-cjN" id="z49-uF-dqA"/>
                         <outlet property="tableView" destination="nMP-c1-chd" id="aNU-PR-Fal"/>
                     </connections>
