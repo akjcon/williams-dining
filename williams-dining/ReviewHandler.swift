@@ -59,10 +59,16 @@ class ReviewHandler {
         }
 
         reviewStr = diningHall.stringValue() + "***" + mealTime.stringValue() + "***" + reviewStr
-/*        submitReviewString(reviewStr: reviewStr) {
+        submitReviewString(reviewStr: reviewStr) {
             (result: Bool) in
             completion(userProvidedFeedback: true,serverError: result)
-        }*/
+        }
+
+
+    }
+
+    private static func submitReviewString(reviewStr: String, completionHandler: (Bool) -> ()) {
+        print(reviewStr)
 
         let url = "https://dining.williams.edu/wpdev/gravityformsapi/forms/" + String(formId) + "/submissions"
         var urlRequest = URLRequest(url: URL(string: url)!)
@@ -73,14 +79,11 @@ class ReviewHandler {
         let dataToSubmit = [
             fieldHeader:reviewStr
         ]
-        var json: Data
-        do {
-            json = try! JSONSerialization.data(withJSONObject: dataToSubmit, options: [])
-//        } catch {
-//            print("was error")
-//            return
-        }
-        urlRequest.httpBody = json
+        //        var json: Data
+        //        do {
+        //        let json = try! JSONSerialization.data(withJSONObject: dataToSubmit, options: [])
+        //        }
+        urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: dataToSubmit, options: [])
 
         let task = session.dataTask(with: urlRequest, completionHandler: {
             (data, response, error) in
@@ -94,21 +97,15 @@ class ReviewHandler {
                 print((response as! HTTPURLResponse).statusCode)
                 return
             }
-//            print("hellooo")
 
             if let jsonObject: AnyObject = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) {
                 print(jsonObject)
             } else {
-                print("had errro")
+                print("had error")
             }
-
+            
         })
         task.resume()
-
-    }
-
-    private static func submitReviewString(reviewStr: String, completionHandler: (Bool) -> ()) {
-        print(reviewStr)
         completionHandler(false)
     }
 
