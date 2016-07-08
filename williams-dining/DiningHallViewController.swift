@@ -16,7 +16,6 @@ class DiningHallViewController: DefaultTableViewController {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
 
-//    var pickerDataSource = MenuHandler.fetchDiningHalls(mealTime: nil)
     var pickerDataSource: [DiningHall] = [.Error]
 
     override func viewDidLoad() {
@@ -105,7 +104,7 @@ extension DiningHallViewController: UITableViewDelegate, UITableViewDataSource {
         cell.glutenFreeLabel.isHidden = !menuItem.isGlutenFree
         cell.veganLabel.isHidden = !menuItem.isVegan
 
-        if MenuHandler.isAFavoriteFood(name: menuItem.name) {
+        if FavoritesHandler.isAFavoriteFood(name: menuItem.name) {
             cell.backgroundColor = Style.yellowColor
         } else {
             cell.backgroundColor = UIColor.clear()
@@ -115,19 +114,14 @@ extension DiningHallViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // if in favorites, remove from favorites
-        // if not in favorites, add to favorites
-        let section = indexPath.section
         let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[section]
+        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[indexPath.section]
         let menuItem: CoreDataMenuItem =
             MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
-        if MenuHandler.isAFavoriteFood(name: menuItem.name){
-            MenuHandler.removeItemFromFavorites(name: menuItem.name)
-            // remove from favorites
+        if FavoritesHandler.isAFavoriteFood(name: menuItem.name) {
+            FavoritesHandler.removeItemFromFavorites(name: menuItem.name)
         } else {
-            // add to favorites
-            MenuHandler.addItemToFavorites(name: menuItem.name)
+            FavoritesHandler.addItemToFavorites(name: menuItem.name)
         }
     }
 
@@ -140,6 +134,9 @@ extension DiningHallViewController: UIPickerViewDelegate, UIPickerViewDataSource
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        guard pickerDataSource != [.Error] else {
+            return 0
+        }
         return pickerDataSource.count;
     }
 

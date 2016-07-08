@@ -36,12 +36,12 @@ class MenuHandler: NSObject {
     */
     internal static func fetchByMealTimeAndDiningHall(mealTime: MealTime, diningHall: DiningHall) -> [CoreDataMenuItem] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
-        let sortDescriptor = SortDescriptor(key: courseKey, ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        let firstPredicate = Predicate(format: valueForKeyMatchesParameter, diningHallKey, NSNumber(value: diningHall.intValue()))
-        let secondPredicate = Predicate(format: valueForKeyMatchesParameter, mealTimeKey, NSNumber(value: mealTime.intValue()))
+        fetchRequest.sortDescriptors = [SortDescriptor(key: courseKey, ascending: true)]
 
-        fetchRequest.predicate = CompoundPredicate(type: .and, subpredicates: [firstPredicate,secondPredicate])
+        let diningHallPredicate = Predicate(format: valueForKeyMatchesParameter, diningHallKey, NSNumber(value: diningHall.intValue()))
+        let mealTimePredicate = Predicate(format: valueForKeyMatchesParameter, mealTimeKey, NSNumber(value: mealTime.intValue()))
+
+        fetchRequest.predicate = CompoundPredicate(type: .and, subpredicates: [diningHallPredicate,mealTimePredicate])
 
         if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [CoreDataMenuItem] {
             return fetchResults!
@@ -98,35 +98,48 @@ class MenuHandler: NSObject {
         return []
     }
 
-    // MARK: favorites handling
-
 
     /**
-     Insert a favorite food into the database
+     Clears the data stored in CoreData for new menu-space.
      */
-    internal static func addItemToFavorites(name: String) {
-        FavoritesHandler.addItemToFavorites(name: name)
+    internal static func clearCachedData() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
+        fetchRequest.includesPropertyValues = false
+        if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [CoreDataMenuItem] {
+            for item in fetchResults! {
+                managedObjectContext.delete(item)
+            }
+        }
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("While clearing the menus, the save failed")
+        }
     }
 
-    /**
-     Remove a favorite food from the database
-     */
-    internal static func removeItemFromFavorites(name: String) {
-        FavoritesHandler.removeItemFromFavorites(name: name)
-    }
 
     /**
-     Returns whether the given food is a favorite or not. Constant time performance
-     */
-    internal static func isAFavoriteFood(name: String) -> Bool {
-        return FavoritesHandler.isAFavoriteFood(name: name)
-    }
+     This method parses the JSON returned from the API and inserts it into CoreData
 
-    /**
-     Fetch the user favorites as an array
-     - returns: [String] of favorites
+     - parameters:
+     - jsonMenu: a JSON object with the menu information
+     - diningHall: the DiningHall enum that the menu corresponds to
+     - favoritesNotifier: the FavoritesNotifier that will handle notifications
+     - completionHandler: a function to call at completion
      */
-    internal static func getFavorites() -> [String] {
-        return FavoritesHandler.getFavorites()
+    internal static func parseMenu(menu: AnyObject, diningHall: DiningHall, favoritesNotifier: FavoritesNotifier, completionHandler: () -> ()) {
+        if let menuItems: [[String:AnyObject]] = menu as? [[String:AnyObject]] {
+            for itemDict in menuItems {
+                let menuItem = MenuItem(itemDict: itemDict, diningHall: diningHall)
+                _ = CoreDataMenuItem.createInManagedObjectContext(moc: managedObjectContext, menuItem: menuItem)
+                if FavoritesHandler.isAFavoriteFood(name: menuItem.name) {
+                    favoritesNotifier.addToFavoritesList(item: menuItem)
+                }
+            }
+            completionHandler()
+        } else {
+            print("Error in menu parsing. Here is the menu")
+            print(menu)
+        }
     }
 }

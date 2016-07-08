@@ -53,11 +53,11 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MenuHandler.getFavorites().count
+        return FavoritesHandler.getFavorites().count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let favorites = MenuHandler.getFavorites()
+        let favorites = FavoritesHandler.getFavorites()
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavoritesTableViewCell") as! FavoritesTableViewCell
         cell.nameLabel.text = favorites[indexPath.row]
@@ -70,8 +70,8 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let favorite = MenuHandler.getFavorites()[indexPath.row]
-            MenuHandler.removeItemFromFavorites(name: favorite)
+            let favorite = FavoritesHandler.getFavorites()[indexPath.row]
+            FavoritesHandler.removeItemFromFavorites(name: favorite)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
 

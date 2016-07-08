@@ -101,7 +101,7 @@ extension MealsViewController: UITableViewDataSource, UITableViewDelegate {
         cell.nameLabel.text = menuItem.name
         cell.glutenFreeLabel.isHidden = !menuItem.isGlutenFree
         cell.veganLabel.isHidden = !menuItem.isVegan
-        if MenuHandler.isAFavoriteFood(name: menuItem.name) {
+        if FavoritesHandler.isAFavoriteFood(name: menuItem.name) {
             cell.backgroundColor = Style.yellowColor
         } else {
             cell.backgroundColor = UIColor.clear()
@@ -117,12 +117,10 @@ extension MealsViewController: UITableViewDataSource, UITableViewDelegate {
         let selectedMealTime = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
         let selectedDiningHall = MenuHandler.fetchDiningHalls(mealTime: selectedMealTime)[section]
         let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
-        if MenuHandler.isAFavoriteFood(name: menuItem.name){
-            MenuHandler.removeItemFromFavorites(name: menuItem.name)
-            // remove from favorites
+        if FavoritesHandler.isAFavoriteFood(name: menuItem.name){
+            FavoritesHandler.removeItemFromFavorites(name: menuItem.name)
         } else {
-            // add to favorites
-            MenuHandler.addItemToFavorites(name: menuItem.name)
+            FavoritesHandler.addItemToFavorites(name: menuItem.name)
         }
     }
 
@@ -135,6 +133,9 @@ extension MealsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        guard pickerDataSource != [.Error] else {
+            return 0
+        }
         return pickerDataSource.count;
     }
 

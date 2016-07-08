@@ -65,7 +65,6 @@ class LoadingViewController: PurpleStatusBarViewController {
         })
     }
 
-
     /**
      Increment the text of the activity label.
      

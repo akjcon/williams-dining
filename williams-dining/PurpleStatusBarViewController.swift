@@ -6,7 +6,6 @@
 //  Copyright © 2016 Andersen Labs. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class PurpleStatusBarViewController: UIViewController {
@@ -17,7 +16,5 @@ class PurpleStatusBarViewController: UIViewController {
         let view = UIView(frame: frame)
         view.backgroundColor = Style.purpleColor
         self.view.addSubview(view)
-
     }
-
 }
