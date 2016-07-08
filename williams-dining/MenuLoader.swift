@@ -43,6 +43,7 @@ class MenuLoader: NSObject {
                 NotificationCenter.default().post(name: incrementLoadingProgressBarKey, object: nil)
                 print("Fetched a menu. There are " + String(menusRemaining) + " menus remaining.")
                 if menusRemaining == 0 {
+                    print("Closing")
                     completionHandler(.newData)
                     appDelegate.saveContext()
                     favoritesNotifier.sendNotifications()
@@ -61,7 +62,7 @@ class MenuLoader: NSObject {
     private static func getMenu(diningHall: DiningHall, favoritesNotifier: FavoritesNotifier, completionHandler: () -> ()) {
         let url = apiBaseUrl + String(diningHall.getAPIValue())
         var request: URLRequest = URLRequest(url: URL(string: url)!)
-        request.httpMethod = "GET"
+        request.httpMethod = httpGet
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = session.dataTask(with: request, completionHandler: {

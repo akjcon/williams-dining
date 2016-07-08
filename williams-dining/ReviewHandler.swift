@@ -9,9 +9,12 @@
 import Foundation
 
 let noRating = -1
+let httpGet = "GET"
+let httpPost = "POST"
 
 class ReviewHandler {
 
+    private static let baseUrl = "http://dining.stage.williams.edu/gravityformsapi"
     private static let valueHeaderKey = "input_values"
     private static let diningHallKey = "dining_hall"
     private static let mealTimeKey = "meal_time"
@@ -44,10 +47,7 @@ class ReviewHandler {
     internal static func submitReviews(diningHall: DiningHall, mealTime: MealTime, suggestion: String, completion: (userProvidedFeedback: Bool, serverError: Bool) -> ()) {
 
         var reviewStr = ""
-
-        for key in ratings.keys {
-            reviewStr += key + ":" + String(ratings[key]!) + "***"
-        }
+        ratings.keys.forEach({reviewStr += $0 + ":" + String(ratings[$0]!) + "***"})
 
         if suggestion != suggestionBoxPlaceholder && suggestion != "" {
             reviewStr += "General feedback:" + suggestion
@@ -70,43 +70,44 @@ class ReviewHandler {
     private static func submitReviewString(reviewStr: String, completionHandler: (Bool) -> ()) {
         print(reviewStr)
 
-        let url = "https://dining.williams.edu/wpdev/gravityformsapi/forms/" + String(formId) + "/submissions"
+        let url = baseUrl + "/forms"
+//        let url = baseUrl + "/forms/" + String(formId) + "/submissions"
+//        print(url)
         var urlRequest = URLRequest(url: URL(string: url)!)
-        urlRequest.httpMethod = "POST"
+        urlRequest.httpMethod = httpGet
+//        urlRequest.httpMethod = httpPost
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let fieldHeader = "input_" + String(fieldId)
-        let dataToSubmit = [
-            fieldHeader:reviewStr
-        ]
-        //        var json: Data
-        //        do {
-        //        let json = try! JSONSerialization.data(withJSONObject: dataToSubmit, options: [])
-        //        }
+        let dataToSubmit = [fieldHeader:reviewStr]
+        // can build this out as custom later
         urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: dataToSubmit, options: [])
 
         let task = session.dataTask(with: urlRequest, completionHandler: {
             (data, response, error) in
             guard error == nil else {
                 print(error)
-                print("had error")
+                print("There was an actual error, seen above ^.")
+                completionHandler(true)
                 return
             }
             guard (response as! HTTPURLResponse).statusCode == 200 else {
-                print("bad status code")
+                print("The following status code is no good.")
                 print((response as! HTTPURLResponse).statusCode)
+                completionHandler(true)
                 return
             }
 
             if let jsonObject: AnyObject = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) {
                 print(jsonObject)
+                print("object finished")
+                completionHandler(false)
             } else {
-                print("had error")
+                print("Couldn't handle the data...")
+                completionHandler(true)
             }
-            
         })
         task.resume()
-        completionHandler(false)
     }
 
 }

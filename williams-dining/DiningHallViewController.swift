@@ -90,9 +90,12 @@ extension DiningHallViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodItemViewCell") as! FoodItemViewCell
+        guard pickerDataSource != [.Error] && pickerDataSource != [] else {
+            return cell
+        }
         let section = indexPath.section
         let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodItemViewCell") as! FoodItemViewCell
         let mealTimes: [MealTime] = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)
         guard mealTimes != [] else {
             return cell
