@@ -17,6 +17,11 @@ class MenuHandler: NSObject {
 
     private static let managedObjectContext = (UIApplication.shared().delegate as! AppDelegate).managedObjectContext
 
+    private static let courseKey = "course"
+    private static let mealTimeKey = "mealTime"
+    private static let diningHallKey = "diningHall"
+    private static let valueForKeyMatchesParameter = "%K == %@"
+
     /**
      Fetch all menu items for a given diningHall and a given mealTime
      
@@ -31,10 +36,10 @@ class MenuHandler: NSObject {
     */
     internal static func fetchByMealTimeAndDiningHall(mealTime: MealTime, diningHall: DiningHall) -> [CoreDataMenuItem] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
-        let sortDescriptor = SortDescriptor(key: "course", ascending: true)
+        let sortDescriptor = SortDescriptor(key: courseKey, ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        let firstPredicate = Predicate(format: "%K == %@", "diningHall", NSNumber(value: diningHall.intValue()))
-        let secondPredicate = Predicate(format: "%K == %@", "mealTime", NSNumber(value: mealTime.intValue()))
+        let firstPredicate = Predicate(format: valueForKeyMatchesParameter, diningHallKey, NSNumber(value: diningHall.intValue()))
+        let secondPredicate = Predicate(format: valueForKeyMatchesParameter, mealTimeKey, NSNumber(value: mealTime.intValue()))
 
         fetchRequest.predicate = CompoundPredicate(type: .and, subpredicates: [firstPredicate,secondPredicate])
 
@@ -44,7 +49,6 @@ class MenuHandler: NSObject {
         return []
     }
 
-
     /**
      Fetch all active dining halls of the mealTime (optional)
 
@@ -53,20 +57,19 @@ class MenuHandler: NSObject {
      WHERE mealTime = mealTime (optional)
 
      - parameters:
-     - mealTime: the MealTime according to which, to fetch the dining halls
+     - mealTime: the MealTime according to which, to fetch the dining halls. If nil, fetch all dining halls that are accessible
      */
     internal static func fetchDiningHalls(mealTime: MealTime?) -> [DiningHall] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
         if mealTime != nil {
-            fetchRequest.predicate = Predicate(format: "%K == %@", "mealTime", NSNumber(value: mealTime!.intValue()))
+            fetchRequest.predicate = Predicate(format: valueForKeyMatchesParameter, mealTimeKey, NSNumber(value: mealTime!.intValue()))
         }
+        fetchRequest.propertiesToFetch = [diningHallKey]
+        fetchRequest.returnsDistinctResults = true
+        fetchRequest.resultType = NSFetchRequestResultType.dictionaryResultType
 
-        if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [CoreDataMenuItem] {
-            var diningHalls = Set<DiningHall>()
-            fetchResults!.forEach({
-                diningHalls.insert(DiningHall(num: $0.diningHall))
-            })
-            return Array(diningHalls).sorted(isOrderedBefore: {$0.intValue() < $1.intValue() })
+        if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [[String:Int]] {
+            return fetchResults!.map({DiningHall(num: $0[diningHallKey]!)})
         }
         return []
     }
@@ -83,15 +86,14 @@ class MenuHandler: NSObject {
     internal static func fetchMealTimes(diningHall: DiningHall?) -> [MealTime] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
         if diningHall != nil {
-            fetchRequest.predicate = Predicate(format: "%K == %@", "diningHall", NSNumber(value: diningHall!.intValue()))
+            fetchRequest.predicate = Predicate(format: valueForKeyMatchesParameter, diningHallKey, NSNumber(value: diningHall!.intValue()))
         }
-        if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [CoreDataMenuItem] {
+        fetchRequest.propertiesToFetch = [mealTimeKey]
+        fetchRequest.returnsDistinctResults = true
+        fetchRequest.resultType = NSFetchRequestResultType.dictionaryResultType
 
-            var mealTimes = Set<MealTime>()
-            fetchResults!.forEach({
-                mealTimes.insert(MealTime(num: $0.mealTime))
-            })
-            return Array(mealTimes).sorted(isOrderedBefore: {$0.intValue() < $1.intValue() })
+        if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [[String:Int]] {
+            return fetchResults!.map({MealTime(num: $0[mealTimeKey]!)})
         }
         return []
     }
