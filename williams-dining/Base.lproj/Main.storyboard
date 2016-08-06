@@ -251,7 +251,7 @@
             </objects>
             <point key="canvasLocation" x="1105" y="562"/>
         </scene>
-        <!--Reviews-->
+        <!--Feedback-->
         <scene sceneID="VHD-Kd-Dyd">
             <objects>
                 <viewController id="d8k-7P-h0m" customClass="ReviewsViewController" customModule="williams_dining" customModuleProvider="target" sceneMemberID="viewController">
@@ -263,7 +263,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reviews" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXd-YZ-qmi">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feedback" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXd-YZ-qmi">
                                 <color key="backgroundColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="YQJ-oq-T3r"/>
@@ -399,7 +399,7 @@
                             <outletCollection property="gestureRecognizers" destination="O1t-I5-npl" appends="YES" id="2zf-jX-R4e"/>
                         </connections>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Reviews" image="rate" id="c5p-OF-xu9"/>
+                    <tabBarItem key="tabBarItem" title="Feedback" image="rate" id="c5p-OF-xu9"/>
                     <connections>
                         <outlet property="pickerView" destination="qsH-xr-5Lm" id="StJ-en-rgT"/>
                         <outlet property="submitButton" destination="81M-Tp-625" id="THc-EY-FC0"/>
