@@ -116,12 +116,30 @@
                                     <outlet property="delegate" destination="8tk-jG-9OB" id="FMP-02-kGk"/>
                                 </connections>
                             </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aL4-wb-duT">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="0up-OZ-vuH"/>
+                                    <constraint firstAttribute="width" secondItem="aL4-wb-duT" secondAttribute="height" multiplier="1:1" id="8rc-iw-t7t"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem systemItem="refresh" id="XYL-0N-MYP">
+                                        <color key="tintColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="refreshButtonWasClicked:" destination="8tk-jG-9OB" id="65M-9Y-Fyw"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="s2c-7C-YGe" secondAttribute="trailing" constant="-20" id="3Hm-2y-n3v"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aL4-wb-duT" secondAttribute="trailing" constant="-16" id="4rD-lx-EFA"/>
                             <constraint firstItem="B8d-w0-8k2" firstAttribute="top" secondItem="GSm-hv-pA2" secondAttribute="bottom" id="7hL-2k-zb3"/>
                             <constraint firstItem="AAq-aV-tuD" firstAttribute="top" secondItem="s2c-7C-YGe" secondAttribute="bottom" id="Obx-en-86k"/>
+                            <constraint firstItem="aL4-wb-duT" firstAttribute="width" secondItem="aL4-wb-duT" secondAttribute="height" multiplier="1:1" id="Pd7-CN-rEP"/>
+                            <constraint firstItem="aL4-wb-duT" firstAttribute="top" secondItem="xwN-hm-Umb" secondAttribute="bottom" id="Tbx-qj-wXi"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GSm-hv-pA2" secondAttribute="trailing" constant="-20" id="U9N-JT-6Lv"/>
                             <constraint firstItem="GSm-hv-pA2" firstAttribute="top" secondItem="AAq-aV-tuD" secondAttribute="bottom" id="Woe-Cj-4CN"/>
                             <constraint firstItem="s2c-7C-YGe" firstAttribute="leading" secondItem="2N3-tj-4br" secondAttribute="leadingMargin" constant="-20" id="byG-gy-Avq"/>
@@ -141,7 +159,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sA2-vH-Hje" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1779" y="192"/>
+            <point key="canvasLocation" x="1946" y="213"/>
         </scene>
         <!--Favorites View Controller-->
         <scene sceneID="aQF-sR-NhI">
@@ -169,12 +187,6 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPG-9L-QdH">
-                                <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="Yh2-B9-bWQ"/>
-                                </constraints>
-                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="one_finger_tap" translatesAutoresizingMaskIntoConstraints="NO" id="WJG-mq-Z1t"/>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tnx-q2-C9g">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -207,53 +219,31 @@
                                     <outlet property="delegate" destination="Q2e-MM-F7c" id="mFr-ay-3cC"/>
                                 </connections>
                             </tableView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="LUa-Kh-jHx">
-                                <color key="color" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
-                            </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zrj-Fy-wb7">
-                                <state key="normal" title="Refresh Menus"/>
-                                <connections>
-                                    <action selector="refreshButtonWasClickedWithSender:" destination="Q2e-MM-F7c" eventType="touchUpInside" id="uA0-OC-C2c"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Q9g-xl-b6I" firstAttribute="top" secondItem="tnx-q2-C9g" secondAttribute="bottom" id="348-z2-MTa"/>
                             <constraint firstItem="tnx-q2-C9g" firstAttribute="leading" secondItem="XcH-Q1-gz4" secondAttribute="leadingMargin" constant="-20" id="3i7-Mw-H8h"/>
                             <constraint firstItem="UkV-ca-Xm7" firstAttribute="top" secondItem="weE-2A-N77" secondAttribute="bottom" constant="15" id="4MC-a9-r05"/>
-                            <constraint firstItem="KPG-9L-QdH" firstAttribute="leading" secondItem="XcH-Q1-gz4" secondAttribute="leadingMargin" id="6Ba-De-Gda"/>
-                            <constraint firstItem="LUa-Kh-jHx" firstAttribute="centerX" secondItem="WJG-mq-Z1t" secondAttribute="centerX" id="FB5-Uc-9Zx"/>
-                            <constraint firstItem="LUa-Kh-jHx" firstAttribute="centerY" secondItem="zrj-Fy-wb7" secondAttribute="centerY" id="HL0-Eo-GBA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="weE-2A-N77" secondAttribute="trailing" constant="-20" id="IUu-jf-UzS"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="KPG-9L-QdH" secondAttribute="trailing" id="Jdr-8s-ZAf"/>
-                            <constraint firstItem="tnx-q2-C9g" firstAttribute="top" secondItem="weE-2A-N77" secondAttribute="bottom" constant="100" id="NX6-9h-OU2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WJG-mq-Z1t" secondAttribute="trailing" id="Pnv-hq-m4n"/>
                             <constraint firstItem="weE-2A-N77" firstAttribute="leading" secondItem="XcH-Q1-gz4" secondAttribute="leadingMargin" constant="-20" id="RnT-xQ-ucj"/>
-                            <constraint firstItem="zrj-Fy-wb7" firstAttribute="top" secondItem="KPG-9L-QdH" secondAttribute="bottom" constant="5" id="RvL-ln-qN0"/>
-                            <constraint firstItem="zrj-Fy-wb7" firstAttribute="leading" secondItem="UkV-ca-Xm7" secondAttribute="leading" id="Ti0-aH-qPt"/>
                             <constraint firstAttribute="leadingMargin" secondItem="UkV-ca-Xm7" secondAttribute="leading" id="UHJ-iT-mGb"/>
-                            <constraint firstItem="tnx-q2-C9g" firstAttribute="top" secondItem="zrj-Fy-wb7" secondAttribute="bottom" constant="5" id="b7h-kn-TXJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tnx-q2-C9g" secondAttribute="trailing" constant="-20" id="dzd-lo-hXK"/>
+                            <constraint firstItem="tnx-q2-C9g" firstAttribute="top" secondItem="WJG-mq-Z1t" secondAttribute="bottom" constant="10" id="fCn-Ne-PUY"/>
                             <constraint firstItem="weE-2A-N77" firstAttribute="top" secondItem="NgI-Qa-xU7" secondAttribute="bottom" id="ieV-eE-RQs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="KPG-9L-QdH" secondAttribute="trailing" id="kb2-lr-PNW"/>
-                            <constraint firstItem="KPG-9L-QdH" firstAttribute="top" secondItem="WJG-mq-Z1t" secondAttribute="bottom" constant="5" id="nJk-m1-fGX"/>
                             <constraint firstItem="WJG-mq-Z1t" firstAttribute="top" secondItem="weE-2A-N77" secondAttribute="bottom" constant="2" id="nhg-Ol-y5U"/>
-                            <constraint firstItem="zrj-Fy-wb7" firstAttribute="centerX" secondItem="XcH-Q1-gz4" secondAttribute="centerX" id="oTW-Fj-YUL"/>
                             <constraint firstItem="WJG-mq-Z1t" firstAttribute="centerY" secondItem="UkV-ca-Xm7" secondAttribute="centerY" id="qwL-wL-Zmq"/>
                             <constraint firstItem="weE-2A-N77" firstAttribute="centerX" secondItem="XcH-Q1-gz4" secondAttribute="centerX" id="x0Q-7t-BrF"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="kb2-lr-PNW"/>
                                 <exclude reference="nhg-Ol-y5U"/>
-                                <exclude reference="oTW-Fj-YUL"/>
                             </mask>
                         </variation>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="favorites" id="Cut-db-4wN"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="LUa-Kh-jHx" id="4me-ah-VEm"/>
                         <outlet property="tableView" destination="tnx-q2-C9g" id="aOu-WM-aqM"/>
                     </connections>
                 </viewController>
@@ -463,6 +453,21 @@
                                     <outlet property="delegate" destination="vz2-Pb-mT1" id="ge4-5K-tQ3"/>
                                 </connections>
                             </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rx-vs-myL">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="Zlg-pu-BnA"/>
+                                    <constraint firstAttribute="width" secondItem="1rx-vs-myL" secondAttribute="height" multiplier="1:1" id="cYz-fL-WRu"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem systemItem="refresh" id="Kly-uL-yzS">
+                                        <color key="tintColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="refreshButtonWasClicked:" destination="vz2-Pb-mT1" id="I5U-t6-aWC"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -472,10 +477,12 @@
                             <constraint firstItem="E7X-1p-KIi" firstAttribute="centerX" secondItem="9Bu-Bk-bJJ" secondAttribute="centerX" id="8b6-hc-8xp"/>
                             <constraint firstItem="Doy-sR-RLQ" firstAttribute="top" secondItem="4O2-aA-9HQ" secondAttribute="bottom" id="bhD-Bw-1Hz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4O2-aA-9HQ" secondAttribute="trailing" constant="-20" id="iIL-wW-59O"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1rx-vs-myL" secondAttribute="trailing" constant="-16" id="j5g-gp-Z1W"/>
                             <constraint firstItem="4O2-aA-9HQ" firstAttribute="top" secondItem="c7R-37-Ypd" secondAttribute="bottom" constant="100" id="kau-dQ-zKh"/>
                             <constraint firstItem="c7R-37-Ypd" firstAttribute="centerX" secondItem="9Bu-Bk-bJJ" secondAttribute="centerX" id="tS8-Qw-mcy"/>
                             <constraint firstItem="c7R-37-Ypd" firstAttribute="leading" secondItem="9Bu-Bk-bJJ" secondAttribute="leadingMargin" constant="-20" id="uDz-1C-fhv"/>
                             <constraint firstItem="c7R-37-Ypd" firstAttribute="top" secondItem="Kf2-iS-1VK" secondAttribute="bottom" id="uKt-nc-ort"/>
+                            <constraint firstItem="1rx-vs-myL" firstAttribute="top" secondItem="Kf2-iS-1VK" secondAttribute="bottom" id="zsq-yU-2MK"/>
                             <constraint firstItem="E7X-1p-KIi" firstAttribute="top" secondItem="c7R-37-Ypd" secondAttribute="bottom" id="ztY-QE-p7B"/>
                         </constraints>
                     </view>
@@ -488,7 +495,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zDm-9f-TxW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1127" y="-280"/>
+            <point key="canvasLocation" x="1125.5999999999999" y="-280.20989505247377"/>
         </scene>
         <!--Central Tab Bar Controller-->
         <scene sceneID="hLs-gz-0hA">

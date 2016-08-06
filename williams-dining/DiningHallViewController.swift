@@ -37,6 +37,10 @@ class DiningHallViewController: DefaultTableViewController {
         self.refreshView()
     }
 
+    @IBAction func refreshButtonWasClicked(_ sender: UIBarButtonItem) {
+        (UIApplication.shared().delegate as! AppDelegate).updateData()
+    }
+
     func refreshTable() {
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()

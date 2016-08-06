@@ -13,8 +13,6 @@ class FavoritesViewController: DefaultTableViewController {
     
     @IBOutlet var tableView: UITableView!
 
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default().addObserver(self, selector: #selector(FavoritesViewController.reloadTable), name: reloadFavoritesTableKey, object: nil)
@@ -31,10 +29,6 @@ class FavoritesViewController: DefaultTableViewController {
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
         })
-    }
-
-    @IBAction func refreshButtonWasClicked(sender: AnyObject) {
-        (UIApplication.shared().delegate as! AppDelegate).updateData()
     }
 }
 

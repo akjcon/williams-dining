@@ -41,6 +41,9 @@ class ReviewsViewController: DefaultTableViewController {
     private let serverErrorTitle = "Server error"
     private let serverErrorBody = "Could not connect to the server. Try again?"
 
+    private let comingSoonTitle = "Coming soon"
+    private let comingSoonBody = "Review collection coming soon.\n\nLook for an update in the coming weeks!"
+
     private let userErrorTitle = "No feedback provided"
     private let userErrorBody = "Please provide ratings or a suggestion before submitting."
 
@@ -103,6 +106,9 @@ class ReviewsViewController: DefaultTableViewController {
             self.submitButton.isUserInteractionEnabled = true
             self.submitButton.isSelected = false
 
+            self.displayErrorMessage(title: self.comingSoonTitle, body: self.comingSoonBody)
+
+            /*
             if !userProvidedFeedback {
                 self.displayErrorMessage(title: self.userErrorTitle, body: self.userErrorBody)
             } else if serverError {
@@ -111,7 +117,7 @@ class ReviewsViewController: DefaultTableViewController {
                 ReviewHandler.clearRatings()
                 self.setSubmitButtonTitle(title: "Thank you!")
                 self.resetSuggestionBoxToPlaceholder()
-            }
+            }*/
             self.tableView.reloadData()
         }
     }

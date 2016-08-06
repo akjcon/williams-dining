@@ -43,6 +43,10 @@ class MealsViewController: DefaultTableViewController {
         })
     }
 
+    @IBAction func refreshButtonWasClicked(_ sender: UIBarButtonItem) {
+        (UIApplication.shared().delegate as! AppDelegate).updateData()
+    }
+
     func refreshView() {
         pickerDataSource = MenuHandler.fetchMealTimes(diningHall: nil)
         pickerView.selectRow(0, inComponent: 0, animated: true)
