@@ -15,7 +15,7 @@ let lunchKey = "lunch"
 let dinnerKey = "dinner"
 
 
-enum MealTime {
+public enum MealTime {
     case Breakfast
     case Lunch
     case Dinner

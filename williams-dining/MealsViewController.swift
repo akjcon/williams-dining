@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MealsViewController: DefaultTableViewController {
+public class MealsViewController: DefaultTableViewController {
 
 //    var pickerDataSource = MenuHandler.fetchMealTimes(diningHall: nil)
     var pickerDataSource: [MealTime] = [.Error]
@@ -18,20 +18,20 @@ class MealsViewController: DefaultTableViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var pickerView: UIPickerView!
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         let nib = UINib(nibName: "FoodItemViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "FoodItemViewCell")
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         NotificationCenter.default().addObserver(self, selector: #selector(MealsViewController.refreshTable), name: reloadMealTableViewKey, object: nil)
         self.refreshView()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    override public func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default().removeObserver(self, name: reloadMealTableViewKey, object: nil)
         self.refreshView()
@@ -59,7 +59,7 @@ class MealsViewController: DefaultTableViewController {
 
 extension MealsViewController: UITableViewDataSource, UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard pickerDataSource != [.Error] && pickerDataSource != [] else {
             return ""
         }
@@ -71,7 +71,7 @@ extension MealsViewController: UITableViewDataSource, UITableViewDelegate {
         return diningHalls[section].stringValue()
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         guard pickerDataSource != [.Error] && pickerDataSource != [] else {
             return 0
         }
@@ -80,7 +80,7 @@ extension MealsViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard pickerDataSource != [.Error] && pickerDataSource != [] else {
             return 0
         }
@@ -92,7 +92,7 @@ extension MealsViewController: UITableViewDataSource, UITableViewDelegate {
         return MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: diningHalls[section]).count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
         let selectedMealTime = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
         let cell = tableView.dequeueReusableCell(withIdentifier: "FoodItemViewCell") as! FoodItemViewCell
@@ -114,7 +114,8 @@ extension MealsViewController: UITableViewDataSource, UITableViewDelegate {
         return cell;
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_
+        tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // if in favorites, remove from favorites
         // if not in favorites, add to favorites
         let section = indexPath.section
@@ -132,22 +133,22 @@ extension MealsViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension MealsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         guard pickerDataSource != [.Error] else {
             return 0
         }
         return pickerDataSource.count;
     }
 
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerDataSource[row].stringValue()
     }
 
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         tableView.reloadData()
     }

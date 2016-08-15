@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-class DefaultTableViewController: PurpleStatusBarViewController {
+public class DefaultTableViewController: PurpleStatusBarViewController {
 
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
         header.contentView.backgroundColor = Style.purpleColor
         header.textLabel!.textColor = UIColor.yellow()

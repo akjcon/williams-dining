@@ -11,7 +11,7 @@ import CoreData
 import UIKit
 
 
-class CoreDataMenuItem: NSManagedObject {
+public class CoreDataMenuItem: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 
@@ -21,7 +21,11 @@ class CoreDataMenuItem: NSManagedObject {
         newItem.course = menuItem.course
         newItem.diningHall = menuItem.diningHall.intValue()
         newItem.mealTime = menuItem.mealTime.intValue()
-        // somehow, when setting isGlutenFree, we bounce.
+
+
+        // BUG:
+        // in new iOS beta, setting these booleans fails
+
 //        newItem.isGlutenFree = menuItem.isGlutenFree
 //        newItem.isVegan = menuItem.isVegan
 

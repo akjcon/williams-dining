@@ -11,7 +11,7 @@ import CoreData
 
 let incrementLoadingProgressBarKey = Notification.Name("incrementLoadingProgressBar")
 
-class LoadingViewController: PurpleStatusBarViewController {
+public class LoadingViewController: PurpleStatusBarViewController {
 
     var diningHallsReturned: Float = 0
     let diningHallCount: Float = 5
@@ -36,7 +36,7 @@ class LoadingViewController: PurpleStatusBarViewController {
 
     var timer: Timer?
 
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("view did appear")
         diningHallsReturned = 0
@@ -45,7 +45,7 @@ class LoadingViewController: PurpleStatusBarViewController {
         NotificationCenter.default().addObserver(self, selector: #selector(LoadingViewController.incrementProgress), name: incrementLoadingProgressBarKey, object: nil)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default().removeObserver(self, name: incrementLoadingProgressBarKey, object: nil)
     }

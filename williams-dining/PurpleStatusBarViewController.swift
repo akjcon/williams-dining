@@ -8,9 +8,9 @@
 
 import UIKit
 
-class PurpleStatusBarViewController: UIViewController {
+public class PurpleStatusBarViewController: UIViewController {
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         let frame: CGRect = CGRect(x: 0, y: 0, width: UIScreen.main().bounds.size.width, height: 20)
         let view = UIView(frame: frame)

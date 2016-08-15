@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-class CentralNavigationController: UINavigationController, UINavigationControllerDelegate {
+public class CentralNavigationController: UINavigationController, UINavigationControllerDelegate {
 
     internal var application: UIApplication!
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
     }
@@ -39,7 +39,7 @@ class CentralNavigationController: UINavigationController, UINavigationControlle
         mainViewController.displayLoadingError()
     }
 
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
         if operation == UINavigationControllerOperation.push {
             return PushAnimator()

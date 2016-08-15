@@ -419,7 +419,7 @@
         <!--Dining Halls-->
         <scene sceneID="R8u-hw-G9k">
             <objects>
-                <viewController id="vz2-Pb-mT1" customClass="DiningHallViewController" customModule="williams_dining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DiningHallViewController" id="vz2-Pb-mT1" customClass="DiningHallViewController" customModule="williams_dining" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Kf2-iS-1VK"/>
                         <viewControllerLayoutGuide type="bottom" id="Doy-sR-RLQ"/>

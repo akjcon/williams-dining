@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DiningHall {
+public enum DiningHall {
     case Driscoll
     case Whitmans
     case Mission

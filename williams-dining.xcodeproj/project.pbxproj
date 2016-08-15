@@ -12,6 +12,7 @@
 		24010CCF1CD5558B008046BD /* PurpleStatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CCE1CD5558B008046BD /* PurpleStatusBarViewController.swift */; };
 		24010CD11CD55635008046BD /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CD01CD55635008046BD /* FavoritesViewController.swift */; };
 		24010CD31CD55868008046BD /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CD21CD55868008046BD /* FavoritesTableViewCell.swift */; };
+		2406E84E1D61F685003F0577 /* DiningHallViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2406E84D1D61F685003F0577 /* DiningHallViewControllerTests.swift */; };
 		2416F1FF1D26BAB8004571D7 /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416F1FE1D26BAB8004571D7 /* ReviewsViewController.swift */; };
 		2416F2021D26E323004571D7 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416F2011D26E323004571D7 /* ReviewTableViewCell.swift */; };
 		2416F2041D26ED25004571D7 /* ReviewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416F2031D26ED25004571D7 /* ReviewHandler.swift */; };
@@ -34,6 +35,11 @@
 		2497A61A1D24951300DD81DD /* DiningHall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A6191D24951300DD81DD /* DiningHall.swift */; };
 		2497A61C1D24957500DD81DD /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A61B1D24957500DD81DD /* MenuItem.swift */; };
 		2497A61E1D24958300DD81DD /* MealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A61D1D24958300DD81DD /* MealTime.swift */; };
+		24A60E141D61FE5C0085FF72 /* MenuHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A60E131D61FE5C0085FF72 /* MenuHandlerProtocol.swift */; };
+		24A60E271D6210140085FF72 /* Whitmans.json in Resources */ = {isa = PBXBuildFile; fileRef = 24A60E261D6210140085FF72 /* Whitmans.json */; };
+		24A60E291D62101A0085FF72 /* EcoCafe.json in Resources */ = {isa = PBXBuildFile; fileRef = 24A60E281D62101A0085FF72 /* EcoCafe.json */; };
+		24A60E2B1D6210200085FF72 /* GrabAndGo.json in Resources */ = {isa = PBXBuildFile; fileRef = 24A60E2A1D6210200085FF72 /* GrabAndGo.json */; };
+		24A60E2D1D6210C70085FF72 /* MockMenuCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A60E2C1D6210C70085FF72 /* MockMenuCache.swift */; };
 		24D5C3691CD680A30096C255 /* FavoritesHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D5C3681CD680A30096C255 /* FavoritesHandler.swift */; };
 		24D5C36F1CD6D4CB0096C255 /* FavoritesNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D5C36E1CD6D4CB0096C255 /* FavoritesNotifier.swift */; };
 		24DD9C841CD3B10C00E2777C /* williams-dining.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 24DD9C821CD3B10C00E2777C /* williams-dining.xcdatamodeld */; };
@@ -65,6 +71,7 @@
 		24010CCE1CD5558B008046BD /* PurpleStatusBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurpleStatusBarViewController.swift; sourceTree = "<group>"; };
 		24010CD01CD55635008046BD /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		24010CD21CD55868008046BD /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
+		2406E84D1D61F685003F0577 /* DiningHallViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHallViewControllerTests.swift; sourceTree = "<group>"; };
 		2416F1FE1D26BAB8004571D7 /* ReviewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewsViewController.swift; sourceTree = "<group>"; };
 		2416F2011D26E323004571D7 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		2416F2031D26ED25004571D7 /* ReviewHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewHandler.swift; sourceTree = "<group>"; };
@@ -93,6 +100,11 @@
 		2497A6191D24951300DD81DD /* DiningHall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHall.swift; sourceTree = "<group>"; };
 		2497A61B1D24957500DD81DD /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		2497A61D1D24958300DD81DD /* MealTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTime.swift; sourceTree = "<group>"; };
+		24A60E131D61FE5C0085FF72 /* MenuHandlerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHandlerProtocol.swift; sourceTree = "<group>"; };
+		24A60E261D6210140085FF72 /* Whitmans.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Whitmans.json; sourceTree = SOURCE_ROOT; };
+		24A60E281D62101A0085FF72 /* EcoCafe.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EcoCafe.json; sourceTree = SOURCE_ROOT; };
+		24A60E2A1D6210200085FF72 /* GrabAndGo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = GrabAndGo.json; sourceTree = SOURCE_ROOT; };
+		24A60E2C1D6210C70085FF72 /* MockMenuCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMenuCache.swift; sourceTree = "<group>"; };
 		24D5C3681CD680A30096C255 /* FavoritesHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesHandler.swift; sourceTree = "<group>"; };
 		24D5C36E1CD6D4CB0096C255 /* FavoritesNotifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesNotifier.swift; sourceTree = "<group>"; };
 		24DD9C831CD3B10C00E2777C /* williams-dining.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "williams-dining.xcdatamodel"; sourceTree = "<group>"; };
@@ -164,6 +176,7 @@
 				24D5C36E1CD6D4CB0096C255 /* FavoritesNotifier.swift */,
 				244CE8471CD326A50028D376 /* Style.swift */,
 				2416F2031D26ED25004571D7 /* ReviewHandler.swift */,
+				24A60E131D61FE5C0085FF72 /* MenuHandlerProtocol.swift */,
 			);
 			name = Handlers;
 			sourceTree = "<group>";
@@ -192,6 +205,7 @@
 		243A949F1CBF328B00A7C3B3 /* williams-dining */ = {
 			isa = PBXGroup;
 			children = (
+				24A60E251D620EE00085FF72 /* Mock Data */,
 				2416F2001D26E2D9004571D7 /* Handlers */,
 				2497A6201D24960C00DD81DD /* Objects */,
 				24010CCD1CD54FAD008046BD /* ViewControllers */,
@@ -209,6 +223,7 @@
 			children = (
 				243A94B51CBF328B00A7C3B3 /* williams_diningTests.swift */,
 				243A94B71CBF328B00A7C3B3 /* Info.plist */,
+				2406E84D1D61F685003F0577 /* DiningHallViewControllerTests.swift */,
 			);
 			path = "williams-diningTests";
 			sourceTree = "<group>";
@@ -234,6 +249,17 @@
 				2416F2011D26E323004571D7 /* ReviewTableViewCell.swift */,
 			);
 			name = Objects;
+			sourceTree = "<group>";
+		};
+		24A60E251D620EE00085FF72 /* Mock Data */ = {
+			isa = PBXGroup;
+			children = (
+				24A60E261D6210140085FF72 /* Whitmans.json */,
+				24A60E281D62101A0085FF72 /* EcoCafe.json */,
+				24A60E2A1D6210200085FF72 /* GrabAndGo.json */,
+				24A60E2C1D6210C70085FF72 /* MockMenuCache.swift */,
+			);
+			name = "Mock Data";
 			sourceTree = "<group>";
 		};
 		8E940E72CCC38AFBC3EDF524 /* Frameworks */ = {
@@ -357,9 +383,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24A60E271D6210140085FF72 /* Whitmans.json in Resources */,
+				24A60E291D62101A0085FF72 /* EcoCafe.json in Resources */,
 				243A94A81CBF328B00A7C3B3 /* Assets.xcassets in Resources */,
 				243A94A61CBF328B00A7C3B3 /* Main.storyboard in Resources */,
 				24010CCC1CD54865008046BD /* FoodItemViewCell.xib in Resources */,
+				24A60E2B1D6210200085FF72 /* GrabAndGo.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +422,7 @@
 				24010CC91CD54815008046BD /* FoodItemViewCell.swift in Sources */,
 				243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */,
 				244627171CD7C88900F3664F /* CentralNavigationController.swift in Sources */,
+				24A60E141D61FE5C0085FF72 /* MenuHandlerProtocol.swift in Sources */,
 				2416F2021D26E323004571D7 /* ReviewTableViewCell.swift in Sources */,
 				24D5C36F1CD6D4CB0096C255 /* FavoritesNotifier.swift in Sources */,
 				2497A61A1D24951300DD81DD /* DiningHall.swift in Sources */,
@@ -404,6 +434,7 @@
 				2416F1FF1D26BAB8004571D7 /* ReviewsViewController.swift in Sources */,
 				24DD9C841CD3B10C00E2777C /* williams-dining.xcdatamodeld in Sources */,
 				243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */,
+				24A60E2D1D6210C70085FF72 /* MockMenuCache.swift in Sources */,
 				244CE8481CD326A50028D376 /* Style.swift in Sources */,
 				24010CD31CD55868008046BD /* FavoritesTableViewCell.swift in Sources */,
 				2497A61C1D24957500DD81DD /* MenuItem.swift in Sources */,
@@ -418,6 +449,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2406E84E1D61F685003F0577 /* DiningHallViewControllerTests.swift in Sources */,
 				243A94B61CBF328B00A7C3B3 /* williams_diningTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,6 +510,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -524,6 +557,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -548,7 +582,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEFINES_MODULE = YES;
+				DEFINES_MODULE = NO;
 				INFOPLIST_FILE = "williams-dining/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -564,7 +598,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEFINES_MODULE = YES;
+				DEFINES_MODULE = NO;
 				INFOPLIST_FILE = "williams-dining/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

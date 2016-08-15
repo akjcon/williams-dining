@@ -12,7 +12,7 @@ let noRating = -1
 let httpGet = "GET"
 let httpPost = "POST"
 
-class ReviewHandler {
+public class ReviewHandler {
 
     private static let baseUrl = "http://dining.stage.williams.edu/gravityformsapi"
     private static let valueHeaderKey = "input_values"

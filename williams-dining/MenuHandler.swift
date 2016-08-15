@@ -13,28 +13,28 @@ import UIKit
 /**
 MenuReader statically reads the menus in from Core Data memory.
  */
-class MenuHandler: NSObject {
+public class MenuHandler: MenuHandlerProtocol {
 
-    private static let managedObjectContext = (UIApplication.shared().delegate as! AppDelegate).managedObjectContext
+    // this is a var for Unit Testing
+
+/*    public static var managedObjectContext: NSManagedObjectContext {
+        get {
+
+        }
+        set {
+
+        }
+    }*/
+
+    public static var managedObjectContext = (UIApplication.shared().delegate as! AppDelegate).managedObjectContext
 
     private static let courseKey = "course"
     private static let mealTimeKey = "mealTime"
     private static let diningHallKey = "diningHall"
     private static let valueForKeyMatchesParameter = "%K == %@"
 
-    /**
-     Fetch all menu items for a given diningHall and a given mealTime
-     
-     - parameters:
-        - diningHall: the selected diningHall
-        - mealTime: the selected mealTime
-     
-     SELECT *
-     FROM CoreData
-     WHERE  diningHall = diningHall
-        AND mealTime = mealTime
-    */
-    internal static func fetchByMealTimeAndDiningHall(mealTime: MealTime, diningHall: DiningHall) -> [CoreDataMenuItem] {
+
+    public static func fetchByMealTimeAndDiningHall(mealTime: MealTime, diningHall: DiningHall) -> [CoreDataMenuItem] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
         fetchRequest.sortDescriptors = [SortDescriptor(key: courseKey, ascending: true)]
 
@@ -49,17 +49,7 @@ class MenuHandler: NSObject {
         return []
     }
 
-    /**
-     Fetch all active dining halls of the mealTime (optional)
-
-     SELECT UNIQUE diningHall
-     FROM CoreData
-     WHERE mealTime = mealTime (optional)
-
-     - parameters:
-     - mealTime: the MealTime according to which, to fetch the dining halls. If nil, fetch all dining halls that are accessible
-     */
-    internal static func fetchDiningHalls(mealTime: MealTime?) -> [DiningHall] {
+    public static func fetchDiningHalls(mealTime: MealTime?) -> [DiningHall] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
         if mealTime != nil {
             fetchRequest.predicate = Predicate(format: valueForKeyMatchesParameter, mealTimeKey, NSNumber(value: mealTime!.intValue()))
@@ -74,16 +64,7 @@ class MenuHandler: NSObject {
         return []
     }
 
-    /**
-     Fetch all active meal times from Core Data
-    - parameters: 
-        - diningHall: the optional dining hall
-
-     SELECT UNIQUE mealTime
-     FROM CoreData
-     WHERE diningHall = diningHall (optional)
-     */
-    internal static func fetchMealTimes(diningHall: DiningHall?) -> [MealTime] {
+    public static func fetchMealTimes(diningHall: DiningHall?) -> [MealTime] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
         if diningHall != nil {
             fetchRequest.predicate = Predicate(format: valueForKeyMatchesParameter, diningHallKey, NSNumber(value: diningHall!.intValue()))
@@ -97,7 +78,6 @@ class MenuHandler: NSObject {
         }
         return []
     }
-
 
     /**
      Clears the data stored in CoreData for new menu-space.

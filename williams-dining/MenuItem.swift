@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct MenuItem {
+public struct MenuItem {
     var mealTime: MealTime = .Error
     var name: String = ""
     var diningHall: DiningHall = .Error

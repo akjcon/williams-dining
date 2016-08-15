@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-class CentralTabBarController: UITabBarController {
+public class CentralTabBarController: UITabBarController {
 
     func displayLoadingError() {
         let alertController = UIAlertController(title: "Data Error", message: "Loading the menus timed out.\n\nPlease reload the data.", preferredStyle: .alert)

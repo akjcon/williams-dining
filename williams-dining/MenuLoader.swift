@@ -12,7 +12,7 @@ import UIKit
 /**
  This class queries the API for the JSON menus, then passes them to Core Data handlers.
  */
-class MenuLoader: NSObject {
+class MenuLoader {
 
     private static let apiBaseUrl = "https://dining.williams.edu/wp-json/dining/service_units/"
     private static let session = URLSession.shared()

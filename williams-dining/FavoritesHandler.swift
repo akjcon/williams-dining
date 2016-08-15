@@ -19,7 +19,7 @@ let reloadDiningHallTableViewKey = NSNotification.Name("reloadDiningHallTableVie
 /**
  This class implements local caching and fetching of user Favorites.
  */
-class FavoritesHandler: NSObject {
+public class FavoritesHandler {
 
     private static let appDelegate = UIApplication.shared().delegate as! AppDelegate
     private static var favorites: Set<String>!
