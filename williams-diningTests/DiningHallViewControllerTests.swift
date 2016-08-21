@@ -15,15 +15,14 @@ class DiningHallViewControllerTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        let mockMOC = MockMenuCache.setupMockManagedObjectContext()
-
-        MenuHandler.managedObjectContext = mockMOC
         // set the MOC to the MOCK MOC, haha
 
         MockMenuCache.initializeMockData()
+        print(MenuHandler.fetchDiningHalls(mealTime: nil, moc: MockMenuCache.mockManagedObjectContext))
 
         // Put setup code here. This method is called before the invocation of each test method in the class.
         viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DiningHallViewController") as! DiningHallViewController
+
     }
     
     override func tearDown() {
@@ -33,6 +32,8 @@ class DiningHallViewControllerTests: XCTestCase {
 
     func testVCHasWhitmansDisplayed() {
         let _ = viewController.view
+        viewController.refreshView()
+        print(viewController.pickerDataSource)
         viewController.pickerView.selectRow(viewController.pickerDataSource.index(of: DiningHall.Whitmans)!, inComponent: 0, animated: false)
         // select Whitmans
 

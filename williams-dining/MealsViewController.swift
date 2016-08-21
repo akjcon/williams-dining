@@ -11,7 +11,6 @@ import UIKit
 
 public class MealsViewController: DefaultTableViewController {
 
-//    var pickerDataSource = MenuHandler.fetchMealTimes(diningHall: nil)
     var pickerDataSource: [MealTime] = [.Error]
 
     @IBOutlet var titleLabel: UILabel!

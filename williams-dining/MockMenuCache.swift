@@ -22,7 +22,7 @@ class MockMenuCache {
         DiningHall.GrabAndGo: "GrabAndGo"
     ]
 
-    static func setupMockManagedObjectContext() -> NSManagedObjectContext {
+    static var mockManagedObjectContext: NSManagedObjectContext = {
         let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle.main()])!
         let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         do {
@@ -35,9 +35,9 @@ class MockMenuCache {
 
         moc = managedObjectContext
         return managedObjectContext
-    }
+    }()
 
-    static func initializeMockData() {
+    static func initializeMockData(/*callback: () -> ()*/) {
         // insert some data
 
         for item in diningHallJSONDict {
@@ -45,16 +45,8 @@ class MockMenuCache {
                 do {
                     let data = try Data(contentsOf: URL(fileURLWithPath: path), options: NSData.ReadingOptions.dataReadingMappedIfSafe)
                     if let jsonResult: AnyObject = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) {
-                        if let menuItems: [[String:AnyObject]] = jsonResult as? [[String:AnyObject]] {
-                            for itemDict in menuItems {
-                                let menuItem = MenuItem(itemDict: itemDict, diningHall: item.key)
-                                _ = CoreDataMenuItem.createInManagedObjectContext(moc: moc, menuItem: menuItem)
-                            }
-                            print("wow ok")
-                            print(item.key)
-                        } else {
-                            print("Error in menu parsing. Here is the menu")
-                        }
+                        MenuHandler.parseMenu(menu: jsonResult, diningHall: item.key, individualCompletion: nil, completionHandler: nil, moc: mockManagedObjectContext)
+                        print(item.key)
                     }
                     // finish this up
                 } catch let error as NSError {
