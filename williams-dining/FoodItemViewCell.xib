@@ -55,7 +55,7 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="labelize" value="NO"/>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="holdScrolling" value="NO"/>
                             <userDefinedRuntimeAttribute type="number" keyPath="scrollRate">
-                                <real key="value" value="20"/>
+                                <real key="value" value="40"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </label>

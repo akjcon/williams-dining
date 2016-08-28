@@ -1656,15 +1656,13 @@ private extension UIResponder {
     func traverseResponderChainForFirstViewController() -> UIViewController? {
         if let nextResponder = self.next() {
 
-            // unclear what this does anyway fuck porting
-
-/*            if (nextResponder.isKind(of: UIViewController)) {
+            if (nextResponder.isKind(of: UIViewController.self)) {
                 return nextResponder as? UIViewController
-            } else if (nextResponder.isKind(of: UIView)) {
+            } else if (nextResponder.isKind(of: UIView.self)) {
                 return nextResponder.traverseResponderChainForFirstViewController()
             } else {
                 return nil
-            }*/
+            }
         }
         return nil
     }
