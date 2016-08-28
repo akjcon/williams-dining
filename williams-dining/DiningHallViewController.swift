@@ -72,7 +72,7 @@ extension DiningHallViewController: UITableViewDelegate, UITableViewDataSource {
         return mealTimes[section].stringValue()
     }
 
-    private func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         guard pickerDataSource != [.Error] && pickerDataSource != [] else {
             return 0
         }

@@ -36,8 +36,25 @@ class DiningHallViewControllerTests: XCTestCase {
         print(viewController.pickerDataSource)
         viewController.pickerView.selectRow(viewController.pickerDataSource.index(of: DiningHall.Whitmans)!, inComponent: 0, animated: false)
         // select Whitmans
+        var foodNames = Set<String>();
+        for meal in MealTime.allCases {
+            let foodItemsAtMealTime = MenuHandler.fetchByMealTimeAndDiningHall(mealTime: meal, diningHall: DiningHall.Whitmans, moc: MockMenuCache.mockManagedObjectContext)
+            foodItemsAtMealTime.forEach({(item) in
+                foodNames.insert(item.name)
+            })
+        }
+        print("made it this far")
 
-        // this seems like a UI test though. ah well, have to get lunch.
+        (viewController.tableView.visibleCells as! [FoodItemViewCell]).forEach({(cell) in
+            print("are there even any cells?")
+            if let nameText = cell.nameLabel.text {
+                XCTAssertTrue(foodNames.contains(nameText))
+                print("hmm seems to be ok")
+            } else {
+                print("was no text")
+            }
+        })
+        print("well, passed test..")
     }
     
     func testExample() {

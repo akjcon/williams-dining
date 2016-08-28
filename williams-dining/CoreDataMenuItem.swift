@@ -26,8 +26,8 @@ public class CoreDataMenuItem: NSManagedObject {
         // BUG:
         // in new iOS beta, setting these booleans fails
 
-//        newItem.isGlutenFree = menuItem.isGlutenFree
-//        newItem.isVegan = menuItem.isVegan
+        newItem.isGlutenFree = menuItem.isGlutenFree
+        newItem.isVegan = menuItem.isVegan
 
         return newItem
     }

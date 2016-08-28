@@ -29,6 +29,7 @@
 		244CE8401CD301CA0028D376 /* MealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE83F1CD301CA0028D376 /* MealsViewController.swift */; };
 		244CE8461CD30B0E0028D376 /* MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8451CD30B0E0028D376 /* MenuHandler.swift */; };
 		244CE8481CD326A50028D376 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE8471CD326A50028D376 /* Style.swift */; };
+		244D744C1D69332F009A600B /* MenuHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244D744B1D69332F009A600B /* MenuHandlerTests.swift */; };
 		248070F61CD5277900CFF98B /* MenuLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F51CD5277900CFF98B /* MenuLoader.swift */; };
 		248070F91CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F71CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift */; };
 		248070FA1CD53BF600CFF98B /* FavoriteFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F81CD53BF600CFF98B /* FavoriteFood.swift */; };
@@ -94,6 +95,8 @@
 		244CE83F1CD301CA0028D376 /* MealsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsViewController.swift; sourceTree = "<group>"; };
 		244CE8451CD30B0E0028D376 /* MenuHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHandler.swift; sourceTree = "<group>"; };
 		244CE8471CD326A50028D376 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		244D744B1D69332F009A600B /* MenuHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHandlerTests.swift; sourceTree = "<group>"; };
+		247D59711D73337C00928715 /* williams-dining 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "williams-dining 2.xcdatamodel"; sourceTree = "<group>"; };
 		248070F51CD5277900CFF98B /* MenuLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuLoader.swift; sourceTree = "<group>"; };
 		248070F71CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FavoriteFood+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		248070F81CD53BF600CFF98B /* FavoriteFood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteFood.swift; sourceTree = "<group>"; };
@@ -224,6 +227,7 @@
 				243A94B51CBF328B00A7C3B3 /* williams_diningTests.swift */,
 				243A94B71CBF328B00A7C3B3 /* Info.plist */,
 				2406E84D1D61F685003F0577 /* DiningHallViewControllerTests.swift */,
+				244D744B1D69332F009A600B /* MenuHandlerTests.swift */,
 			);
 			path = "williams-diningTests";
 			sourceTree = "<group>";
@@ -449,6 +453,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				244D744C1D69332F009A600B /* MenuHandlerTests.swift in Sources */,
 				2406E84E1D61F685003F0577 /* DiningHallViewControllerTests.swift in Sources */,
 				243A94B61CBF328B00A7C3B3 /* williams_diningTests.swift in Sources */,
 			);
@@ -702,6 +707,7 @@
 		24DD9C821CD3B10C00E2777C /* williams-dining.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				247D59711D73337C00928715 /* williams-dining 2.xcdatamodel */,
 				24DD9C831CD3B10C00E2777C /* williams-dining.xcdatamodel */,
 			);
 			currentVersion = 24DD9C831CD3B10C00E2777C /* williams-dining.xcdatamodel */;

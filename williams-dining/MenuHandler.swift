@@ -86,7 +86,7 @@ public class MenuHandler: MenuHandlerProtocol {
         fetchRequest.resultType = NSFetchRequestResultType.dictionaryResultType
 
         if let fetchResults = try? moc.fetch(fetchRequest) as? [[String:Int]] {
-            return fetchResults!.map({MealTime(num: $0[mealTimeKey]!)})
+            return fetchResults!.map({MealTime(num: $0[mealTimeKey]!)}).sorted(isOrderedBefore: {(a,b) in (a.intValue() < b.intValue())})
         }
         return []
     }

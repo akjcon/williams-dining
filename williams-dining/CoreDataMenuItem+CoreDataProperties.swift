@@ -14,8 +14,8 @@ import CoreData
 
 extension CoreDataMenuItem {
     
-    @NSManaged var isVegan: Bool
-    @NSManaged var isGlutenFree: Bool
+    @NSManaged @objc(isVegan) var isVegan: Bool
+    @NSManaged @objc(isGlutenFree) var isGlutenFree: Bool
     @NSManaged var name: String
     @NSManaged var mealTime: NSNumber
     @NSManaged var diningHall: NSNumber
