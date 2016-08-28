@@ -17,6 +17,7 @@
 		2416F2021D26E323004571D7 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416F2011D26E323004571D7 /* ReviewTableViewCell.swift */; };
 		2416F2041D26ED25004571D7 /* ReviewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416F2031D26ED25004571D7 /* ReviewHandler.swift */; };
 		242FED661D26A15600DE6004 /* DefaultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242FED651D26A15600DE6004 /* DefaultTableViewController.swift */; };
+		2437F81B1D734793007D77E3 /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437F81A1D734793007D77E3 /* MarqueeLabel.swift */; };
 		243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */; };
 		243A94A31CBF328B00A7C3B3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */; };
 		243A94A61CBF328B00A7C3B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243A94A41CBF328B00A7C3B3 /* Main.storyboard */; };
@@ -77,6 +78,7 @@
 		2416F2011D26E323004571D7 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		2416F2031D26ED25004571D7 /* ReviewHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewHandler.swift; sourceTree = "<group>"; };
 		242FED651D26A15600DE6004 /* DefaultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTableViewController.swift; sourceTree = "<group>"; };
+		2437F81A1D734793007D77E3 /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
 		243A949D1CBF328B00A7C3B3 /* williams-dining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "williams-dining.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				2497A61B1D24957500DD81DD /* MenuItem.swift */,
 				2497A61D1D24958300DD81DD /* MealTime.swift */,
 				2416F2011D26E323004571D7 /* ReviewTableViewCell.swift */,
+				2437F81A1D734793007D77E3 /* MarqueeLabel.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				2497A61C1D24957500DD81DD /* MenuItem.swift in Sources */,
 				2416F2041D26ED25004571D7 /* ReviewHandler.swift in Sources */,
 				2497A61E1D24958300DD81DD /* MealTime.swift in Sources */,
+				2437F81B1D734793007D77E3 /* MarqueeLabel.swift in Sources */,
 				24010CD11CD55635008046BD /* FavoritesViewController.swift in Sources */,
 				248070F91CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift in Sources */,
 			);

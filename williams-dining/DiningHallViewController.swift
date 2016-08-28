@@ -105,6 +105,9 @@ extension DiningHallViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(mealTime: mealTimes[section], diningHall: selectedDiningHall)[indexPath.row]
+
+
+        (cell.nameLabel as! MarqueeLabel).type = .LeftRight
         cell.nameLabel.text = menuItem.name
         cell.glutenFreeLabel.isHidden = !menuItem.isGlutenFree
         cell.veganLabel.isHidden = !menuItem.isVegan

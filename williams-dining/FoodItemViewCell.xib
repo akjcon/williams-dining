@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A304a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11103.10"/>
@@ -17,11 +17,6 @@
                 <frame key="frameInset" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xk0-Ph-baK">
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQh-G3-rsZ">
                         <color key="backgroundColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -52,15 +47,26 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zU2-1S-J3S" customClass="MarqueeLabel" customModule="williams_dining" customModuleProvider="target">
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="labelize" value="NO"/>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="holdScrolling" value="NO"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="scrollRate">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="ZRE-yY-Mdm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Xk0-Ph-baK" secondAttribute="trailing" id="3r4-gB-CwB"/>
-                    <constraint firstItem="Xk0-Ph-baK" firstAttribute="centerY" secondItem="58Z-fl-GRz" secondAttribute="centerY" id="OwQ-af-ftv"/>
-                    <constraint firstItem="Xk0-Ph-baK" firstAttribute="leading" secondItem="58Z-fl-GRz" secondAttribute="leadingMargin" constant="10" id="QnC-bw-wPE"/>
+                    <constraint firstItem="ZRE-yY-Mdm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zU2-1S-J3S" secondAttribute="trailing" id="MBR-mF-kE8"/>
+                    <constraint firstItem="zU2-1S-J3S" firstAttribute="leading" secondItem="58Z-fl-GRz" secondAttribute="leadingMargin" constant="10" id="NwZ-wa-b1T"/>
                     <constraint firstAttribute="bottomMargin" secondItem="iQh-G3-rsZ" secondAttribute="bottom" id="Sgh-XI-ubC"/>
                     <constraint firstAttribute="trailingMargin" secondItem="iQh-G3-rsZ" secondAttribute="trailing" constant="10" id="VQl-Gj-7hh"/>
                     <constraint firstItem="ZRE-yY-Mdm" firstAttribute="centerY" secondItem="58Z-fl-GRz" secondAttribute="centerY" id="Vsc-N9-MyM"/>
-                    <constraint firstAttribute="leadingMargin" secondItem="Xk0-Ph-baK" secondAttribute="leading" constant="10" id="i67-nf-oh5"/>
+                    <constraint firstItem="zU2-1S-J3S" firstAttribute="centerY" secondItem="58Z-fl-GRz" secondAttribute="centerY" id="gAo-5k-iEA"/>
                     <constraint firstItem="iQh-G3-rsZ" firstAttribute="centerY" secondItem="58Z-fl-GRz" secondAttribute="centerY" id="jYb-bT-5Q0"/>
                     <constraint firstItem="iQh-G3-rsZ" firstAttribute="top" secondItem="58Z-fl-GRz" secondAttribute="topMargin" id="joL-OD-Ip9"/>
                     <constraint firstItem="ZRE-yY-Mdm" firstAttribute="top" secondItem="58Z-fl-GRz" secondAttribute="topMargin" id="qxC-HB-WO7"/>
@@ -74,15 +80,10 @@
                         <integer key="value" value="5"/>
                     </userDefinedRuntimeAttribute>
                 </userDefinedRuntimeAttributes>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="i67-nf-oh5"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="glutenFreeLabel" destination="iQh-G3-rsZ" id="UFm-an-f6c"/>
-                <outlet property="nameLabel" destination="Xk0-Ph-baK" id="cUp-Vv-UtS"/>
+                <outlet property="nameLabel" destination="zU2-1S-J3S" id="oCt-Pc-dav"/>
                 <outlet property="veganLabel" destination="ZRE-yY-Mdm" id="u0c-jf-IEB"/>
             </connections>
             <point key="canvasLocation" x="136" y="4"/>

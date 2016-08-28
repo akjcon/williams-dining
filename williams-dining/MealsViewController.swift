@@ -101,6 +101,7 @@ extension MealsViewController: UITableViewDataSource, UITableViewDelegate {
         }
         let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: diningHalls[section])[indexPath.row]
 
+//        cell.nameLabel.setText(text: menuItem.name)
         cell.nameLabel.text = menuItem.name
         cell.glutenFreeLabel.isHidden = !menuItem.isGlutenFree
         cell.veganLabel.isHidden = !menuItem.isVegan
