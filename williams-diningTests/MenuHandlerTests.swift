@@ -24,9 +24,33 @@ class MenuHandlerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testMenuParse() {
-        let moc = MockMenuCache.mockManagedObjectContext
-        
+    func testWhitmansParse() {
+        // determine an individual completion
+        let validate = {
+            (item: MenuItem) in
+            print(item)
+        }
+        let finished = {
+            () in
+//            print("finished")
+            XCTAssertTrue(true)
+        }
+        if let path = Bundle.main().pathForResource("Whitmans", ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: NSData.ReadingOptions.dataReadingMappedIfSafe)
+                if let jsonResult: AnyObject = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) {
+                    MenuHandler.parseMenu(menu: jsonResult, diningHall: .Whitmans, individualCompletion: validate, completionHandler: finished)
+                }
+                // finish this up
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            } catch {
+                print("uh oh")
+            }
+        } else {
+            print("invalid filename / path")
+        }
+
     }
 
     func testExample() {

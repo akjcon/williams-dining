@@ -122,6 +122,7 @@ public class MenuHandler: MenuHandlerProtocol {
     internal static func parseMenu(menu: AnyObject, diningHall: DiningHall, favoritesNotifier: FavoritesNotifier, completionHandler: () -> ()) {
         let individualCompletion: (MenuItem) -> () = {
             (item: MenuItem) in
+
             if FavoritesHandler.isAFavoriteFood(name: item.name) {
                 favoritesNotifier.addToFavoritesList(item: item)
             }
@@ -130,7 +131,15 @@ public class MenuHandler: MenuHandlerProtocol {
     }
 
     internal static func parseMenu(menu: AnyObject, diningHall: DiningHall, individualCompletion: ((MenuItem) -> ())?, completionHandler: (() -> ())?, moc: NSManagedObjectContext ) {
-        if let menuItems: [[String:AnyObject]] = menu as? [[String:AnyObject]] {
+        let completionFn = {
+            (item: MenuItem) in
+            _ = CoreDataMenuItem.createInManagedObjectContext(moc: moc, menuItem: item)
+            if let indComp = individualCompletion {
+                indComp(item)
+            }
+        }
+        parseMenu(menu: menu, diningHall: diningHall, individualCompletion: completionFn, completionHandler: completionHandler)
+        /*        if let menuItems: [[String:AnyObject]] = menu as? [[String:AnyObject]] {
             for itemDict in menuItems {
                 let menuItem = MenuItem(itemDict: itemDict, diningHall: diningHall)
                 _ = CoreDataMenuItem.createInManagedObjectContext(moc: moc, menuItem: menuItem)
@@ -144,7 +153,23 @@ public class MenuHandler: MenuHandlerProtocol {
         } else {
             print("Error in menu parsing. Here is the menu")
             print(menu)
-        }
+        }*/
+    }
 
+    internal static func parseMenu(menu: AnyObject, diningHall: DiningHall, individualCompletion: ((MenuItem) -> ())?, completionHandler: (() -> ())?) {
+        if let menuItems: [[String:AnyObject]] = menu as? [[String:AnyObject]] {
+            for itemDict in menuItems {
+                let menuItem = MenuItem(itemDict: itemDict, diningHall: diningHall)
+                if let indComp = individualCompletion {
+                    indComp(menuItem)
+                }
+            }
+            if let comp = completionHandler {
+                comp()
+            }
+        } else {
+            print("Error in menu parsing. Here is the menu")
+            print(menu)
+        }
     }
 }
