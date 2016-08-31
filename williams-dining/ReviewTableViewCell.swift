@@ -14,14 +14,14 @@ class ReviewTableViewCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var ratingControl: UISegmentedControl!
 
-    @IBAction func controlChanged(_ sender: UISegmentedControl) {
+    @IBAction func controlChanged(sender: UISegmentedControl) {
         let rating: Int
         if sender.selectedSegmentIndex == sender.numberOfSegments - 1 {
             rating = noRating
         } else {
             rating = sender.selectedSegmentIndex + 1
         }
-        ReviewHandler.addRating(name: nameLabel.text!, rating: rating)
+        ReviewHandler.addRating(nameLabel.text!, rating: rating)
     }
 
 }

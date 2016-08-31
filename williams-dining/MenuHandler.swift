@@ -26,7 +26,7 @@ public class MenuHandler: MenuHandlerProtocol {
         }
     }*/
 
-    private static let managedObjectContext = (UIApplication.shared().delegate as! AppDelegate).managedObjectContext
+    private static let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 
     private static let courseKey = "course"
     private static let mealTimeKey = "mealTime"
@@ -35,58 +35,62 @@ public class MenuHandler: MenuHandlerProtocol {
 
 
     public static func fetchByMealTimeAndDiningHall(mealTime: MealTime, diningHall: DiningHall) -> [CoreDataMenuItem] {
-        return fetchByMealTimeAndDiningHall(mealTime: mealTime, diningHall: diningHall, moc: self.managedObjectContext)
+        return fetchByMealTimeAndDiningHall(mealTime, diningHall: diningHall, moc: self.managedObjectContext)
     }
 
     public static func fetchByMealTimeAndDiningHall(mealTime: MealTime, diningHall: DiningHall, moc: NSManagedObjectContext) -> [CoreDataMenuItem] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
-        fetchRequest.sortDescriptors = [SortDescriptor(key: courseKey, ascending: true)]
+        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: courseKey, ascending: true)]
 
-        let diningHallPredicate = Predicate(format: valueForKeyMatchesParameter, diningHallKey, NSNumber(value: diningHall.intValue()))
-        let mealTimePredicate = Predicate(format: valueForKeyMatchesParameter, mealTimeKey, NSNumber(value: mealTime.intValue()))
+        let diningHallPredicate = NSPredicate(format: valueForKeyMatchesParameter, diningHallKey, NSNumber(integer: diningHall.intValue()))
+        let mealTimePredicate = NSPredicate(format: valueForKeyMatchesParameter, mealTimeKey, NSNumber(integer: mealTime.intValue()))
 
-        fetchRequest.predicate = CompoundPredicate(type: .and, subpredicates: [diningHallPredicate,mealTimePredicate])
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [diningHallPredicate,mealTimePredicate])
+//        fetchRequest.predicate = NSCompoundPredicate(type: .And, subpredicates: [diningHallPredicate,mealTimePredicate])
 
-        if let fetchResults = try? moc.fetch(fetchRequest) as? [CoreDataMenuItem] {
+        if let fetchResults = try? moc.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
             return fetchResults!
         }
         return []
     }
 
     public static func fetchDiningHalls(mealTime: MealTime?) -> [DiningHall] {
-        return fetchDiningHalls(mealTime: mealTime, moc: self.managedObjectContext)
+        return fetchDiningHalls(mealTime, moc: self.managedObjectContext)
     }
 
     public static func fetchDiningHalls(mealTime: MealTime?, moc: NSManagedObjectContext) -> [DiningHall] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
+        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
         if mealTime != nil {
-            fetchRequest.predicate = Predicate(format: valueForKeyMatchesParameter, mealTimeKey, NSNumber(value: mealTime!.intValue()))
+            fetchRequest.predicate = NSPredicate(format: valueForKeyMatchesParameter, mealTimeKey, NSNumber(integer: mealTime!.intValue()))
         }
         fetchRequest.propertiesToFetch = [diningHallKey]
         fetchRequest.returnsDistinctResults = true
-        fetchRequest.resultType = NSFetchRequestResultType.dictionaryResultType
+        fetchRequest.resultType = NSFetchRequestResultType.DictionaryResultType
 
-        if let fetchResults = try? moc.fetch(fetchRequest) as? [[String:Int]] {
+        if let fetchResults = try? moc.executeFetchRequest(fetchRequest) as? [[String:Int]] {
             return fetchResults!.map({DiningHall(num: $0[diningHallKey]!)})
         }
         return []
     }
 
     public static func fetchMealTimes(diningHall: DiningHall?) -> [MealTime] {
-        return fetchMealTimes(diningHall: diningHall, moc: self.managedObjectContext)
+        return fetchMealTimes(diningHall, moc: self.managedObjectContext)
     }
 
     public static func fetchMealTimes(diningHall: DiningHall?, moc: NSManagedObjectContext) -> [MealTime] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
+        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
         if diningHall != nil {
-            fetchRequest.predicate = Predicate(format: valueForKeyMatchesParameter, diningHallKey, NSNumber(value: diningHall!.intValue()))
+            fetchRequest.predicate = NSPredicate(format: valueForKeyMatchesParameter, diningHallKey, NSNumber(integer: diningHall!.intValue()))
         }
         fetchRequest.propertiesToFetch = [mealTimeKey]
         fetchRequest.returnsDistinctResults = true
-        fetchRequest.resultType = NSFetchRequestResultType.dictionaryResultType
+        fetchRequest.resultType = NSFetchRequestResultType.DictionaryResultType
 
-        if let fetchResults = try? moc.fetch(fetchRequest) as? [[String:Int]] {
-            return fetchResults!.map({MealTime(num: $0[mealTimeKey]!)}).sorted(isOrderedBefore: {(a,b) in (a.intValue() < b.intValue())})
+        if let fetchResults = try? moc.executeFetchRequest(fetchRequest) as? [[String:Int]] {
+            return fetchResults!
+                .map({MealTime(num: $0[mealTimeKey]!)})
+                .sort({(a,b) in (a.intValue() < b.intValue())})
+//            return fetchResults!.map({MealTime(num: $0[mealTimeKey]!)}).sorted({(a,b) in (a.intValue() < b.intValue())})
         }
         return []
     }
@@ -95,11 +99,11 @@ public class MenuHandler: MenuHandlerProtocol {
      Clears the data stored in CoreData for new menu-space.
      */
     internal static func clearCachedData() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreDataMenuItem")
+        let fetchRequest = NSFetchRequest(entityName: "CoreDataMenuItem")
         fetchRequest.includesPropertyValues = false
-        if let fetchResults = try? managedObjectContext.fetch(fetchRequest) as? [CoreDataMenuItem] {
+        if let fetchResults = try? managedObjectContext.executeFetchRequest(fetchRequest) as? [CoreDataMenuItem] {
             for item in fetchResults! {
-                managedObjectContext.delete(item)
+                managedObjectContext.deleteObject(item)
             }
         }
         do {
@@ -123,22 +127,22 @@ public class MenuHandler: MenuHandlerProtocol {
         let individualCompletion: (MenuItem) -> () = {
             (item: MenuItem) in
 
-            if FavoritesHandler.isAFavoriteFood(name: item.name) {
-                favoritesNotifier.addToFavoritesList(item: item)
+            if FavoritesHandler.isAFavoriteFood(item.name) {
+                favoritesNotifier.addToFavoritesList(item)
             }
         }
-        parseMenu(menu: menu, diningHall: diningHall, individualCompletion: individualCompletion, completionHandler: completionHandler, moc: self.managedObjectContext)
+        parseMenu(menu, diningHall: diningHall, individualCompletion: individualCompletion, completionHandler: completionHandler, moc: self.managedObjectContext)
     }
 
     internal static func parseMenu(menu: AnyObject, diningHall: DiningHall, individualCompletion: ((MenuItem) -> ())?, completionHandler: (() -> ())?, moc: NSManagedObjectContext ) {
         let completionFn = {
             (item: MenuItem) in
-            _ = CoreDataMenuItem.createInManagedObjectContext(moc: moc, menuItem: item)
+            _ = CoreDataMenuItem.createInManagedObjectContext(moc, menuItem: item)
             if let indComp = individualCompletion {
                 indComp(item)
             }
         }
-        parseMenu(menu: menu, diningHall: diningHall, individualCompletion: completionFn, completionHandler: completionHandler)
+        parseMenu(menu, diningHall: diningHall, individualCompletion: completionFn, completionHandler: completionHandler)
         /*        if let menuItems: [[String:AnyObject]] = menu as? [[String:AnyObject]] {
             for itemDict in menuItems {
                 let menuItem = MenuItem(itemDict: itemDict, diningHall: diningHall)

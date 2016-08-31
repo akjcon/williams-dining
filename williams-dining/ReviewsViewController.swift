@@ -23,7 +23,7 @@ class RoundedBorderedButton: UIButton {
     private func sharedInit() {
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 5
-        self.layer.borderColor = tintColor.cgColor
+        self.layer.borderColor = tintColor.CGColor
     }
 
 }
@@ -47,66 +47,66 @@ class ReviewsViewController: DefaultTableViewController {
     private let userErrorTitle = "No feedback provided"
     private let userErrorBody = "Please provide ratings or a suggestion before submitting."
 
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default().addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeShown(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default().addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeShown(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
         self.refreshView()
-        setSubmitButtonTitle(title: "Submit")
+        setSubmitButtonTitle("Submit")
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.refreshView()
-        NotificationCenter.default().removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default().removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        setSubmitButtonTitle(title: "Submit")
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        setSubmitButtonTitle("Submit")
     }
 
     func refreshView() {
-        pickerDataSource = MenuHandler.fetchDiningHalls(mealTime: nil)
+        pickerDataSource = MenuHandler.fetchDiningHalls(nil)
         pickerView.selectRow(0, inComponent: 0, animated: true)
-        DispatchQueue.main.async(execute: {
+        dispatch_async(dispatch_get_main_queue(), {
             self.tableView.reloadData()
             self.pickerView.reloadAllComponents()
         })
     }
 
-    @IBAction func userDidTapOutsideTextArea(_ sender: UITapGestureRecognizer) {
+    @IBAction func userDidTapOutsideTextArea(sender: UITapGestureRecognizer) {
         if suggestionBox.isFirstResponder() {
             suggestionBox.resignFirstResponder()
         }
-        setSubmitButtonTitle(title: "Submit")
+        setSubmitButtonTitle("Submit")
     }
 
     func setSubmitButtonTitle(title: String) {
-        submitButton.setTitle(title, for: [])
+        submitButton.setTitle(title, forState: [])
     }
 
-    func keyboardWillBeShown(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue() {
+    func keyboardWillBeShown(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
             self.view.window!.frame.origin.y = -1 * keyboardSize.height
         }
     }
 
-    func keyboardWillBeHidden(notification: Notification) {
-        self.view.window!.frame = UIScreen.main().bounds
+    func keyboardWillBeHidden(notification: NSNotification) {
+        self.view.window!.frame = UIScreen.mainScreen().bounds
     }
 
     @IBAction func submitReviews() {
 
-        submitButton.isUserInteractionEnabled = false
-        submitButton.isSelected = true
+        submitButton.userInteractionEnabled = false
+        submitButton.selected = true
 
-        let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[pickerView.selectedRow(inComponent: 1)]
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
+        let selectedMealTime = MenuHandler.fetchMealTimes(selectedDiningHall)[pickerView.selectedRowInComponent(1)]
 
-        ReviewHandler.submitReviews(diningHall: selectedDiningHall, mealTime: selectedMealTime, suggestion: suggestionBox.text) {
+        ReviewHandler.submitReviews(selectedDiningHall, mealTime: selectedMealTime, suggestion: suggestionBox.text) {
             (userProvidedFeedback: Bool, serverError: Bool) in
-            self.submitButton.isUserInteractionEnabled = true
-            self.submitButton.isSelected = false
+            self.submitButton.userInteractionEnabled = true
+            self.submitButton.selected = false
 
-            self.displayErrorMessage(title: self.comingSoonTitle, body: self.comingSoonBody)
+            self.displayErrorMessage(self.comingSoonTitle, body: self.comingSoonBody)
 
             /*
             if !userProvidedFeedback {
@@ -124,18 +124,18 @@ class ReviewsViewController: DefaultTableViewController {
 
     private func displayErrorMessage(title: String, body: String) {
         if alertController == nil {
-            alertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
-            alertController?.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            alertController = UIAlertController(title: title, message: body, preferredStyle: .Alert)
+            alertController?.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
         } else {
             alertController?.title = title
             alertController?.message = body
         }
-        self.present(alertController!, animated: true, completion: nil)
+        self.presentViewController(alertController!, animated: true, completion: nil)
     }
 
     func resetSuggestionBoxToPlaceholder() {
         suggestionBox.text = suggestionBoxPlaceholder
-        suggestionBox.textColor = UIColor.lightGray()
+        suggestionBox.textColor = UIColor.lightGrayColor()
     }
 
 }
@@ -143,15 +143,15 @@ class ReviewsViewController: DefaultTableViewController {
 let suggestionBoxPlaceholder = "Enter your feedback for Williams Dining Services here."
 
 extension ReviewsViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
+    func textViewDidBeginEditing(textView: UITextView) {
         if textView.text == suggestionBoxPlaceholder {
             textView.text = ""
-            textView.textColor = UIColor.black()
+            textView.textColor = UIColor.blackColor()
         }
         textView.becomeFirstResponder()
     }
 
-    func textViewDidEndEditing(_ textView: UITextView) {
+    func textViewDidEndEditing(textView: UITextView) {
         if textView.text == "" {
             resetSuggestionBoxToPlaceholder()
         }
@@ -160,36 +160,36 @@ extension ReviewsViewController: UITextViewDelegate {
 }
 
 extension ReviewsViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Ratings"
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
 
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard pickerDataSource != [.Error] && pickerDataSource != [] else {
             return 0
         }
-        let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[pickerView.selectedRow(inComponent: 1)]
-        return MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall).count
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
+        let selectedMealTime = MenuHandler.fetchMealTimes(selectedDiningHall)[pickerView.selectedRowInComponent(1)]
+        return MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: selectedDiningHall).count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reviewTableViewCell") as! ReviewTableViewCell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("reviewTableViewCell") as! ReviewTableViewCell
         guard pickerDataSource != [.Error] && pickerDataSource != [] else {
             return cell
         }
-        let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-        let selectedMealTime = MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[pickerView.selectedRow(inComponent: 1)]
+        let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
+        let selectedMealTime = MenuHandler.fetchMealTimes(selectedDiningHall)[pickerView.selectedRowInComponent(1)]
 
-        let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(mealTime: selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
+        let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(selectedMealTime, diningHall: selectedDiningHall)[indexPath.row]
 
         cell.nameLabel.text = menuItem.name
-        let rating = ReviewHandler.ratingForName(name: menuItem.name)
+        let rating = ReviewHandler.ratingForName(menuItem.name)
         if rating == noRating {
             cell.ratingControl.selectedSegmentIndex = cell.ratingControl.numberOfSegments - 1
         } else {
@@ -201,11 +201,11 @@ extension ReviewsViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension ReviewsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 2
     }
 
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         guard component == 0 || component == 1 else {
             return 0
         }
@@ -215,24 +215,24 @@ extension ReviewsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             guard pickerDataSource != [.Error] && pickerDataSource != [] else {
                 return 0
             }
-            let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-            return MenuHandler.fetchMealTimes(diningHall: selectedDiningHall).count
+            let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
+            return MenuHandler.fetchMealTimes(selectedDiningHall).count
         }
     }
 
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if component == 0 {
             return pickerDataSource[row].stringValue()
         } else {
             guard pickerDataSource != [.Error] && pickerDataSource != [] else {
                 return ""
             }
-            let selectedDiningHall = pickerDataSource[pickerView.selectedRow(inComponent: 0)]
-            return MenuHandler.fetchMealTimes(diningHall: selectedDiningHall)[row].stringValue()
+            let selectedDiningHall = pickerDataSource[pickerView.selectedRowInComponent(0)]
+            return MenuHandler.fetchMealTimes(selectedDiningHall)[row].stringValue()
         }
     }
 
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         if component == 0 {
             pickerView.reloadComponent(1)

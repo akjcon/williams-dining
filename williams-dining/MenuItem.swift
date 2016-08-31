@@ -25,13 +25,13 @@ public struct MenuItem {
 
     init(itemDict: [String:AnyObject], diningHall: DiningHall) {
         let foodString = itemDict[foodNameKey] as! String
-        self.isGlutenFree = foodString.contains(glutenFreeKey)
-        self.isVegan = foodString.contains(veganKey)
+        self.isGlutenFree = foodString.containsString(glutenFreeKey)
+        self.isVegan = foodString.containsString(veganKey)
 
         if isGlutenFree {
-            self.name = foodString.substring(to: foodString.indexOf(string: glutenFreeKey))
+            self.name = foodString.substringToIndex(foodString.indexOf(glutenFreeKey))
         } else if isVegan {
-            self.name = foodString.substring(to: foodString.indexOf(string: veganKey))
+            self.name = foodString.substringToIndex(foodString.indexOf(veganKey))
         } else {
             self.name = foodString
         }
@@ -43,6 +43,6 @@ public struct MenuItem {
 
 extension String {
     func indexOf(string: String) -> String.Index {
-        return range(of: string, options: .literalSearch, range: nil, locale: nil)?.lowerBound ?? startIndex
+        return rangeOfString(string, options: .LiteralSearch, range: nil, locale: nil)?.startIndex ?? startIndex
     }
 }

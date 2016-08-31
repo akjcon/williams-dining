@@ -27,7 +27,8 @@ class FavoritesNotifier {
     */
     internal func sendNotifications() {
         let date = NSDate()
-        let dateAtStartOfDay = Calendar.current().startOfDay(for: date as Date)
+        let dateAtStartOfDay = NSCalendar.currentCalendar().startOfDayForDate(date)
+//        let dateAtStartOfDay = NSCalendar.currentCalendar().startOfDay(for: date as NSDate)
         var breakfastNotificationStr: String = ""
         var brunchNotificationStr: String = ""
         var lunchNotificationStr: String = ""
@@ -38,41 +39,43 @@ class FavoritesNotifier {
             let itemStr = "\(item.name) is being served at \(item.diningHall)\n"
             switch(item.mealTime) {
             case .Breakfast:
-                breakfastNotificationStr.append(itemStr)
+                breakfastNotificationStr.appendContentsOf(itemStr)
             case .Brunch:
-                brunchNotificationStr.append(itemStr)
+                brunchNotificationStr.appendContentsOf(itemStr)
             case .Lunch:
-                lunchNotificationStr.append(itemStr)
+                lunchNotificationStr.appendContentsOf(itemStr)
             case .Dinner:
-                dinnerNotificationStr.append(itemStr)
+                dinnerNotificationStr.appendContentsOf(itemStr)
             case .Dessert:
-                dessertNotificationStr.append(itemStr)
+                dessertNotificationStr.appendContentsOf(itemStr)
             case _:
                 break
             }
         }
 
-        let fourPmWilliamstown = Date(timeInterval: 16*3600, since: dateAtStartOfDay)
+        let fourPmWilliamstown = NSDate(timeInterval: 16*3600, sinceDate: dateAtStartOfDay)
         // if after 4 PM, then don't bother to send any notifications.
-        if NSDate().compare(fourPmWilliamstown as Date) != .orderedAscending {
+        if NSDate().compare(fourPmWilliamstown as NSDate) != .OrderedAscending {
             return
         } else if !dinnerNotificationStr.isEmpty {
-            let trimmedstr = dinnerNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            let trimmedstr = dinnerNotificationStr.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+//            let trimmedstr = dinnerNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             let notification = UILocalNotification()
             notification.alertTitle = "Dinner"
             notification.alertBody = trimmedstr
             notification.alertAction = "view"
             notification.fireDate = fourPmWilliamstown
-            UIApplication.shared().scheduleLocalNotification(notification)
+            UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
 
-        let tenThirtyAmWilliamstown = Date(timeInterval: 10.5*3600, since: dateAtStartOfDay)
+        let tenThirtyAmWilliamstown = NSDate(timeInterval: 10.5*3600, sinceDate: dateAtStartOfDay)
         // if after 10:30, don't send lunch (or earlier) notifications
-        if Date().compare(tenThirtyAmWilliamstown) != .orderedAscending {
+        if NSDate().compare(tenThirtyAmWilliamstown) != .OrderedAscending {
             return
         } else if !lunchNotificationStr.isEmpty {
 
-            let trimmedstr = lunchNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            let trimmedstr = lunchNotificationStr.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+//            let trimmedstr = lunchNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
 
             let notification = UILocalNotification()
@@ -80,50 +83,53 @@ class FavoritesNotifier {
             notification.alertBody = trimmedstr
             notification.alertAction = "view"
             notification.fireDate = tenThirtyAmWilliamstown
-            UIApplication.shared().scheduleLocalNotification(notification)
+            UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
 
-        let tenAmWilliamstown = Date(timeInterval: 10*3600, since: dateAtStartOfDay)
+        let tenAmWilliamstown = NSDate(timeInterval: 10*3600, sinceDate: dateAtStartOfDay)
         // if after 10, don't send brunch or dessert or breakfast
-        if NSDate().compare(tenAmWilliamstown) != .orderedAscending {
+        if NSDate().compare(tenAmWilliamstown) != .OrderedAscending {
             return
         } else {
             if !brunchNotificationStr.isEmpty {
 
-                let trimmedstr = brunchNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                let trimmedstr = brunchNotificationStr.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+//                let trimmedstr = brunchNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
                 let notification = UILocalNotification()
                 notification.alertTitle = "Brunch"
                 notification.alertBody = trimmedstr
                 notification.alertAction = "view"
                 notification.fireDate = tenAmWilliamstown
-                UIApplication.shared().scheduleLocalNotification(notification)
+                UIApplication.sharedApplication().scheduleLocalNotification(notification)
             }
             if !dessertNotificationStr.isEmpty {
-                let trimmedstr = dessertNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                let trimmedstr = dessertNotificationStr.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+//                let trimmedstr = dessertNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
                 let notification = UILocalNotification()
                 notification.alertTitle = "Dessert"
                 notification.alertBody = trimmedstr
                 notification.alertAction = "view"
                 notification.fireDate = tenAmWilliamstown
-                UIApplication.shared().scheduleLocalNotification(notification)
+                UIApplication.sharedApplication().scheduleLocalNotification(notification)
             }
         }
 
-        let sevenAmWilliamstown = Date(timeInterval: 7*3600, since: dateAtStartOfDay)
-        if NSDate().compare(sevenAmWilliamstown) != .orderedAscending {
+        let sevenAmWilliamstown = NSDate(timeInterval: 7*3600, sinceDate: dateAtStartOfDay)
+        if NSDate().compare(sevenAmWilliamstown) != .OrderedAscending {
             return
         } else if !breakfastNotificationStr.isEmpty {
 
-            let trimmedstr = breakfastNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            let trimmedstr = breakfastNotificationStr.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+//            let trimmedstr = breakfastNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
             let notification = UILocalNotification()
             notification.alertTitle = "Breakfast"
             notification.alertBody = trimmedstr
             notification.alertAction = "view"
             notification.fireDate = sevenAmWilliamstown
-            UIApplication.shared().scheduleLocalNotification(notification)
+            UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
     }
 }

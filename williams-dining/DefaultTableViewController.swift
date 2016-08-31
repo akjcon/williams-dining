@@ -11,10 +11,10 @@ import UIKit
 
 public class DefaultTableViewController: PurpleStatusBarViewController {
 
-    public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
         header.contentView.backgroundColor = Style.purpleColor
-        header.textLabel!.textColor = UIColor.yellow()
+        header.textLabel!.textColor = UIColor.yellowColor()
         header.alpha = 0.9
     }
 }

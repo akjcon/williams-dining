@@ -77,7 +77,7 @@ public enum MealTime {
     static let allCases = [Breakfast,Lunch,Dinner,Brunch,Dessert]
 
     init(mealTime: String) {
-        switch(mealTime.lowercased()) {
+        switch(mealTime.lowercaseString) {
         case breakfastKey:
             self = .Breakfast
         case lunchKey:

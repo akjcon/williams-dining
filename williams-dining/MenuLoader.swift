@@ -15,8 +15,8 @@ import UIKit
 class MenuLoader {
 
     private static let apiBaseUrl = "https://dining.williams.edu/wp-json/dining/service_units/"
-    private static let session = URLSession.shared()
-    private static let appDelegate = UIApplication.shared().delegate as! AppDelegate
+    private static let session = NSURLSession.sharedSession()
+    private static let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     /**
      This queries the API, one dining hall at a time, loading the results into
@@ -32,13 +32,13 @@ class MenuLoader {
         let favoritesNotifier = FavoritesNotifier()
 
         for diningHall in DiningHall.allCases {
-            self.getMenu(diningHall: diningHall,favoritesNotifier: favoritesNotifier) {
+            self.getMenu(diningHall,favoritesNotifier: favoritesNotifier) {
                 menusRemaining -= 1
-                NotificationCenter.default().post(name: incrementLoadingProgressBarKey, object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName(incrementLoadingProgressBarKey, object: nil)
                 print("Fetched a menu. There are " + String(menusRemaining) + " menus remaining.")
                 if menusRemaining == 0 {
                     print("Closing")
-                    completionHandler(.newData)
+                    completionHandler(.NewData)
                     appDelegate.saveContext()
                     favoritesNotifier.sendNotifications()
                 }
@@ -55,19 +55,18 @@ class MenuLoader {
      */
     private static func getMenu(diningHall: DiningHall, favoritesNotifier: FavoritesNotifier, completionHandler: () -> ()) {
         let url = apiBaseUrl + String(diningHall.getAPIValue())
-        var request: URLRequest = URLRequest(url: URL(string: url)!)
-        request.httpMethod = httpGet
+        let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPMethod = httpGet
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let task = session.dataTask(with: request, completionHandler: {
+        let task = session.dataTaskWithRequest(request, completionHandler: {
             (data, response, error) in
-            guard error == nil && (response as! HTTPURLResponse).statusCode == 200 else {
+            guard error == nil && (response as! NSHTTPURLResponse).statusCode == 200 else {
                 print(error)
                 self.appDelegate.loadingDataHadError()
                 return
             }
-            if let jsonObject: AnyObject = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) {
-                MenuHandler.parseMenu(menu: jsonObject, diningHall: diningHall, favoritesNotifier: favoritesNotifier) {
+            if let jsonObject: AnyObject = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) {
+                MenuHandler.parseMenu(jsonObject, diningHall: diningHall, favoritesNotifier: favoritesNotifier) {
                     completionHandler()
                 }
             } else {

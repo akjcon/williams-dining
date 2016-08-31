@@ -20,7 +20,7 @@ public class ReviewHandler {
     private static let mealTimeKey = "meal_time"
     private static let fieldId = 1
     private static let formId = 20
-    private static let session = URLSession.shared()
+    private static let session = NSURLSession.sharedSession()
 
     private static var ratings: [String:Int] = [String:Int]()
 
@@ -29,7 +29,8 @@ public class ReviewHandler {
     }
 
     internal static func removeRating(name: String) {
-        ratings.removeValue(forKey: name)
+        ratings.removeValueForKey(name)
+//        ratings.removeValue(forKey: name)
     }
 
     internal static func clearRatings() {
@@ -59,7 +60,7 @@ public class ReviewHandler {
         }
 
         reviewStr = diningHall.stringValue() + "***" + mealTime.stringValue() + "***" + reviewStr
-        submitReviewString(reviewStr: reviewStr) {
+        submitReviewString(reviewStr) {
             (result: Bool) in
             completion(userProvidedFeedback: true,serverError: result)
         }
@@ -73,17 +74,17 @@ public class ReviewHandler {
         let url = baseUrl + "/forms"
 //        let url = baseUrl + "/forms/" + String(formId) + "/submissions"
 //        print(url)
-        var urlRequest = URLRequest(url: URL(string: url)!)
-        urlRequest.httpMethod = httpGet
+        let urlRequest = NSMutableURLRequest(URL: NSURL(string: url)!)
+        urlRequest.HTTPMethod = httpGet
 //        urlRequest.httpMethod = httpPost
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let fieldHeader = "input_" + String(fieldId)
         let dataToSubmit = [fieldHeader:reviewStr]
         // can build this out as custom later
-        urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: dataToSubmit, options: [])
+        urlRequest.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(dataToSubmit, options: [])
 
-        let task = session.dataTask(with: urlRequest, completionHandler: {
+        let task = session.dataTaskWithRequest(urlRequest, completionHandler: {
             (data, response, error) in
             guard error == nil else {
                 print(error)
@@ -91,14 +92,14 @@ public class ReviewHandler {
                 completionHandler(true)
                 return
             }
-            guard (response as! HTTPURLResponse).statusCode == 200 else {
+            guard (response as! NSHTTPURLResponse).statusCode == 200 else {
                 print("The following status code is no good.")
-                print((response as! HTTPURLResponse).statusCode)
+                print((response as! NSHTTPURLResponse).statusCode)
                 completionHandler(true)
                 return
             }
 
-            if let jsonObject: AnyObject = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) {
+            if let jsonObject: AnyObject = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) {
                 print(jsonObject)
                 print("object finished")
                 completionHandler(false)

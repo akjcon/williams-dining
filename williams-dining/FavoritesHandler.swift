@@ -10,10 +10,10 @@ import Foundation
 import CoreData
 import UIKit
 
-
-let reloadFavoritesTableKey: NSNotification.Name = NSNotification.Name("reloadFavoritesTable")
-let reloadMealTableViewKey = NSNotification.Name("reloadMealTableView")
-let reloadDiningHallTableViewKey = NSNotification.Name("reloadDiningHallTableView")
+let reloadFavoritesTableKey = "reloadFavoritesTable"
+//let reloadFavoritesTableKey: NSNotification.Name = NSNotification.Name("reloadFavoritesTable")
+let reloadMealTableViewKey = "reloadMealTableView"
+let reloadDiningHallTableViewKey = "reloadDiningHallTableView"
 
 
 /**
@@ -21,7 +21,8 @@ let reloadDiningHallTableViewKey = NSNotification.Name("reloadDiningHallTableVie
  */
 public class FavoritesHandler {
 
-    private static let appDelegate = UIApplication.shared().delegate as! AppDelegate
+    private static let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//    private static let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     private static var favorites: Set<String>!
     private static var favoriteFoods: [FavoriteFood]!
     
@@ -29,7 +30,7 @@ public class FavoritesHandler {
      Insert a favorite food into the database
      */
     internal static func addItemToFavorites(name: String) {
-        _ = FavoriteFood.createInManagedObjectContext(moc: appDelegate.managedObjectContext, name: name)
+        _ = FavoriteFood.createInManagedObjectContext(appDelegate.managedObjectContext, name: name)
         appDelegate.saveContext()
         updateFavorites()
     }
@@ -48,7 +49,7 @@ public class FavoritesHandler {
         guard let favFood = food else {
             return
         }
-        appDelegate.managedObjectContext.delete(favFood)
+        appDelegate.managedObjectContext.deleteObject(favFood)
         appDelegate.saveContext()
         updateFavorites()
     }
@@ -75,7 +76,8 @@ public class FavoritesHandler {
         for f in favorites {
             favs.append(f)
         }
-        return favs.sorted()
+        return favs.sort()
+//        return favs.sorted()
     }
 
     /**
@@ -86,20 +88,22 @@ public class FavoritesHandler {
         favorites = Set<String>()
         favoriteFoods.forEach({favorites.insert($0.name!)})
 
-        NotificationCenter.default().post(name: reloadFavoritesTableKey, object: nil)
-        NotificationCenter.default().post(name: reloadMealTableViewKey, object: nil)
-        NotificationCenter.default().post(name: reloadDiningHallTableViewKey, object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(reloadFavoritesTableKey, object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(reloadMealTableViewKey, object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(reloadDiningHallTableViewKey, object: nil)
     }
 
     /**
      Fetch the user favorites from memory
      */
     private static func fetchFavorites() -> [FavoriteFood] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteFood")
-        let sortDescriptor = SortDescriptor(key: "name", ascending: true)
+        let fetchRequest = NSFetchRequest(entityName: "FavoriteFood")
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteFood")
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
 
-        if let fetchResults = try? appDelegate.managedObjectContext.fetch(fetchRequest) as? [FavoriteFood] {
+        if let fetchResults = try? appDelegate.managedObjectContext.executeFetchRequest(fetchRequest) as? [FavoriteFood] {
+//        if let fetchResults = try? appDelegate.managedObjectContext.fetch(fetchRequest) as? [FavoriteFood] {
 
             return fetchResults!
         }

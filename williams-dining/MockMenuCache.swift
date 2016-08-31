@@ -23,10 +23,10 @@ class MockMenuCache {
     ]
 
     static var mockManagedObjectContext: NSManagedObjectContext = {
-        let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle.main()])!
+        let managedObjectModel = NSManagedObjectModel.mergedModelFromBundles([NSBundle.mainBundle()])!
         let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         do {
-            try persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil, options: nil)
+            try persistentStoreCoordinator.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
         } catch {
             print("Initializing in-memory persistent store failed")
         }
@@ -41,12 +41,12 @@ class MockMenuCache {
         // insert some data
 
         for item in diningHallJSONDict {
-            if let path = Bundle.main().pathForResource(item.value, ofType: "json") {
+            if let path = NSBundle.mainBundle().pathForResource(item.1, ofType: "json") {
                 do {
-                    let data = try Data(contentsOf: URL(fileURLWithPath: path), options: NSData.ReadingOptions.dataReadingMappedIfSafe)
-                    if let jsonResult: AnyObject = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) {
-                        MenuHandler.parseMenu(menu: jsonResult, diningHall: item.key, individualCompletion: nil, completionHandler: nil, moc: mockManagedObjectContext)
-                        print(item.key)
+                    let data = try NSData(contentsOfURL: NSURL(fileURLWithPath: path), options: NSDataReadingOptions.DataReadingMappedIfSafe)
+                    if let jsonResult: AnyObject = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) {
+                        MenuHandler.parseMenu(jsonResult, diningHall: item.0, individualCompletion: nil, completionHandler: nil, moc: mockManagedObjectContext)
+                        //print(item.key)
                     }
                     // finish this up
                 } catch let error as NSError {
