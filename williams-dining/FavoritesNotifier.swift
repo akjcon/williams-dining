@@ -27,7 +27,7 @@ class FavoritesNotifier {
     */
     internal func sendNotifications() {
         let date = NSDate()
-        let dateAtStartOfDay = Calendar.current().startOfDay(for: date as Date)
+        let dateAtStartOfDay = Calendar.current.startOfDay(for: date as Date)
         var breakfastNotificationStr: String = ""
         var brunchNotificationStr: String = ""
         var lunchNotificationStr: String = ""
@@ -63,7 +63,7 @@ class FavoritesNotifier {
             notification.alertBody = trimmedstr
             notification.alertAction = "view"
             notification.fireDate = fourPmWilliamstown
-            UIApplication.shared().scheduleLocalNotification(notification)
+            UIApplication.shared.scheduleLocalNotification(notification)
         }
 
         let tenThirtyAmWilliamstown = Date(timeInterval: 10.5*3600, since: dateAtStartOfDay)
@@ -80,7 +80,7 @@ class FavoritesNotifier {
             notification.alertBody = trimmedstr
             notification.alertAction = "view"
             notification.fireDate = tenThirtyAmWilliamstown
-            UIApplication.shared().scheduleLocalNotification(notification)
+            UIApplication.shared.scheduleLocalNotification(notification)
         }
 
         let tenAmWilliamstown = Date(timeInterval: 10*3600, since: dateAtStartOfDay)
@@ -97,7 +97,7 @@ class FavoritesNotifier {
                 notification.alertBody = trimmedstr
                 notification.alertAction = "view"
                 notification.fireDate = tenAmWilliamstown
-                UIApplication.shared().scheduleLocalNotification(notification)
+                UIApplication.shared.scheduleLocalNotification(notification)
             }
             if !dessertNotificationStr.isEmpty {
                 let trimmedstr = dessertNotificationStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -107,7 +107,7 @@ class FavoritesNotifier {
                 notification.alertBody = trimmedstr
                 notification.alertAction = "view"
                 notification.fireDate = tenAmWilliamstown
-                UIApplication.shared().scheduleLocalNotification(notification)
+                UIApplication.shared.scheduleLocalNotification(notification)
             }
         }
 
@@ -123,7 +123,7 @@ class FavoritesNotifier {
             notification.alertBody = trimmedstr
             notification.alertAction = "view"
             notification.fireDate = sevenAmWilliamstown
-            UIApplication.shared().scheduleLocalNotification(notification)
+            UIApplication.shared.scheduleLocalNotification(notification)
         }
     }
 }

@@ -19,8 +19,8 @@ public class CoreDataMenuItem: NSManagedObject {
         let newItem = NSEntityDescription.insertNewObject(forEntityName: "CoreDataMenuItem", into: moc) as! CoreDataMenuItem
         newItem.name = menuItem.name
         newItem.course = menuItem.course
-        newItem.diningHall = menuItem.diningHall.intValue()
-        newItem.mealTime = menuItem.mealTime.intValue()
+        newItem.diningHall = NSNumber(integerLiteral: menuItem.diningHall.intValue())
+        newItem.mealTime = NSNumber(integerLiteral: menuItem.mealTime.intValue())
 
 
         // BUG:

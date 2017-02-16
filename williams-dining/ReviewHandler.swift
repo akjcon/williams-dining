@@ -20,7 +20,7 @@ public class ReviewHandler {
     private static let mealTimeKey = "meal_time"
     private static let fieldId = 1
     private static let formId = 20
-    private static let session = URLSession.shared()
+    private static let session = URLSession.shared
 
     private static var ratings: [String:Int] = [String:Int]()
 
@@ -44,7 +44,7 @@ public class ReviewHandler {
         }
     }
 
-    internal static func submitReviews(diningHall: DiningHall, mealTime: MealTime, suggestion: String, completion: (userProvidedFeedback: Bool, serverError: Bool) -> ()) {
+    internal static func submitReviews(diningHall: DiningHall, mealTime: MealTime, suggestion: String, completion: @escaping (_ userProvidedFeedback: Bool, _ serverError: Bool) -> ()) {
 
         var reviewStr = ""
         ratings.keys.forEach({reviewStr += $0 + ":" + String(ratings[$0]!) + "***"})
@@ -54,20 +54,20 @@ public class ReviewHandler {
         }
 
         guard reviewStr != "" else {
-            completion(userProvidedFeedback: false, serverError: false)
+            completion(false, false)
             return
         }
 
         reviewStr = diningHall.stringValue() + "***" + mealTime.stringValue() + "***" + reviewStr
         submitReviewString(reviewStr: reviewStr) {
             (result: Bool) in
-            completion(userProvidedFeedback: true,serverError: result)
+            completion(true,result)
         }
 
 
     }
 
-    private static func submitReviewString(reviewStr: String, completionHandler: (Bool) -> ()) {
+    private static func submitReviewString(reviewStr: String, completionHandler: @escaping (Bool) -> ()) {
         print(reviewStr)
 
         let url = baseUrl + "/forms"
@@ -86,7 +86,7 @@ public class ReviewHandler {
         let task = session.dataTask(with: urlRequest, completionHandler: {
             (data, response, error) in
             guard error == nil else {
-                print(error)
+                print(error!)
                 print("There was an actual error, seen above ^.")
                 completionHandler(true)
                 return
@@ -98,7 +98,7 @@ public class ReviewHandler {
                 return
             }
 
-            if let jsonObject: AnyObject = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) {
+            if let jsonObject: AnyObject = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject? {
                 print(jsonObject)
                 print("object finished")
                 completionHandler(false)

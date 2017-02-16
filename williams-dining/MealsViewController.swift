@@ -26,13 +26,13 @@ public class MealsViewController: DefaultTableViewController {
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default().addObserver(self, selector: #selector(MealsViewController.refreshTable), name: reloadMealTableViewKey, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MealsViewController.refreshTable), name: reloadMealTableViewKey, object: nil)
         self.refreshView()
     }
 
     override public func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NotificationCenter.default().removeObserver(self, name: reloadMealTableViewKey, object: nil)
+        NotificationCenter.default.removeObserver(self, name: reloadMealTableViewKey, object: nil)
         self.refreshView()
     }
 
@@ -43,7 +43,7 @@ public class MealsViewController: DefaultTableViewController {
     }
 
     @IBAction func refreshButtonWasClicked(_ sender: UIBarButtonItem) {
-        (UIApplication.shared().delegate as! AppDelegate).updateData()
+        (UIApplication.shared.delegate as! AppDelegate).updateData()
     }
 
     func refreshView() {
@@ -108,7 +108,7 @@ extension MealsViewController: UITableViewDataSource, UITableViewDelegate {
         if FavoritesHandler.isAFavoriteFood(name: menuItem.name) {
             cell.backgroundColor = Style.yellowColor
         } else {
-            cell.backgroundColor = UIColor.clear()
+            cell.backgroundColor = UIColor.clear
         }
 
         return cell;

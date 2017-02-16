@@ -15,8 +15,8 @@ import UIKit
 class MenuLoader {
 
     private static let apiBaseUrl = "https://dining.williams.edu/wp-json/dining/service_units/"
-    private static let session = URLSession.shared()
-    private static let appDelegate = UIApplication.shared().delegate as! AppDelegate
+    private static let session = URLSession.shared
+    private static let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     /**
      This queries the API, one dining hall at a time, loading the results into
@@ -26,7 +26,7 @@ class MenuLoader {
      - parameters:
         - completionHandler: a function to call at completion
     */
-    internal static func fetchMenusFromAPI(completionHandler: (UIBackgroundFetchResult) -> Void) {
+    internal static func fetchMenusFromAPI(completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         var menusRemaining = 5
         MenuHandler.clearCachedData()
         let favoritesNotifier = FavoritesNotifier()
@@ -34,7 +34,7 @@ class MenuLoader {
         for diningHall in DiningHall.allCases {
             self.getMenu(diningHall: diningHall,favoritesNotifier: favoritesNotifier) {
                 menusRemaining -= 1
-                NotificationCenter.default().post(name: incrementLoadingProgressBarKey, object: nil)
+                NotificationCenter.default.post(name: incrementLoadingProgressBarKey, object: nil)
                 print("Fetched a menu. There are " + String(menusRemaining) + " menus remaining.")
                 if menusRemaining == 0 {
                     print("Closing")
@@ -53,7 +53,7 @@ class MenuLoader {
         - favoritesNotifier: the FavoritesNotifier that will handle notifications
         - completionHandler: a function to call at completion
      */
-    private static func getMenu(diningHall: DiningHall, favoritesNotifier: FavoritesNotifier, completionHandler: () -> ()) {
+    private static func getMenu(diningHall: DiningHall, favoritesNotifier: FavoritesNotifier, completionHandler: @escaping () -> ()) {
         let url = apiBaseUrl + String(diningHall.getAPIValue())
         var request: URLRequest = URLRequest(url: URL(string: url)!)
         request.httpMethod = httpGet
@@ -62,11 +62,11 @@ class MenuLoader {
         let task = session.dataTask(with: request, completionHandler: {
             (data, response, error) in
             guard error == nil && (response as! HTTPURLResponse).statusCode == 200 else {
-                print(error)
+                print(error!)
                 self.appDelegate.loadingDataHadError()
                 return
             }
-            if let jsonObject: AnyObject = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) {
+            if let jsonObject: AnyObject = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject? {
                 MenuHandler.parseMenu(menu: jsonObject, diningHall: diningHall, favoritesNotifier: favoritesNotifier) {
                     completionHandler()
                 }

@@ -35,9 +35,9 @@ class MenuHandlerTests: XCTestCase {
 //            print("finished")
             XCTAssertTrue(true)
         }
-        if let path = Bundle.main().pathForResource("Whitmans", ofType: "json") {
+        if let path = Bundle.main.path(forResource: "Whitmans", ofType: "json") {
             do {
-                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: NSData.ReadingOptions.dataReadingMappedIfSafe)
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: Data.ReadingOptions.dataReadingMappedIfSafe)
                 if let jsonResult: AnyObject = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) {
                     MenuHandler.parseMenu(menu: jsonResult, diningHall: .Whitmans, individualCompletion: validate, completionHandler: finished)
                 }

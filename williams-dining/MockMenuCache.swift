@@ -23,7 +23,7 @@ class MockMenuCache {
     ]
 
     static var mockManagedObjectContext: NSManagedObjectContext = {
-        let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle.main()])!
+        let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle.main])!
         let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         do {
             try persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil, options: nil)
@@ -41,10 +41,10 @@ class MockMenuCache {
         // insert some data
 
         for item in diningHallJSONDict {
-            if let path = Bundle.main().pathForResource(item.value, ofType: "json") {
+            if let path = Bundle.main.path(forResource: item.value, ofType: "json") {
                 do {
-                    let data = try Data(contentsOf: URL(fileURLWithPath: path), options: NSData.ReadingOptions.dataReadingMappedIfSafe)
-                    if let jsonResult: AnyObject = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) {
+                    let data = try Data(contentsOf: URL(fileURLWithPath: path), options: NSData.ReadingOptions.mappedIfSafe)
+                    if let jsonResult: AnyObject = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject? {
                         MenuHandler.parseMenu(menu: jsonResult, diningHall: item.key, individualCompletion: nil, completionHandler: nil, moc: mockManagedObjectContext)
                         print(item.key)
                     }

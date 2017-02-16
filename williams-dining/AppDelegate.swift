@@ -15,16 +15,16 @@ extension Date {
     func dayIsEarlierThan(otherDate:
 
         Date) -> Bool {
-        let calendar = Calendar.current()
-        let thisComponents = calendar.components([.day, .month, .year], from: self)
-        let otherComponents = calendar.components([.day, .month, .year], from: otherDate)
-        if thisComponents.year < otherComponents.year {
+        let calendar = Calendar.current
+        let thisComponents = calendar.dateComponents([.day, .month, .year], from: self)
+        let otherComponents = calendar.dateComponents([.day, .month, .year], from: otherDate)
+        if thisComponents.year! < otherComponents.year! {
             return true
         } else {
-            if thisComponents.month < otherComponents.month {
+            if thisComponents.month! < otherComponents.month! {
                 return true
             } else {
-                return thisComponents.day < otherComponents.day
+                return thisComponents.day! < otherComponents.day!
             }
         }
     }
@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var controller: CentralNavigationController?
 
-    var defaults: UserDefaults = UserDefaults.standard()
+    var defaults: UserDefaults = UserDefaults.standard
 
     /**
      This function is called when loading the data had an error.
@@ -61,37 +61,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if result == .newData {
                 self.controller!.hideLoadingScreen()
 
-                NotificationCenter.default().post(name: reloadFavoritesTableKey, object: nil)
-                NotificationCenter.default().post(name: reloadMealTableViewKey as NSNotification.Name, object: nil)
-                NotificationCenter.default().post(name: reloadDiningHallTableViewKey as NSNotification.Name, object: nil)
+                NotificationCenter.default.post(name: reloadFavoritesTableKey, object: nil)
+                NotificationCenter.default.post(name: reloadMealTableViewKey as NSNotification.Name, object: nil)
+                NotificationCenter.default.post(name: reloadDiningHallTableViewKey as NSNotification.Name, object: nil)
             } else {
                 self.loadingDataHadError()
             }
         }
     }
 
-    private func updateData(completionHandler: (UIBackgroundFetchResult) -> Void) {
+    private func updateData(completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         MenuLoader.fetchMenusFromAPI(completionHandler: completionHandler)
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
         // set the status bar to white, and add a purple BG
-        UIApplication.shared().statusBarStyle = .lightContent
+        UIApplication.shared.statusBarStyle = .lightContent
 
-        let frame = CGRect(x: 0, y: 0, width: UIScreen.main().bounds.size.width, height: 20)
+        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 20)
         let view = UIView(frame: frame)
         view.backgroundColor = Style.purpleColor
         self.window?.rootViewController!.view.addSubview(view)
 
         // set the background fetching interval
-        UIApplication.shared().setMinimumBackgroundFetchInterval(
+        UIApplication.shared.setMinimumBackgroundFetchInterval(
             UIApplicationBackgroundFetchIntervalMinimum)
 
         let yesterday = Date(timeInterval: -86400, since: Date())
-        defaults.register([lastUpdatedAtKey:yesterday])
-        self.window = UIWindow(frame: UIScreen.main().bounds)
+        defaults.register(defaults: [lastUpdatedAtKey:yesterday])
+        self.window = UIWindow(frame: UIScreen.main.bounds)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
         controller = (storyboard.instantiateViewController(withIdentifier: "CentralController") as? CentralNavigationController)!
@@ -99,6 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = controller
         self.window?.makeKeyAndVisible()
         self.registerForPushNotifications(application: self.controller!.application)
+
 
         return true
     }
@@ -119,7 +120,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        if (defaults.value(forKey: lastUpdatedAtKey) as! Date).dayIsEarlierThan(otherDate: Date()) {
+
+        let lastUpdatedAt: Date? = defaults.value(forKey: lastUpdatedAtKey) as? Date
+        guard let updatedAt = lastUpdatedAt else {
+            print("updating data")
+            self.updateData()
+            return
+        }
+        if updatedAt.dayIsEarlierThan(otherDate: Date()) {
             print("updating data")
             self.updateData()
         }
@@ -133,7 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // Support for background fetch
-    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         if (defaults.value(forKey: lastUpdatedAtKey) as! Date).dayIsEarlierThan(otherDate: Date()) {
             print("updating data")
             updateData(completionHandler: completionHandler)
@@ -147,13 +155,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "uk.co.plymouthsoftware.core_data" in the application's documents Application Support directory.
-        let urls = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
-        return urls[urls.count-1]
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+//        let urls = FileManager.default.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
+        return urls[urls.count-1] as NSURL
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = Bundle.main().urlForResource("williams-dining", withExtension: "momd")!
+        let modelURL = Bundle.main.url(forResource: "williams-dining", withExtension: "momd")!
+//        let modelURL = Bundle.main.urlForResource("williams-dining", withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
 
@@ -168,8 +178,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
-            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
-            dict[NSLocalizedFailureReasonErrorKey] = failureReason
+            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject?
+            dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject?
 
             dict[NSUnderlyingErrorKey] = error as NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
@@ -234,7 +244,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print("Device Token:", tokenString)
     }
 
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Failed to register:", error)
     }
 

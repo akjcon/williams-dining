@@ -28,18 +28,18 @@ public class DiningHallViewController: DefaultTableViewController {
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default().addObserver(self, selector: #selector(DiningHallViewController.refreshTable), name: reloadDiningHallTableViewKey, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DiningHallViewController.refreshTable), name: reloadDiningHallTableViewKey, object: nil)
         self.refreshView()
     }
 
     override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default().removeObserver(self, name: reloadDiningHallTableViewKey, object: nil)
+        NotificationCenter.default.removeObserver(self, name: reloadDiningHallTableViewKey, object: nil)
         self.refreshView()
     }
 
     @IBAction func refreshButtonWasClicked(_ sender: UIBarButtonItem) {
-        (UIApplication.shared().delegate as! AppDelegate).updateData()
+        (UIApplication.shared.delegate as! AppDelegate).updateData()
     }
 
     func refreshTable() {
@@ -107,7 +107,7 @@ extension DiningHallViewController: UITableViewDelegate, UITableViewDataSource {
         let menuItem: CoreDataMenuItem = MenuHandler.fetchByMealTimeAndDiningHall(mealTime: mealTimes[section], diningHall: selectedDiningHall)[indexPath.row]
 
 
-        (cell.nameLabel as! MarqueeLabel).type = .LeftRight
+        (cell.nameLabel as! MarqueeLabel).type = .leftRight
         cell.nameLabel.text = menuItem.name
         cell.glutenFreeLabel.isHidden = !menuItem.isGlutenFree
         cell.veganLabel.isHidden = !menuItem.isVegan
@@ -115,7 +115,7 @@ extension DiningHallViewController: UITableViewDelegate, UITableViewDataSource {
         if FavoritesHandler.isAFavoriteFood(name: menuItem.name) {
             cell.backgroundColor = Style.yellowColor
         } else {
-            cell.backgroundColor = UIColor.clear()
+            cell.backgroundColor = UIColor.clear
         }
 
         return cell;

@@ -49,8 +49,8 @@ class ReviewsViewController: DefaultTableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default().addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeShown(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default().addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeShown(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ReviewsViewController.keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         self.refreshView()
         setSubmitButtonTitle(title: "Submit")
     }
@@ -58,8 +58,8 @@ class ReviewsViewController: DefaultTableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.refreshView()
-        NotificationCenter.default().removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default().removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         setSubmitButtonTitle(title: "Submit")
     }
 
@@ -73,7 +73,7 @@ class ReviewsViewController: DefaultTableViewController {
     }
 
     @IBAction func userDidTapOutsideTextArea(_ sender: UITapGestureRecognizer) {
-        if suggestionBox.isFirstResponder() {
+        if suggestionBox.isFirstResponder {
             suggestionBox.resignFirstResponder()
         }
         setSubmitButtonTitle(title: "Submit")
@@ -84,13 +84,13 @@ class ReviewsViewController: DefaultTableViewController {
     }
 
     func keyboardWillBeShown(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue() {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             self.view.window!.frame.origin.y = -1 * keyboardSize.height
         }
     }
 
     func keyboardWillBeHidden(notification: Notification) {
-        self.view.window!.frame = UIScreen.main().bounds
+        self.view.window!.frame = UIScreen.main.bounds
     }
 
     @IBAction func submitReviews() {
@@ -135,7 +135,7 @@ class ReviewsViewController: DefaultTableViewController {
 
     func resetSuggestionBoxToPlaceholder() {
         suggestionBox.text = suggestionBoxPlaceholder
-        suggestionBox.textColor = UIColor.lightGray()
+        suggestionBox.textColor = UIColor.lightGray
     }
 
 }
@@ -146,7 +146,7 @@ extension ReviewsViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == suggestionBoxPlaceholder {
             textView.text = ""
-            textView.textColor = UIColor.black()
+            textView.textColor = UIColor.black
         }
         textView.becomeFirstResponder()
     }

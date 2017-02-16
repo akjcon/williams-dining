@@ -1,19 +1,15 @@
 //
 //  MarqueeLabel.swift
-//  williams-dining
 //
-//  Created by Nathan Andersen on 8/28/16.
-//  Copyright © 2016 Andersen Labs. All rights reserved.
+//  Created by Charles Powell on 8/6/14.
+//  Copyright (c) 2015 Charles Powell. All rights reserved.
 //
-
-import Foundation
 import UIKit
-
 import QuartzCore
 
 @IBDesignable
 
-public class MarqueeLabel: UILabel {
+open class MarqueeLabel: UILabel, CAAnimationDelegate {
 
     /**
      An enum that defines the types of `MarqueeLabel` scrolling
@@ -23,11 +19,11 @@ public class MarqueeLabel: UILabel {
      - Continuous: Continuously scrolls left (with a pause at the original position if animationDelay is set).
      - ContinuousReverse: Continuously scrolls right (with a pause at the original position if animationDelay is set).
      */
-    public enum `Type` {
-        case LeftRight
-        case RightLeft
-        case Continuous
-        case ContinuousReverse
+    public enum MarqueeType {
+        case leftRight
+        case rightLeft
+        case continuous
+        case continuousReverse
     }
 
     //
@@ -50,7 +46,7 @@ public class MarqueeLabel: UILabel {
 
      - SeeAlso: textAlignment
      */
-    public var type: Type = .Continuous {
+    open var type: MarqueeType = .continuous {
         didSet {
             if type == oldValue {
                 return
@@ -70,7 +66,7 @@ public class MarqueeLabel: UILabel {
 
      Defaults to `UIViewAnimationOptionCurveEaseInOut`.
      */
-    public var animationCurve: UIViewAnimationCurve = .linear
+    open var animationCurve: UIViewAnimationCurve = .linear
 
     /**
      A boolean property that sets whether the `MarqueeLabel` should behave like a normal `UILabel`.
@@ -90,7 +86,7 @@ public class MarqueeLabel: UILabel {
      the text adds an ellipsis glyph (...). Set the `lineBreakMode` property to `NSLineBreakByClipping` in order to avoid the
      ellipsis, especially if using an edge transparency fade.
      */
-    @IBInspectable public var labelize: Bool = false {
+    @IBInspectable open var labelize: Bool = false {
         didSet {
             if labelize != oldValue {
                 updateAndScroll()
@@ -111,7 +107,7 @@ public class MarqueeLabel: UILabel {
      - SeeAlso: labelize
      @warning The label will not automatically scroll when this property is set to `true`.
      */
-    @IBInspectable public var holdScrolling: Bool = false {
+    @IBInspectable open var holdScrolling: Bool = false {
         didSet {
             if holdScrolling != oldValue {
                 if oldValue == true && !(awayFromHome || labelize || tapToScroll ) && labelShouldScroll() {
@@ -132,11 +128,11 @@ public class MarqueeLabel: UILabel {
      @warning The label will not automatically scroll when this property is set to `false`.
      - SeeAlso: holdScrolling
      */
-    @IBInspectable public var tapToScroll: Bool = false {
+    @IBInspectable open var tapToScroll: Bool = false {
         didSet {
             if tapToScroll != oldValue {
                 if tapToScroll {
-                    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(MarqueeLabel.labelWasTapped(recognizer:)))
+                    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(MarqueeLabel.labelWasTapped(_:)))
                     self.addGestureRecognizer(tapRecognizer)
                     isUserInteractionEnabled = true
                 } else {
@@ -155,7 +151,7 @@ public class MarqueeLabel: UILabel {
      - SeeAlso: pauseLabel
      - SeeAlso: unpauseLabel
      */
-    public var isPaused: Bool {
+    open var isPaused: Bool {
         return (sublabel.layer.speed == 0.0)
     }
 
@@ -164,10 +160,11 @@ public class MarqueeLabel: UILabel {
 
      The "home" location is the traditional location of `UILabel` text. This property essentially reflects if a scroll animation is underway.
      */
-    public var awayFromHome: Bool {
+    open var awayFromHome: Bool {
         if let presentationLayer = sublabel.layer.presentation() {
             return !(presentationLayer.position.x == homeLabelFrame.origin.x)
         }
+
         return false
     }
 
@@ -179,14 +176,14 @@ public class MarqueeLabel: UILabel {
      Each case takes an associated `CGFloat` value, which is the rate/duration desired.
      */
     public enum SpeedLimit {
-        case Rate(CGFloat)
-        case Duration(CGFloat)
+        case rate(CGFloat)
+        case duration(CGFloat)
 
         var value: CGFloat {
             switch self {
-            case .Rate(let rate):
+            case .rate(let rate):
                 return rate
-            case .Duration(let duration):
+            case .duration(let duration):
                 return duration
             }
         }
@@ -199,12 +196,12 @@ public class MarqueeLabel: UILabel {
 
      - SeeAlso: SpeedLimit
      */
-    public var speed: SpeedLimit = .Duration(7.0) {
+    open var speed: SpeedLimit = .duration(7.0) {
         didSet {
             switch (speed, oldValue) {
-            case (.Rate(let a), .Rate(let b)) where a == b:
+            case (.rate(let a), .rate(let b)) where a == b:
                 return
-            case (.Duration(let a), .Duration(let b)) where a == b:
+            case (.duration(let a), .duration(let b)) where a == b:
                 return
             default:
                 updateAndScroll()
@@ -213,28 +210,28 @@ public class MarqueeLabel: UILabel {
     }
 
     @available(*, deprecated : 2.6, message : "Use speed property instead")
-    @IBInspectable public var scrollDuration: CGFloat {
+    @IBInspectable open var scrollDuration: CGFloat {
         get {
             switch speed {
-            case .Duration(let duration): return duration
-            case .Rate(_): return 0.0
+            case .duration(let duration): return duration
+            case .rate(_): return 0.0
             }
         }
         set {
-            speed = .Duration(newValue)
+            speed = .duration(newValue)
         }
     }
 
     @available(*, deprecated : 2.6, message : "Use speed property instead")
-    @IBInspectable public var scrollRate: CGFloat {
+    @IBInspectable open var scrollRate: CGFloat {
         get {
             switch speed {
-            case .Duration(_): return 0.0
-            case .Rate(let rate): return rate
+            case .duration(_): return 0.0
+            case .rate(let rate): return rate
             }
         }
         set {
-            speed = .Rate(newValue)
+            speed = .rate(newValue)
         }
     }
 
@@ -254,7 +251,7 @@ public class MarqueeLabel: UILabel {
 
      - SeeAlso: trailingBuffer
      */
-    @IBInspectable public var leadingBuffer: CGFloat = 0.0 {
+    @IBInspectable open var leadingBuffer: CGFloat = 0.0 {
         didSet {
             if leadingBuffer != oldValue {
                 updateAndScroll()
@@ -278,7 +275,7 @@ public class MarqueeLabel: UILabel {
 
      - SeeAlso: leadingBuffer
      */
-    @IBInspectable public var trailingBuffer: CGFloat = 0.0 {
+    @IBInspectable open var trailingBuffer: CGFloat = 0.0 {
         didSet {
             if trailingBuffer != oldValue {
                 updateAndScroll()
@@ -295,41 +292,50 @@ public class MarqueeLabel: UILabel {
 
      Defaults to `0`.
      */
-    @IBInspectable public var fadeLength: CGFloat = 0.0 {
+    @IBInspectable open var fadeLength: CGFloat = 0.0 {
         didSet {
             if fadeLength != oldValue {
-                applyGradientMask(fadeLength: fadeLength, animated: true)
+                applyGradientMask(fadeLength, animated: true)
                 updateAndScroll()
             }
         }
     }
-    
+
+
     /**
      The length of delay in seconds that the label pauses at the completion of a scroll.
      */
-    @IBInspectable public var animationDelay: CGFloat = 1.0
-    
+    @IBInspectable open var animationDelay: CGFloat = 1.0
+
+
+    /** The read-only duration of the scroll animation (not including delay).
+
+     The value of this property is calculated from the value set to the `speed` property. If a .duration value is
+     used to set the label animation speed, this value will be equivalent.
+     */
+    private(set) public var animationDuration: CGFloat = 0.0
+
     //
     // MARK: - Class Functions and Helpers
     //
-    
+
     /**
      Convenience method to restart all `MarqueeLabel` instances that have the specified view controller in their next responder chain.
-     
+
      - Parameter controller: The view controller for which to restart all `MarqueeLabel` instances.
-     
+
      - Warning: View controllers that appear with animation (such as from underneath a modal-style controller) can cause some `MarqueeLabel` text
      position "jumping" when this method is used in `viewDidAppear` if scroll animations are already underway. Use this method inside `viewWillAppear:`
      instead to avoid this problem.
-     
+
      - Warning: This method may not function properly if passed the parent view controller when using view controller containment.
-     
+
      - SeeAlso: restartLabel
      - SeeAlso: controllerViewDidAppear:
      - SeeAlso: controllerViewWillAppear:
      */
-    class func restartLabelsOfController(controller: UIViewController) {
-        MarqueeLabel.notifyController(controller: controller, message: .Restart)
+    class func restartLabelsOfController(_ controller: UIViewController) {
+        MarqueeLabel.notifyController(controller, message: .Restart)
     }
 
     /**
@@ -341,8 +347,8 @@ public class MarqueeLabel: UILabel {
      - SeeAlso: restartLabel
      - SeeAlso: controllerViewDidAppear
      */
-    class func controllerViewWillAppear(controller: UIViewController) {
-        MarqueeLabel.restartLabelsOfController(controller: controller)
+    class func controllerViewWillAppear(_ controller: UIViewController) {
+        MarqueeLabel.restartLabelsOfController(controller)
     }
 
     /**
@@ -354,8 +360,8 @@ public class MarqueeLabel: UILabel {
      - SeeAlso: restartLabel
      - SeeAlso: controllerViewWillAppear
      */
-    class func controllerViewDidAppear(controller: UIViewController) {
-        MarqueeLabel.restartLabelsOfController(controller: controller)
+    class func controllerViewDidAppear(_ controller: UIViewController) {
+        MarqueeLabel.restartLabelsOfController(controller)
     }
 
     /**
@@ -366,8 +372,8 @@ public class MarqueeLabel: UILabel {
      - Parameter controller: The view controller for which all `MarqueeLabel` instances should be labelized.
      - SeeAlso: labelize
      */
-    class func controllerLabelsLabelize(controller: UIViewController) {
-        MarqueeLabel.notifyController(controller: controller, message: .Labelize)
+    class func controllerLabelsLabelize(_ controller: UIViewController) {
+        MarqueeLabel.notifyController(controller, message: .Labelize)
     }
 
     /**
@@ -378,8 +384,8 @@ public class MarqueeLabel: UILabel {
      - Parameter controller: The view controller for which all `MarqueeLabel` instances should be de-labelized.
      - SeeAlso: labelize
      */
-    class func controllerLabelsAnimate(controller: UIViewController) {
-        MarqueeLabel.notifyController(controller: controller, message: .Animate)
+    class func controllerLabelsAnimate(_ controller: UIViewController) {
+        MarqueeLabel.notifyController(controller, message: .Animate)
     }
 
 
@@ -396,8 +402,8 @@ public class MarqueeLabel: UILabel {
      - Returns: An initialized `MarqueeLabel` object or nil if the object couldn't be created.
      - SeeAlso: fadeLength
      */
-    init(frame: CGRect, rate: CGFloat, fadeLength fade: CGFloat) {
-        speed = .Rate(rate)
+    public init(frame: CGRect, rate: CGFloat, fadeLength fade: CGFloat) {
+        speed = .rate(rate)
         fadeLength = CGFloat(min(fade, frame.size.width/2.0))
         super.init(frame: frame)
         setup()
@@ -412,8 +418,8 @@ public class MarqueeLabel: UILabel {
      - Returns: An initialized `MarqueeLabel` object or nil if the object couldn't be created.
      - SeeAlso: fadeLength
      */
-    init(frame: CGRect, duration: CGFloat, fadeLength fade: CGFloat) {
-        speed = .Duration(duration)
+    public init(frame: CGRect, duration: CGFloat, fadeLength fade: CGFloat) {
+        speed = .duration(duration)
         fadeLength = CGFloat(min(fade, frame.size.width/2.0))
         super.init(frame: frame)
         setup()
@@ -451,27 +457,21 @@ public class MarqueeLabel: UILabel {
 
         // Add notification observers
         // Custom class notifications
-
-
-        NotificationCenter.default().addObserver(self, selector:
-            #selector(MarqueeLabel.restartForViewController(notification:)), name: MarqueeKeys.Restart.rawValue, object: nil)
-
-        NotificationCenter.default().addObserver(self, selector:
-            #selector(MarqueeLabel.labelizeForController(notification:)), name: MarqueeKeys.Labelize.rawValue, object: nil)
-        NotificationCenter.default().addObserver(self, selector:
-            #selector(MarqueeLabel.animateForController(notification:)), name: MarqueeKeys.Animate.rawValue, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MarqueeLabel.restartForViewController(_:)), name: NSNotification.Name(rawValue: MarqueeKeys.Restart.rawValue), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MarqueeLabel.labelizeForController(_:)), name: NSNotification.Name(rawValue: MarqueeKeys.Labelize.rawValue), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MarqueeLabel.animateForController(_:)), name: NSNotification.Name(rawValue: MarqueeKeys.Animate.rawValue), object: nil)
         // UIApplication state notifications
-        NotificationCenter.default().addObserver(self, selector: #selector(MarqueeLabel.restartLabel), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        NotificationCenter.default().addObserver(self, selector: #selector(MarqueeLabel.shutdownLabel), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MarqueeLabel.restartLabel), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MarqueeLabel.shutdownLabel), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
     }
 
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         forwardPropertiesToSublabel()
     }
 
     @available(iOS 8.0, *)
-    public override func prepareForInterfaceBuilder() {
+    override open func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         forwardPropertiesToSublabel()
     }
@@ -489,49 +489,48 @@ public class MarqueeLabel: UILabel {
                           "minimumFontSize", "shadowOffset", "textAlignment",
                           "userInteractionEnabled", "adjustsFontSizeToFitWidth",
                           "lineBreakMode", "numberOfLines"]
-        
+
         // Iterate through properties
         sublabel.text = super.text
         sublabel.font = super.font
         sublabel.textColor = super.textColor
-        sublabel.backgroundColor = super.backgroundColor ?? UIColor.clear()
+        sublabel.backgroundColor = super.backgroundColor ?? UIColor.clear
         sublabel.shadowColor = super.shadowColor
         sublabel.shadowOffset = super.shadowOffset
         for prop in properties {
-            let value: AnyObject! = super.value(forKey: prop)
+            let value = super.value(forKey: prop)
             sublabel.setValue(value, forKeyPath: prop)
         }
     }
-    
+
     //
     // MARK: - MarqueeLabel Heavy Lifting
     //
-    
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
-        
-        updateAndScroll(shouldBeginScroll: true)
+
+        updateAndScroll(true)
     }
-    
-    override public func willMove(toWindow newWindow: UIWindow?) {
+
+    override open func willMove(toWindow newWindow: UIWindow?) {
         if newWindow == nil {
             shutdownLabel()
         }
     }
-    
-    override public func didMoveToWindow() {
+
+    override open func didMoveToWindow() {
         if self.window == nil {
             shutdownLabel()
         } else {
             updateAndScroll()
         }
     }
-    
+
     private func updateAndScroll() {
-        updateAndScroll(shouldBeginScroll: true)
+        updateAndScroll(true)
     }
 
-    private func updateAndScroll(shouldBeginScroll: Bool) {
+    private func updateAndScroll(_ shouldBeginScroll: Bool) {
         // Check if scrolling can occur
         if !labelReadyForScroll() {
             return
@@ -553,13 +552,10 @@ public class MarqueeLabel: UILabel {
             sublabel.textAlignment = super.textAlignment
             sublabel.lineBreakMode = super.lineBreakMode
 
-            var unusedFrame = CGRect.zero
-            var labelFrame = CGRect.zero
-
+            let labelFrame: CGRect
             switch type {
-            case .ContinuousReverse, .RightLeft:
-                bounds.divide(slice: &unusedFrame, remainder: &labelFrame, amount: leadingBuffer, edge: CGRectEdge.maxXEdge)
-                labelFrame = labelFrame.integral
+            case .continuousReverse, .rightLeft:
+                labelFrame = bounds.divided(atDistance: leadingBuffer, from: CGRectEdge.maxXEdge).remainder.integral
             default:
                 labelFrame = CGRect(x: leadingBuffer, y: 0.0, width: bounds.size.width - leadingBuffer, height: bounds.size.height).integral
             }
@@ -585,8 +581,8 @@ public class MarqueeLabel: UILabel {
         let minTrailing = max(max(leadingBuffer, trailingBuffer), fadeLength)
 
         switch type {
-        case .Continuous, .ContinuousReverse:
-            if (type == .Continuous) {
+        case .continuous, .continuousReverse:
+            if (type == .continuous) {
                 homeLabelFrame = CGRect(x: leadingBuffer, y: 0.0, width: expectedLabelSize.width, height: bounds.size.height).integral
                 awayOffset = -(homeLabelFrame.size.width + minTrailing)
             } else { // .ContinuousReverse
@@ -601,7 +597,7 @@ public class MarqueeLabel: UILabel {
             repliLayer?.instanceCount = 2
             repliLayer?.instanceTransform = CATransform3DMakeTranslation(-awayOffset, 0.0, 0.0)
 
-        case .RightLeft:
+        case .rightLeft:
             homeLabelFrame = CGRect(x: bounds.size.width - (expectedLabelSize.width + leadingBuffer), y: 0.0, width: expectedLabelSize.width, height: bounds.size.height).integral
             awayOffset = (expectedLabelSize.width + trailingBuffer + leadingBuffer) - bounds.size.width
 
@@ -614,7 +610,7 @@ public class MarqueeLabel: UILabel {
             // Enforce text alignment for this type
             sublabel.textAlignment = NSTextAlignment.right
 
-        case .LeftRight:
+        case .leftRight:
             homeLabelFrame = CGRect(x: leadingBuffer, y: 0.0, width: expectedLabelSize.width, height: expectedLabelSize.height).integral
             awayOffset = bounds.size.width - (expectedLabelSize.width + leadingBuffer + trailingBuffer)
 
@@ -633,27 +629,27 @@ public class MarqueeLabel: UILabel {
         // Recompute the animation duration
         animationDuration = {
             switch self.speed {
-            case .Rate(let rate):
+            case .rate(let rate):
                 return CGFloat(fabs(self.awayOffset) / rate)
-            case .Duration(let duration):
+            case .duration(let duration):
                 return duration
             }
         }()
-        
+
         // Configure gradient for current condition
-        applyGradientMask(fadeLength: fadeLength, animated: !labelize)
-        
+        applyGradientMask(fadeLength, animated: !self.labelize)
+
         if !tapToScroll && !holdScrolling && shouldBeginScroll {
             beginScroll()
         }
     }
-    
-    func sublabelSize() -> CGSize {
+
+    private func sublabelSize() -> CGSize {
         // Bound the expected size
         let maximumLabelSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
         // Calculate the expected size
         var expectedLabelSize = sublabel.sizeThatFits(maximumLabelSize)
-        
+
         #if os(tvOS)
             // Sanitize width to 16384.0 (largest width a UILabel will draw on tvOS)
             expectedLabelSize.width = min(expectedLabelSize.width, 16384.0)
@@ -661,13 +657,13 @@ public class MarqueeLabel: UILabel {
             // Sanitize width to 5461.0 (largest width a UILabel will draw on an iPhone 6S Plus)
             expectedLabelSize.width = min(expectedLabelSize.width, 5461.0)
         #endif
-        
+
         // Adjust to own height (make text baseline match normal label)
         expectedLabelSize.height = bounds.size.height
         return expectedLabelSize
     }
-    
-    override public func sizeThatFits(_ size: CGSize) -> CGSize {
+
+    override open func sizeThatFits(_ size: CGSize) -> CGSize {
         var fitSize = sublabel.sizeThatFits(size)
         fitSize.width += leadingBuffer
         return fitSize
@@ -708,7 +704,7 @@ public class MarqueeLabel: UILabel {
         // Check if our view controller is ready
         let viewController = firstAvailableViewController()
         if viewController != nil {
-            if !viewController!.isViewLoaded() {
+            if !viewController!.isViewLoaded {
                 return false
             }
         }
@@ -717,15 +713,15 @@ public class MarqueeLabel: UILabel {
     }
 
     private func beginScroll() {
-        beginScroll(delay: true)
+        beginScroll(true)
     }
 
-    private func beginScroll(delay: Bool) {
+    private func beginScroll(_ delay: Bool) {
         switch self.type {
-        case .LeftRight, .RightLeft:
-            scrollAway(interval: animationDuration, delay: animationDelay)
+        case .leftRight, .rightLeft:
+            scrollAway(animationDuration, delay: animationDelay)
         default:
-            scrollContinuous(interval: animationDuration, delay: animationDelay)
+            scrollContinuous(animationDuration, delay: animationDelay)
         }
     }
 
@@ -735,9 +731,12 @@ public class MarqueeLabel: UILabel {
 
         // Remove all sublabel position animations
         sublabel.layer.removeAllAnimations()
+
+        // Remove completion block
+        scrollCompletionBlock = nil
     }
 
-    private func scroll(interval: CGFloat, delay: CGFloat = 0.0, scroller: Scroller, fader: CAKeyframeAnimation?) {
+    private func scroll(_ interval: CGFloat, delay: CGFloat = 0.0, scroller: Scroller, fader: CAKeyframeAnimation?) {
         var scroller = scroller
         // Check for conditions which would prevent scrolling
         if !labelReadyForScroll() {
@@ -749,7 +748,7 @@ public class MarqueeLabel: UILabel {
 
         // Start animation transactions
         CATransaction.begin()
-        let transDuration = transactionDurationType(labelType: type, interval: interval, delay: delay)
+        let transDuration = transactionDurationType(type, interval: interval, delay: delay)
         CATransaction.setAnimationDuration(transDuration)
 
         // Create gradient animation, if needed
@@ -758,7 +757,7 @@ public class MarqueeLabel: UILabel {
         #if !TARGET_INTERFACE_BUILDER
             if fadeLength > 0.0 {
                 // Remove any setup animation, but apply final values
-                if let setupAnim = maskLayer?.animation(forKey: "setupFade") as? CABasicAnimation, finalColors = setupAnim.toValue as? [CGColor] {
+                if let setupAnim = maskLayer?.animation(forKey: "setupFade") as? CABasicAnimation, let finalColors = setupAnim.toValue as? [CGColor] {
                     maskLayer?.colors = finalColors
                 }
                 maskLayer?.removeAnimation(forKey: "setupFade")
@@ -767,7 +766,7 @@ public class MarqueeLabel: UILabel {
                 if let previousAnimation = fader {
                     gradientAnimation = previousAnimation
                 } else {
-                    gradientAnimation = keyFrameAnimationForGradient(fadeLength: fadeLength, interval: interval, delay: delay)
+                    gradientAnimation = keyFrameAnimationForGradient(fadeLength, interval: interval, delay: delay)
                 }
 
                 // Apply scrolling animation
@@ -791,7 +790,7 @@ public class MarqueeLabel: UILabel {
             }
 
             // Call returned home function
-            self!.labelReturnedToHome(finished: true)
+            self!.labelReturnedToHome(true)
 
             // Check to ensure that:
             // 1) We don't double fire if an animation already exists
@@ -809,35 +808,35 @@ public class MarqueeLabel: UILabel {
             // Begin again, if conditions met
             if (self!.labelShouldScroll() && !self!.tapToScroll && !self!.holdScrolling) {
                 // Perform completion callback
-                self!.scroll(interval: interval, delay: delay, scroller: scroller, fader: gradientAnimation)
+                self!.scroll(interval, delay: delay, scroller: scroller, fader: gradientAnimation)
             }
         }
-        
+
         // Call scroller
-        let scrolls = scroller.generate(interval: interval, delay: delay)
-        
+        let scrolls = scroller.generate(interval, delay: delay)
+
         // Perform all animations in scrolls
         for (index, scroll) in scrolls.enumerated() {
             let layer = scroll.layer
             let anim = scroll.anim
-            
+
             // Add callback to single animation
             if index == 0 {
                 anim.setValue(true, forKey: MarqueeKeys.CompletionClosure.rawValue)
                 anim.delegate = self
             }
-            
+
             // Add animation
             layer.add(anim, forKey: "position")
         }
-        
+
         CATransaction.commit()
     }
-    
-    private func scrollAway(interval: CGFloat, delay: CGFloat = 0.0) {
+
+    private func scrollAway(_ interval: CGFloat, delay: CGFloat = 0.0) {
         // Create scroller, which defines the animation to perform
         let homeOrigin = homeLabelFrame.origin
-        let awayOrigin = offsetCGPoint(point: homeLabelFrame.origin, offset: awayOffset)
+        let awayOrigin = offsetCGPoint(homeLabelFrame.origin, offset: awayOffset)
         let scroller = Scroller(generator: { [unowned self] (interval: CGFloat, delay: CGFloat) -> [(layer: CALayer, anim: CAKeyframeAnimation)] in
             // Create animation for position
             let values: [NSValue] = [
@@ -847,22 +846,22 @@ public class MarqueeLabel: UILabel {
                 NSValue(cgPoint: awayOrigin), // Stay at away for delay
                 NSValue(cgPoint: homeOrigin)  // Move back to home
             ]
-            
+
             let layer = self.sublabel.layer
-            let anim = self.keyFrameAnimationForProperty(property: "position", values: values, interval: interval, delay: delay)
+            let anim = self.keyFrameAnimationForProperty("position", values: values, interval: interval, delay: delay)
 
             return [(layer: layer, anim: anim)]
-            })
+        })
 
         // Scroll
-        scroll(interval: interval, delay: delay, scroller: scroller, fader: nil)
+        scroll(interval, delay: delay, scroller: scroller, fader: nil)
     }
 
 
-    private func scrollContinuous(interval: CGFloat, delay: CGFloat) {
+    private func scrollContinuous(_ interval: CGFloat, delay: CGFloat) {
         // Create scroller, which defines the animation to perform
         let homeOrigin = homeLabelFrame.origin
-        let awayOrigin = offsetCGPoint(point: homeLabelFrame.origin, offset: awayOffset)
+        let awayOrigin = offsetCGPoint(homeLabelFrame.origin, offset: awayOffset)
         let scroller = Scroller(generator: { [unowned self] (interval: CGFloat, delay: CGFloat) -> [(layer: CALayer, anim: CAKeyframeAnimation)] in
             // Create animation for position
             let values: [NSValue] = [
@@ -873,16 +872,16 @@ public class MarqueeLabel: UILabel {
 
             // Generate animation
             let layer = self.sublabel.layer
-            let anim = self.keyFrameAnimationForProperty(property: "position", values: values, interval: interval, delay: delay)
+            let anim = self.keyFrameAnimationForProperty("position", values: values, interval: interval, delay: delay)
 
             return [(layer: layer, anim: anim)]
-            })
+        })
 
         // Scroll
-        scroll(interval: interval, delay: delay, scroller: scroller, fader: nil)
+        scroll(interval, delay: delay, scroller: scroller, fader: nil)
     }
 
-    private func applyGradientMask(fadeLength: CGFloat, animated: Bool) {
+    private func applyGradientMask(_ fadeLength: CGFloat, animated: Bool) {
         // Remove any in-flight animations
         maskLayer?.removeAllAnimations()
 
@@ -905,25 +904,25 @@ public class MarqueeLabel: UILabel {
             // No mask exists, create new mask
             gradientMask = CAGradientLayer()
             gradientMask.shouldRasterize = true
-            gradientMask.rasterizationScale = UIScreen.main().scale
-            gradientMask.startPoint = CGPoint(x: 0.0, y: 0.5)
-            gradientMask.endPoint = CGPoint(x: 1.0, y: 0.5)
+            gradientMask.rasterizationScale = UIScreen.main.scale
+            gradientMask.startPoint = CGPoint(x:0.0, y:0.5)
+            gradientMask.endPoint = CGPoint(x:1.0, y:0.5)
         }
 
         // Check if there is a mask to layer size mismatch
         if gradientMask.bounds != self.layer.bounds {
             // Adjust stops based on fade length
             let leftFadeStop = fadeLength/self.bounds.size.width
-            let rightFadeStop = fadeLength/self.bounds.size.width
-            gradientMask.locations = [0.0, leftFadeStop, (1.0 - rightFadeStop), 1.0]
+            let rightFadeStop = 1.0 - fadeLength/self.bounds.size.width
+            gradientMask.locations = [0.0, leftFadeStop, rightFadeStop, 1.0].mapToNumbers()
         }
 
         gradientMask.bounds = self.layer.bounds
-        gradientMask.position = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
+        gradientMask.position = CGPoint(x:self.bounds.midX, y:self.bounds.midY)
 
         // Set up colors
-        let transparent = UIColor.clear().cgColor
-        let opaque = UIColor.black().cgColor
+        let transparent = UIColor.clear.cgColor
+        let opaque = UIColor.black.cgColor
 
         // Set mask
         self.layer.mask = gradientMask
@@ -933,7 +932,7 @@ public class MarqueeLabel: UILabel {
         let trailingFadeNeeded = self.labelShouldScroll()
 
         switch (type) {
-        case .ContinuousReverse, .RightLeft:
+        case .continuousReverse, .rightLeft:
             adjustedColors = [(trailingFadeNeeded ? transparent : opaque), opaque, opaque, opaque]
 
         // .Continuous, .LeftRight
@@ -971,22 +970,22 @@ public class MarqueeLabel: UILabel {
         self.layer.mask = nil
     }
 
-    private func keyFrameAnimationForGradient(fadeLength: CGFloat, interval: CGFloat, delay: CGFloat) -> CAKeyframeAnimation {
+    private func keyFrameAnimationForGradient(_ fadeLength: CGFloat, interval: CGFloat, delay: CGFloat) -> CAKeyframeAnimation {
         // Setup
         let values: [[CGColor]]
         let keyTimes: [CGFloat]
-        let transp = UIColor.clear().cgColor
-        let opaque = UIColor.black().cgColor
+        let transp = UIColor.clear.cgColor
+        let opaque = UIColor.black.cgColor
 
         // Create new animation
         let animation = CAKeyframeAnimation(keyPath: "colors")
 
         // Get timing function
-        let timingFunction = timingFunctionForAnimationCurve(curve: animationCurve)
+        let timingFunction = timingFunctionForAnimationCurve(animationCurve)
 
         // Define keyTimes
         switch (type) {
-        case .LeftRight, .RightLeft:
+        case .leftRight, .rightLeft:
             // Calculate total animation duration
             let totalDuration = 2.0 * (delay + interval)
             keyTimes =
@@ -1011,9 +1010,9 @@ public class MarqueeLabel: UILabel {
             let offsetDistance = awayOffset
             let startFadeFraction = fabs((sublabel.bounds.size.width + leadingBuffer) / offsetDistance)
             // Find when the animation will hit that point
-            let startFadeTimeFraction = timingFunction.durationPercentageForPositionPercentage(positionPercentage: startFadeFraction, duration: totalDuration)
+            let startFadeTimeFraction = timingFunction.durationPercentageForPositionPercentage(startFadeFraction, duration: totalDuration)
             let startFadeTime = delay + CGFloat(startFadeTimeFraction) * interval
-            
+
             keyTimes = [
                 0.0,                                        // Initial gradient
                 delay/totalDuration,                        // Begin of fade in
@@ -1024,14 +1023,14 @@ public class MarqueeLabel: UILabel {
             ]
             break
         }
-        
+
         // Define values
         // Get current layer values
         let mask = maskLayer?.presentation()
         let currentValues = mask?.colors as? [CGColor]
-        
+
         switch (type) {
-        case .ContinuousReverse:
+        case .continuousReverse:
             values = [
                 currentValues ?? [transp, opaque, opaque, opaque],           // Initial gradient
                 [transp, opaque, opaque, opaque],           // Begin of fade in
@@ -1042,7 +1041,7 @@ public class MarqueeLabel: UILabel {
             ]
             break
 
-        case .RightLeft:
+        case .rightLeft:
             values = [
                 currentValues ?? [transp, opaque, opaque, opaque],           // 1)
                 [transp, opaque, opaque, opaque],           // 2)
@@ -1056,7 +1055,7 @@ public class MarqueeLabel: UILabel {
             ]
             break
 
-        case .Continuous:
+        case .continuous:
             values = [
                 currentValues ?? [opaque, opaque, opaque, transp],           // Initial gradient
                 [opaque, opaque, opaque, transp],           // Begin of fade in
@@ -1067,7 +1066,7 @@ public class MarqueeLabel: UILabel {
             ]
             break
 
-        case .LeftRight:
+        case .leftRight:
             values = [
                 currentValues ?? [opaque, opaque, opaque, transp],           // 1)
                 [opaque, opaque, opaque, transp],           // 2)
@@ -1083,27 +1082,29 @@ public class MarqueeLabel: UILabel {
         }
 
         animation.values = values
-        animation.keyTimes = keyTimes
+        animation.keyTimes = keyTimes.mapToNumbers()
         animation.timingFunctions = [timingFunction, timingFunction, timingFunction, timingFunction]
 
         return animation
     }
 
-    private func keyFrameAnimationForProperty(property: String, values: [NSValue], interval: CGFloat, delay: CGFloat) -> CAKeyframeAnimation {
+    private func keyFrameAnimationForProperty(_ property: String, values: [NSValue], interval: CGFloat, delay: CGFloat) -> CAKeyframeAnimation {
         // Create new animation
         let animation = CAKeyframeAnimation(keyPath: property)
 
         // Get timing function
-        let timingFunction = timingFunctionForAnimationCurve(curve: animationCurve)
+        let timingFunction = timingFunctionForAnimationCurve(animationCurve)
 
         // Calculate times based on marquee type
         let totalDuration: CGFloat
+        let keyTimes: [CGFloat]
+
         switch (type) {
-        case .LeftRight, .RightLeft:
+        case .leftRight, .rightLeft:
             //NSAssert(values.count == 5, @"Incorrect number of values passed for MLLeftRight-type animation")
             totalDuration = 2.0 * (delay + interval)
             // Set up keyTimes
-            animation.keyTimes = [
+            keyTimes = [
                 0.0,                                            // Initial location, home
                 delay/totalDuration,                            // Initial delay, at home
                 (delay + interval)/totalDuration,               // Animation to away
@@ -1124,7 +1125,7 @@ public class MarqueeLabel: UILabel {
             //NSAssert(values.count == 3, @"Incorrect number of values passed for MLContinous-type animation")
             totalDuration = delay + interval
             // Set up keyTimes
-            animation.keyTimes = [
+            keyTimes = [
                 0.0,                        // Initial location, home
                 delay/totalDuration,        // Initial delay, at home
                 1.0                         // Animation to away
@@ -1137,12 +1138,13 @@ public class MarqueeLabel: UILabel {
         }
 
         // Set values
+        animation.keyTimes = keyTimes.mapToNumbers()
         animation.values = values
 
         return animation
     }
 
-    private func timingFunctionForAnimationCurve(curve: UIViewAnimationCurve) -> CAMediaTimingFunction {
+    private func timingFunctionForAnimationCurve(_ curve: UIViewAnimationCurve) -> CAMediaTimingFunction {
         let timingFunction: String?
 
         switch curve {
@@ -1159,16 +1161,16 @@ public class MarqueeLabel: UILabel {
         return CAMediaTimingFunction(name: timingFunction!)
     }
 
-    private func transactionDurationType(labelType: Type, interval: CGFloat, delay: CGFloat) -> TimeInterval {
+    private func transactionDurationType(_ labelType: MarqueeType, interval: CGFloat, delay: CGFloat) -> TimeInterval {
         switch (labelType) {
-        case .LeftRight, .RightLeft:
+        case .leftRight, .rightLeft:
             return TimeInterval(2.0 * (delay + interval))
         default:
             return TimeInterval(delay + interval)
         }
     }
 
-    override public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if let setupAnim = anim as? GradientSetupAnimation {
             if let finalColors = setupAnim.toValue as? [CGColor] {
                 maskLayer?.colors = finalColors
@@ -1176,7 +1178,7 @@ public class MarqueeLabel: UILabel {
             // Remove regardless, since we set removeOnCompletion = false
             maskLayer?.removeAnimation(forKey: "setupFade")
         } else {
-            scrollCompletionBlock?(finished: flag)
+            scrollCompletionBlock?(flag)
         }
     }
 
@@ -1186,26 +1188,25 @@ public class MarqueeLabel: UILabel {
     //
 
     private var sublabel = UILabel()
-    private var animationDuration: CGFloat = 0.0
 
-    private var homeLabelFrame = CGRect.zero
-    private var awayOffset: CGFloat = 0.0
+    fileprivate var homeLabelFrame = CGRect.zero
+    fileprivate var awayOffset: CGFloat = 0.0
 
-    override public class func layerClass() -> AnyClass {
+    override open class var layerClass: AnyClass {
         return CAReplicatorLayer.self
     }
 
-    private weak var repliLayer: CAReplicatorLayer? {
+    fileprivate weak var repliLayer: CAReplicatorLayer? {
         return self.layer as? CAReplicatorLayer
     }
 
-    private weak var maskLayer: CAGradientLayer? {
+    fileprivate weak var maskLayer: CAGradientLayer? {
         return self.layer.mask as! CAGradientLayer?
     }
 
-    private var scrollCompletionBlock: MLAnimationCompletionBlock?
+    fileprivate var scrollCompletionBlock: MLAnimationCompletionBlock?
 
-    override public func draw(_ layer: CALayer, in ctx: CGContext) {
+    override open func draw(_ layer: CALayer, in ctx: CGContext) {
         // Do NOT call super, to prevent UILabel superclass from drawing into context
         // Label drawing is handled by sublabel and CAReplicatorLayer layer class
 
@@ -1216,35 +1217,35 @@ public class MarqueeLabel: UILabel {
         }
     }
 
-    private enum MarqueeKeys: String {
+    fileprivate enum MarqueeKeys: String {
         case Restart = "MLViewControllerRestart"
         case Labelize = "MLShouldLabelize"
         case Animate = "MLShouldAnimate"
         case CompletionClosure = "MLAnimationCompletion"
     }
 
-    class private func notifyController(controller: UIViewController, message: MarqueeKeys) {
-        NotificationCenter.default().post(name: NSNotification.Name(rawValue: message.rawValue), object: nil)
+    class fileprivate func notifyController(_ controller: UIViewController, message: MarqueeKeys) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: message.rawValue), object: nil, userInfo: ["controller" : controller])
     }
 
-    public func restartForViewController(notification: NSNotification) {
-        if let controller = notification.userInfo?["controller"] as? UIViewController {
+    public func restartForViewController(_ notification: Notification) {
+        if let controller = (notification as NSNotification).userInfo?["controller"] as? UIViewController {
             if controller === self.firstAvailableViewController() {
                 self.restartLabel()
             }
         }
     }
 
-    public func labelizeForController(notification: NSNotification) {
-        if let controller = notification.userInfo?["controller"] as? UIViewController {
+    public func labelizeForController(_ notification: Notification) {
+        if let controller = (notification as NSNotification).userInfo?["controller"] as? UIViewController {
             if controller === self.firstAvailableViewController() {
                 self.labelize = true
             }
         }
     }
 
-    public func animateForController(notification: NSNotification) {
-        if let controller = notification.userInfo?["controller"] as? UIViewController {
+    public func animateForController(_ notification: Notification) {
+        if let controller = (notification as NSNotification).userInfo?["controller"] as? UIViewController {
             if controller === self.firstAvailableViewController() {
                 self.labelize = false
             }
@@ -1262,12 +1263,12 @@ public class MarqueeLabel: UILabel {
      Currently the only non-size conditions which can prevent a label from scrolling are the `tapToScroll` and `holdScrolling` properties. This
      method will not force a label with a string that fits inside the label bounds (i.e. that would not automatically scroll) to begin a scroll
      animation.
-     
+
      Upon the completion of the first forced scroll animation, the receiver will not automatically continue to scroll unless the conditions
      preventing scrolling have been removed.
-     
+
      - Note: This method has no effect if called during an already in-flight scroll animation.
-     
+
      - SeeAlso: restartLabel
      */
     public func triggerScrollStart() {
@@ -1275,10 +1276,10 @@ public class MarqueeLabel: UILabel {
             beginScroll()
         }
     }
-    
+
     /**
      Immediately resets the label to the home position, cancelling any in-flight scroll animation, and restarts the scroll animation if the appropriate conditions are met.
-     
+
      - SeeAlso: resetLabel
      - SeeAlso: triggerScrollStart
      */
@@ -1290,14 +1291,14 @@ public class MarqueeLabel: UILabel {
             beginScroll()
         }
     }
-    
+
     /**
      Resets the label text, recalculating the scroll animation.
-     
+
      The text is immediately returned to the home position, and the scroll animation positions are cleared. Scrolling will not resume automatically after
      a call to this method. To re-initiate scrolling, use either a call to `restartLabel` or make a change to a UILabel property such as text, bounds/frame,
      font, font size, etc.
-     
+
      - SeeAlso: restartLabel
      */
     public func resetLabel() {
@@ -1305,14 +1306,14 @@ public class MarqueeLabel: UILabel {
         homeLabelFrame = CGRect.null
         awayOffset = 0.0
     }
-    
+
     /**
      Immediately resets the label to the home position, cancelling any in-flight scroll animation.
-     
+
      The text is immediately returned to the home position. Scrolling will not resume automatically after a call to this method.
      To re-initiate scrolling use a call to `restartLabel` or `triggerScrollStart`, or make a change to a UILabel property such as text, bounds/frame,
      font, font size, etc.
-     
+
      - SeeAlso: restartLabel
      - SeeAlso: triggerScrollStart
      */
@@ -1320,7 +1321,7 @@ public class MarqueeLabel: UILabel {
         // Bring label to home location
         returnLabelToHome()
         // Apply gradient mask for home location
-        applyGradientMask(fadeLength: fadeLength, animated: false)
+        applyGradientMask(fadeLength, animated: false)
     }
 
     /**
@@ -1374,9 +1375,9 @@ public class MarqueeLabel: UILabel {
         maskLayer?.beginTime = maskLayer!.convertTime(CACurrentMediaTime(), from:nil) - gradientPauseTime!
     }
 
-    public func labelWasTapped(recognizer: UIGestureRecognizer) {
+    public func labelWasTapped(_ recognizer: UIGestureRecognizer) {
         if labelShouldScroll() && !awayFromHome {
-            beginScroll(delay: true)
+            beginScroll(true)
         }
     }
 
@@ -1386,7 +1387,7 @@ public class MarqueeLabel: UILabel {
      The default implementation of this method does nothing. Subclasses may override this method in order to perform any custom actions just as
      the label animation begins. This is only called in the event that the conditions for scrolling to begin are met.
      */
-    public func labelWillBeginScroll() {
+    open func labelWillBeginScroll() {
         // Default implementation does nothing - override to customize
         return
     }
@@ -1402,7 +1403,7 @@ public class MarqueeLabel: UILabel {
      - Warning: This method will be called, and the `finished` parameter will be `NO`, when any property changes are made that would cause the label
      scrolling to be automatically reset. This includes changes to label text and font/font size changes.
      */
-    public func labelReturnedToHome(finished: Bool) {
+    open func labelReturnedToHome(_ finished: Bool) {
         // Default implementation does nothing - override to customize
         return
     }
@@ -1412,18 +1413,18 @@ public class MarqueeLabel: UILabel {
     //
 
     #if os(iOS)
-    override public func forBaselineLayout() -> UIView {
+    override open func forBaselineLayout() -> UIView {
         // Use subLabel view for handling baseline layouts
         return sublabel
     }
 
-    public override var forLastBaselineLayout: UIView {
+    override open var forLastBaselineLayout: UIView {
         // Use subLabel view for handling baseline layouts
         return sublabel
     }
     #endif
 
-    public override var text: String? {
+    override open var text: String? {
         get {
             return sublabel.text
         }
@@ -1438,7 +1439,7 @@ public class MarqueeLabel: UILabel {
         }
     }
 
-    public override var attributedText: AttributedString? {
+    override open var attributedText: NSAttributedString? {
         get {
             return sublabel.attributedText
         }
@@ -1453,7 +1454,7 @@ public class MarqueeLabel: UILabel {
         }
     }
 
-    public override var font: UIFont! {
+    override open var font: UIFont! {
         get {
             return sublabel.font
         }
@@ -1469,7 +1470,7 @@ public class MarqueeLabel: UILabel {
         }
     }
 
-    public override var textColor: UIColor! {
+    override open var textColor: UIColor! {
         get {
             return sublabel.textColor
         }
@@ -1479,74 +1480,74 @@ public class MarqueeLabel: UILabel {
             super.textColor = newValue
         }
     }
-    
-    public override var backgroundColor: UIColor? {
+
+    override open var backgroundColor: UIColor? {
         get {
             return sublabel.backgroundColor
         }
-        
+
         set {
             sublabel.backgroundColor = newValue
             super.backgroundColor = newValue
         }
     }
-    
-    public override var shadowColor: UIColor? {
+
+    override open var shadowColor: UIColor? {
         get {
             return sublabel.shadowColor
         }
-        
+
         set {
             sublabel.shadowColor = newValue
             super.shadowColor = newValue
         }
     }
-    
-    public override var shadowOffset: CGSize {
+
+    override open var shadowOffset: CGSize {
         get {
             return sublabel.shadowOffset
         }
-        
+
         set {
             sublabel.shadowOffset = newValue
             super.shadowOffset = newValue
         }
     }
-    
-    public override var highlightedTextColor: UIColor? {
+
+    override open var highlightedTextColor: UIColor? {
         get {
             return sublabel.highlightedTextColor
         }
-        
+
         set {
             sublabel.highlightedTextColor = newValue
             super.highlightedTextColor = newValue
         }
     }
-    
-    public override var isHighlighted: Bool {
+
+    override open var isHighlighted: Bool {
         get {
             return sublabel.isHighlighted
         }
-        
+
         set {
             sublabel.isHighlighted = newValue
             super.isHighlighted = newValue
         }
     }
-    
-    public override var isEnabled: Bool {
+
+    override open var isEnabled: Bool {
         get {
             return sublabel.isEnabled
         }
-        
+
         set {
             sublabel.isEnabled = newValue
             super.isEnabled = newValue
         }
     }
-    
-    public override var numberOfLines: Int {
+
+    override open var numberOfLines: Int {
         get {
             return super.numberOfLines
         }
@@ -1557,7 +1558,7 @@ public class MarqueeLabel: UILabel {
         }
     }
 
-    public override var adjustsFontSizeToFitWidth: Bool {
+    override open var adjustsFontSizeToFitWidth: Bool {
         get {
             return super.adjustsFontSizeToFitWidth
         }
@@ -1568,7 +1569,7 @@ public class MarqueeLabel: UILabel {
         }
     }
 
-    public override var minimumScaleFactor: CGFloat {
+    override open var minimumScaleFactor: CGFloat {
         get {
             return super.minimumScaleFactor
         }
@@ -1578,7 +1579,7 @@ public class MarqueeLabel: UILabel {
         }
     }
 
-    public override var baselineAdjustment: UIBaselineAdjustment {
+    override open var baselineAdjustment: UIBaselineAdjustment {
         get {
             return sublabel.baselineAdjustment
         }
@@ -1589,10 +1590,26 @@ public class MarqueeLabel: UILabel {
         }
     }
 
-    public override func intrinsicContentSize() -> CGSize {
-        var content = sublabel.intrinsicContentSize()
+    override open var intrinsicContentSize: CGSize {
+        var content = sublabel.intrinsicContentSize
         content.width += leadingBuffer
         return content
+    }
+
+    override open var tintColor: UIColor! {
+        get {
+            return sublabel.tintColor
+        }
+
+        set {
+            sublabel.tintColor = newValue
+            super.tintColor = newValue
+        }
+    }
+
+    override open func tintColorDidChange() {
+        super.tintColorDidChange()
+        sublabel.tintColorDidChange()
     }
 
 
@@ -1600,7 +1617,7 @@ public class MarqueeLabel: UILabel {
     // MARK: - Support
     //
 
-    private func offsetCGPoint(point: CGPoint, offset: CGFloat) -> CGPoint {
+    fileprivate func offsetCGPoint(_ point: CGPoint, offset: CGFloat) -> CGPoint {
         return CGPoint(x: point.x + offset, y: point.y)
     }
 
@@ -1609,7 +1626,7 @@ public class MarqueeLabel: UILabel {
     //
 
     deinit {
-        NotificationCenter.default().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -1617,34 +1634,33 @@ public class MarqueeLabel: UILabel {
 //
 // MARK: - Support
 //
-
 // Define animation completion closure type
-private typealias MLAnimationCompletionBlock = (finished: Bool) -> ()
+fileprivate typealias MLAnimationCompletionBlock = (_ finished: Bool) -> ()
 
-private class GradientSetupAnimation: CABasicAnimation {
+fileprivate class GradientSetupAnimation: CABasicAnimation {
 }
 
-private struct Scroller {
+fileprivate struct Scroller {
     typealias Scroll = (layer: CALayer, anim: CAKeyframeAnimation)
 
-    init(generator gen: (interval: CGFloat, delay: CGFloat) -> [Scroll]) {
+    init(generator gen: @escaping (_ interval: CGFloat, _ delay: CGFloat) -> [Scroll]) {
         self.generator = gen
     }
 
-    let generator: (interval: CGFloat, delay: CGFloat) -> [Scroll]
+    let generator: (_ interval: CGFloat, _ delay: CGFloat) -> [Scroll]
     var scrolls: [Scroll]? = nil
 
-    mutating func generate(interval: CGFloat, delay: CGFloat) -> [Scroll] {
+    mutating func generate(_ interval: CGFloat, delay: CGFloat) -> [Scroll] {
         if let existing = scrolls {
             return existing
         } else {
-            scrolls = generator(interval: interval, delay: delay)
+            scrolls = generator(interval, delay)
             return scrolls!
         }
     }
 }
 
-private extension UIResponder {
+fileprivate extension UIResponder {
     // Thanks to Phil M
     // http://stackoverflow.com/questions/1340434/get-to-uiviewcontroller-from-uiview-on-iphone
 
@@ -1654,11 +1670,10 @@ private extension UIResponder {
     }
 
     func traverseResponderChainForFirstViewController() -> UIViewController? {
-        if let nextResponder = self.next() {
-
-            if (nextResponder.isKind(of: UIViewController.self)) {
+        if let nextResponder = self.next {
+            if nextResponder is UIViewController {
                 return nextResponder as? UIViewController
-            } else if (nextResponder.isKind(of: UIView.self)) {
+            } else if nextResponder is UIView {
                 return nextResponder.traverseResponderChainForFirstViewController()
             } else {
                 return nil
@@ -1668,9 +1683,16 @@ private extension UIResponder {
     }
 }
 
-private extension CAMediaTimingFunction {
+fileprivate extension Sequence where Iterator.Element == CGFloat {
+    func mapToNumbers() -> [NSNumber] {
+        return self.map { NSNumber(value: Float($0)) }
+    }
+}
 
-    func durationPercentageForPositionPercentage(positionPercentage: CGFloat, duration: CGFloat) -> CGFloat {
+
+fileprivate extension CAMediaTimingFunction {
+
+    func durationPercentageForPositionPercentage(_ positionPercentage: CGFloat, duration: CGFloat) -> CGFloat {
         // Finds the animation duration percentage that corresponds with the given animation "position" percentage.
         // Utilizes Newton's Method to solve for the parametric Bezier curve that is used by CAMediaAnimation.
 
@@ -1678,15 +1700,15 @@ private extension CAMediaTimingFunction {
         let epsilon: CGFloat = 1.0 / (100.0 * CGFloat(duration))
 
         // Find the t value that gives the position percentage we want
-        let t_found = solveTforY(y_0: positionPercentage, epsilon: epsilon, controlPoints: controlPoints)
+        let t_found = solveTforY(positionPercentage, epsilon: epsilon, controlPoints: controlPoints)
 
         // With that t, find the corresponding animation percentage
-        let durationPercentage = XforCurveAt(t: t_found, controlPoints: controlPoints)
+        let durationPercentage = XforCurveAt(t_found, controlPoints: controlPoints)
 
         return durationPercentage
     }
 
-    func solveTforY(y_0: CGFloat, epsilon: CGFloat, controlPoints: [CGPoint]) -> CGFloat {
+    func solveTforY(_ y_0: CGFloat, epsilon: CGFloat, controlPoints: [CGPoint]) -> CGFloat {
         // Use Newton's Method: http://en.wikipedia.org/wiki/Newton's_method
         // For first guess, use t = y (i.e. if curve were linear)
         var t0 = y_0
@@ -1697,14 +1719,14 @@ private extension CAMediaTimingFunction {
             // Base this iteration of t1 calculated from last iteration
             t0 = t1
             // Calculate f(t0)
-            f0 = YforCurveAt(t: t0, controlPoints:controlPoints) - y_0
+            f0 = YforCurveAt(t0, controlPoints:controlPoints) - y_0
             // Check if this is close (enough)
             if (fabs(f0) < epsilon) {
                 // Done!
                 return t0
             }
             // Else continue Newton's Method
-            df0 = derivativeCurveYValueAt(t: t0, controlPoints:controlPoints)
+            df0 = derivativeCurveYValueAt(t0, controlPoints:controlPoints)
             // Check if derivative is small or zero ( http://en.wikipedia.org/wiki/Newton's_method#Failure_analysis )
             if (fabs(df0) < 1e-6) {
                 break
@@ -1718,7 +1740,7 @@ private extension CAMediaTimingFunction {
         return t0
     }
 
-    func YforCurveAt(t: CGFloat, controlPoints:[CGPoint]) -> CGFloat {
+    func YforCurveAt(_ t: CGFloat, controlPoints:[CGPoint]) -> CGFloat {
         let P0 = controlPoints[0]
         let P1 = controlPoints[1]
         let P2 = controlPoints[2]
@@ -1729,39 +1751,39 @@ private extension CAMediaTimingFunction {
         let y1 = (3.0 * pow(1.0 - t, 2.0) * t * P1.y)
         let y2 = (3.0 * (1.0 - t) * pow(t, 2.0) * P2.y)
         let y3 = (pow(t, 3.0) * P3.y)
-        
+
         return y0 + y1 + y2 + y3
     }
-    
-    func XforCurveAt(t: CGFloat, controlPoints: [CGPoint]) -> CGFloat {
+
+    func XforCurveAt(_ t: CGFloat, controlPoints: [CGPoint]) -> CGFloat {
         let P0 = controlPoints[0]
         let P1 = controlPoints[1]
         let P2 = controlPoints[2]
         let P3 = controlPoints[3]
-        
+
         // Per http://en.wikipedia.org/wiki/Bezier_curve#Cubic_B.C3.A9zier_curves
-        
+
         let x0 = (pow((1.0 - t),3.0) * P0.x)
         let x1 = (3.0 * pow(1.0 - t, 2.0) * t * P1.x)
         let x2 = (3.0 * (1.0 - t) * pow(t, 2.0) * P2.x)
         let x3 = (pow(t, 3.0) * P3.x)
-        
+
         return x0 + x1 + x2 + x3
     }
-    
-    func derivativeCurveYValueAt(t: CGFloat, controlPoints: [CGPoint]) -> CGFloat {
+
+    func derivativeCurveYValueAt(_ t: CGFloat, controlPoints: [CGPoint]) -> CGFloat {
         let P0 = controlPoints[0]
         let P1 = controlPoints[1]
         let P2 = controlPoints[2]
         let P3 = controlPoints[3]
-        
+
         let dy0 = (P0.y + 3.0 * P1.y + 3.0 * P2.y - P3.y) * -3.0
         let dy1 = t * (6.0 * P0.y + 6.0 * P2.y)
         let dy2 = (-3.0 * P0.y + 3.0 * P1.y)
-        
+
         return dy0 * pow(t, 2.0) + dy1 + dy2
     }
-    
+
     func controlPoints() -> [CGPoint] {
         // Create point array to point to
         var point: [Float] = [0.0, 0.0]

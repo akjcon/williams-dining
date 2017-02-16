@@ -42,12 +42,12 @@ public class LoadingViewController: PurpleStatusBarViewController {
         diningHallsReturned = 0
         progressBar.setProgress(0, animated: true)
         activityLabel.text = orderedActivityLabels[0]
-        NotificationCenter.default().addObserver(self, selector: #selector(LoadingViewController.incrementProgress), name: incrementLoadingProgressBarKey, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoadingViewController.incrementProgress), name: incrementLoadingProgressBarKey, object: nil)
     }
 
     override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default().removeObserver(self, name: incrementLoadingProgressBarKey, object: nil)
+        NotificationCenter.default.removeObserver(self, name: incrementLoadingProgressBarKey, object: nil)
     }
 
     internal func initializeLabelTimer() {
@@ -75,7 +75,7 @@ public class LoadingViewController: PurpleStatusBarViewController {
         if curIndex == orderedActivityLabels.count - 1 {
             timer?.invalidate()
             // alert that the fetch must have failed
-            (UIApplication.shared().delegate as! AppDelegate).loadingDataHadError()
+            (UIApplication.shared.delegate as! AppDelegate).loadingDataHadError()
             return
         }
         activityLabel.text = orderedActivityLabels[curIndex + 1]

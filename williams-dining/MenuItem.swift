@@ -43,6 +43,6 @@ public struct MenuItem {
 
 extension String {
     func indexOf(string: String) -> String.Index {
-        return range(of: string, options: .literalSearch, range: nil, locale: nil)?.lowerBound ?? startIndex
+        return range(of: string, options: .literal, range: nil, locale: nil)?.lowerBound ?? startIndex
     }
 }

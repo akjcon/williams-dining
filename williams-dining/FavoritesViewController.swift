@@ -15,13 +15,13 @@ public class FavoritesViewController: DefaultTableViewController {
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default().addObserver(self, selector: #selector(FavoritesViewController.reloadTable), name: reloadFavoritesTableKey, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FavoritesViewController.reloadTable), name: reloadFavoritesTableKey, object: nil)
         self.reloadTable()
     }
 
     override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default().removeObserver(self, name: reloadFavoritesTableKey, object: nil)
+        NotificationCenter.default.removeObserver(self, name: reloadFavoritesTableKey, object: nil)
         self.reloadTable()
     }
 
