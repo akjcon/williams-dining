@@ -42,7 +42,7 @@ class ReviewsViewController: DefaultTableViewController {
     private let serverErrorBody = "Could not connect to the server. Try again?"
 
     private let comingSoonTitle = "Coming soon"
-    private let comingSoonBody = "Review collection coming soon.\n\nLook for an update in the coming weeks!"
+    private let comingSoonBody = "Review collection coming soon!"
 
     private let userErrorTitle = "No feedback provided"
     private let userErrorBody = "Please provide ratings or a suggestion before submitting."

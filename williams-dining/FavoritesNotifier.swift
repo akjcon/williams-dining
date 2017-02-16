@@ -45,6 +45,8 @@ class FavoritesNotifier {
                 lunchNotificationStr.append(itemStr)
             case .Dinner:
                 dinnerNotificationStr.append(itemStr)
+            case .Special:
+                dinnerNotificationStr.append(itemStr)
             case .Dessert:
                 dessertNotificationStr.append(itemStr)
             case _:

@@ -13,7 +13,7 @@ let brunchKey = "brunch"
 let breakfastKey = "breakfast"
 let lunchKey = "lunch"
 let dinnerKey = "dinner"
-
+let specialsKey = "specials"
 
 public enum MealTime {
     case Breakfast
@@ -21,6 +21,7 @@ public enum MealTime {
     case Dinner
     case Brunch
     case Dessert
+    case Special
     case Error
 
     init(num: NSNumber) {
@@ -34,6 +35,8 @@ public enum MealTime {
         case 4:
             self = .Dinner
         case 5:
+            self = .Special
+        case 6:
             self = .Dessert
         default:
             self = .Error
@@ -50,6 +53,8 @@ public enum MealTime {
             return "Lunch"
         case .Dinner:
             return "Dinner"
+        case .Special:
+            return "Specials"
         case .Dessert:
             return "Dessert"
         case .Error:
@@ -67,14 +72,16 @@ public enum MealTime {
             return 3
         case .Dinner:
             return 4
-        case .Dessert:
+        case .Special:
             return 5
+        case .Dessert:
+            return 6
         case .Error:
             return 10
         }
     }
 
-    static let allCases = [Breakfast,Lunch,Dinner,Brunch,Dessert]
+    static let allCases = [Breakfast,Lunch,Dinner,Special,Brunch,Dessert]
 
     init(mealTime: String) {
         switch(mealTime.lowercased()) {
@@ -86,6 +93,8 @@ public enum MealTime {
             self = .Dinner
         case brunchKey:
             self = .Brunch
+        case specialsKey:
+            self = .Special
         case dessertKey:
             self = .Dessert
         case _:
