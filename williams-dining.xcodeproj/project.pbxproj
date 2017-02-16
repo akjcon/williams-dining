@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		24010CC91CD54815008046BD /* FoodItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CC81CD54815008046BD /* FoodItemViewCell.swift */; };
 		24010CCC1CD54865008046BD /* FoodItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24010CCB1CD54865008046BD /* FoodItemViewCell.xib */; };
-		24010CCF1CD5558B008046BD /* PurpleStatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CCE1CD5558B008046BD /* PurpleStatusBarViewController.swift */; };
+		24010CCF1CD5558B008046BD /* ColoredStatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CCE1CD5558B008046BD /* ColoredStatusBarViewController.swift */; };
 		24010CD11CD55635008046BD /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CD01CD55635008046BD /* FavoritesViewController.swift */; };
 		24010CD31CD55868008046BD /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24010CD21CD55868008046BD /* FavoritesTableViewCell.swift */; };
 		2406E84E1D61F685003F0577 /* DiningHallViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2406E84D1D61F685003F0577 /* DiningHallViewControllerTests.swift */; };
@@ -34,7 +34,9 @@
 		248070F61CD5277900CFF98B /* MenuLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F51CD5277900CFF98B /* MenuLoader.swift */; };
 		248070F91CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F71CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift */; };
 		248070FA1CD53BF600CFF98B /* FavoriteFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248070F81CD53BF600CFF98B /* FavoriteFood.swift */; };
-		24939C671E55F4EA00B5158B /* CustomColorRefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24939C661E55F4EA00B5158B /* CustomColorRefreshButton.swift */; };
+		24939C691E560C5C00B5158B /* CustomColorToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24939C681E560C5C00B5158B /* CustomColorToolbar.swift */; };
+		24939C6B1E56101F00B5158B /* TitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24939C6A1E56101F00B5158B /* TitleLabel.swift */; };
+		24939C6D1E5616FC00B5158B /* CustomColorTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24939C6C1E5616FC00B5158B /* CustomColorTabBar.swift */; };
 		2497A61A1D24951300DD81DD /* DiningHall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A6191D24951300DD81DD /* DiningHall.swift */; };
 		2497A61C1D24957500DD81DD /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A61B1D24957500DD81DD /* MenuItem.swift */; };
 		2497A61E1D24958300DD81DD /* MealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A61D1D24958300DD81DD /* MealTime.swift */; };
@@ -71,7 +73,7 @@
 /* Begin PBXFileReference section */
 		24010CC81CD54815008046BD /* FoodItemViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodItemViewCell.swift; sourceTree = "<group>"; };
 		24010CCB1CD54865008046BD /* FoodItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoodItemViewCell.xib; sourceTree = "<group>"; };
-		24010CCE1CD5558B008046BD /* PurpleStatusBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurpleStatusBarViewController.swift; sourceTree = "<group>"; };
+		24010CCE1CD5558B008046BD /* ColoredStatusBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColoredStatusBarViewController.swift; sourceTree = "<group>"; };
 		24010CD01CD55635008046BD /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		24010CD21CD55868008046BD /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		2406E84D1D61F685003F0577 /* DiningHallViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHallViewControllerTests.swift; sourceTree = "<group>"; };
@@ -103,7 +105,9 @@
 		248070F51CD5277900CFF98B /* MenuLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuLoader.swift; sourceTree = "<group>"; };
 		248070F71CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FavoriteFood+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		248070F81CD53BF600CFF98B /* FavoriteFood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteFood.swift; sourceTree = "<group>"; };
-		24939C661E55F4EA00B5158B /* CustomColorRefreshButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColorRefreshButton.swift; sourceTree = "<group>"; };
+		24939C681E560C5C00B5158B /* CustomColorToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColorToolbar.swift; sourceTree = "<group>"; };
+		24939C6A1E56101F00B5158B /* TitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleLabel.swift; sourceTree = "<group>"; };
+		24939C6C1E5616FC00B5158B /* CustomColorTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColorTabBar.swift; sourceTree = "<group>"; };
 		2497A6191D24951300DD81DD /* DiningHall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHall.swift; sourceTree = "<group>"; };
 		2497A61B1D24957500DD81DD /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		2497A61D1D24958300DD81DD /* MealTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTime.swift; sourceTree = "<group>"; };
@@ -164,7 +168,7 @@
 				243A94A21CBF328B00A7C3B3 /* LoadingViewController.swift */,
 				244CE83D1CD301B20028D376 /* DiningHallViewController.swift */,
 				244CE83F1CD301CA0028D376 /* MealsViewController.swift */,
-				24010CCE1CD5558B008046BD /* PurpleStatusBarViewController.swift */,
+				24010CCE1CD5558B008046BD /* ColoredStatusBarViewController.swift */,
 				24010CD01CD55635008046BD /* FavoritesViewController.swift */,
 				244627141CD7B9F300F3664F /* CentralTabBarController.swift */,
 				244627161CD7C88900F3664F /* CentralNavigationController.swift */,
@@ -181,7 +185,6 @@
 				248070F51CD5277900CFF98B /* MenuLoader.swift */,
 				24D5C3681CD680A30096C255 /* FavoritesHandler.swift */,
 				24D5C36E1CD6D4CB0096C255 /* FavoritesNotifier.swift */,
-				244CE8471CD326A50028D376 /* Style.swift */,
 				2416F2031D26ED25004571D7 /* ReviewHandler.swift */,
 				24A60E131D61FE5C0085FF72 /* MenuHandlerProtocol.swift */,
 			);
@@ -219,6 +222,7 @@
 				24010CCD1CD54FAD008046BD /* ViewControllers */,
 				24010CCA1CD54819008046BD /* CoreData */,
 				243A94A01CBF328B00A7C3B3 /* AppDelegate.swift */,
+				244CE8471CD326A50028D376 /* Style.swift */,
 				243A94A41CBF328B00A7C3B3 /* Main.storyboard */,
 				243A94A71CBF328B00A7C3B3 /* Assets.xcassets */,
 				243A94AC1CBF328B00A7C3B3 /* Info.plist */,
@@ -249,7 +253,9 @@
 		24939C651E55F4C600B5158B /* UIObjects */ = {
 			isa = PBXGroup;
 			children = (
-				24939C661E55F4EA00B5158B /* CustomColorRefreshButton.swift */,
+				24939C681E560C5C00B5158B /* CustomColorToolbar.swift */,
+				24939C6A1E56101F00B5158B /* TitleLabel.swift */,
+				24939C6C1E5616FC00B5158B /* CustomColorTabBar.swift */,
 			);
 			name = UIObjects;
 			sourceTree = "<group>";
@@ -435,7 +441,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				24D5C3691CD680A30096C255 /* FavoritesHandler.swift in Sources */,
-				24010CCF1CD5558B008046BD /* PurpleStatusBarViewController.swift in Sources */,
+				24010CCF1CD5558B008046BD /* ColoredStatusBarViewController.swift in Sources */,
+				24939C6D1E5616FC00B5158B /* CustomColorTabBar.swift in Sources */,
 				24DD9C8A1CD3C06A00E2777C /* CoreDataMenuItem.swift in Sources */,
 				244CE8401CD301CA0028D376 /* MealsViewController.swift in Sources */,
 				248070FA1CD53BF600CFF98B /* FavoriteFood.swift in Sources */,
@@ -447,13 +454,13 @@
 				2416F2021D26E323004571D7 /* ReviewTableViewCell.swift in Sources */,
 				24D5C36F1CD6D4CB0096C255 /* FavoritesNotifier.swift in Sources */,
 				2497A61A1D24951300DD81DD /* DiningHall.swift in Sources */,
+				24939C6B1E56101F00B5158B /* TitleLabel.swift in Sources */,
 				244CE83E1CD301B20028D376 /* DiningHallViewController.swift in Sources */,
 				244CE8461CD30B0E0028D376 /* MenuHandler.swift in Sources */,
 				248070F61CD5277900CFF98B /* MenuLoader.swift in Sources */,
 				24DD9C891CD3C06A00E2777C /* CoreDataMenuItem+CoreDataProperties.swift in Sources */,
 				244627151CD7B9F300F3664F /* CentralTabBarController.swift in Sources */,
 				2416F1FF1D26BAB8004571D7 /* ReviewsViewController.swift in Sources */,
-				24939C671E55F4EA00B5158B /* CustomColorRefreshButton.swift in Sources */,
 				24DD9C841CD3B10C00E2777C /* williams-dining.xcdatamodeld in Sources */,
 				243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */,
 				24A60E2D1D6210C70085FF72 /* MockMenuCache.swift in Sources */,
@@ -463,6 +470,7 @@
 				2416F2041D26ED25004571D7 /* ReviewHandler.swift in Sources */,
 				2497A61E1D24958300DD81DD /* MealTime.swift in Sources */,
 				2437F81B1D734793007D77E3 /* MarqueeLabel.swift in Sources */,
+				24939C691E560C5C00B5158B /* CustomColorToolbar.swift in Sources */,
 				24010CD11CD55635008046BD /* FavoritesViewController.swift in Sources */,
 				248070F91CD53BF600CFF98B /* FavoriteFood+CoreDataProperties.swift in Sources */,
 			);

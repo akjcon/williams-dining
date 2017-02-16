@@ -9,42 +9,43 @@
 import Foundation
 import UIKit
 
+enum Theme {
+    case Standard
+    case Test
+}
 /**
  This contains the global style for the app
  */
 struct Style {
 
-    static func initialize() {
-        print("initializing colors")
-
-        
+    static var theme: Theme = .Standard
 
 
-        // initialize colors here
-            //        UILabel.appearance().tintColor = Style.secondaryColor
-            //        UILabel.appearance().backgroundColor = Style.defaultColor
 
-            // UITabBarController
-
-            // UITableView
-
-            // UITableViewCell
-
-            // UIButton
-
-            // UIProgressBar
-            
-            // UILoadingIndicator (or whatever it is)
-            
-            //        UITableView.appearance().tintColor
-
+    static var defaultColor: UIColor {
+        switch Style.theme {
+        case .Standard:
+            return purpleColor
+        case .Test:
+            return UIColor.red
+        }
     }
 
-    static var defaultColor = purpleColor
+
+    static var secondaryColor: UIColor {
+        switch Style.theme {
+        case .Standard:
+            return yellowColor
+        case .Test:
+            return UIColor.green
+        }
+    }
+//    static var defaultColor = purpleColor
 
 //    static var defaultColor = UIColor.red
+//    static var secondaryColor = UIColor.green
 
-    static var secondaryColor = yellowColor
+//    static var secondaryColor = yellowColor
     static var clearColor = UIColor.clear
 
     private static var purpleColor = UIColor(red: 102/255, green: 51/255, blue: 153/255, alpha: 0.9)

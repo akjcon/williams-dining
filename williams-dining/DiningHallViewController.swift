@@ -117,6 +117,8 @@ extension DiningHallViewController: UITableViewDelegate, UITableViewDataSource {
             cell.backgroundColor = Style.clearColor
         }
 
+        cell.drawColors()
+
         return cell;
     }
 

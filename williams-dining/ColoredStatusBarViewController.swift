@@ -1,5 +1,5 @@
 //
-//  PurpleStatusBarViewController.swift
+//  ColoredStatusBarViewController.swift
 //  williams-dining
 //
 //  Created by Nathan Andersen on 4/30/16.
