@@ -14,6 +14,32 @@ import UIKit
  */
 struct Style {
 
+    static func initialize() {
+        print("initializing colors")
+
+        
+
+
+        // initialize colors here
+            //        UILabel.appearance().tintColor = Style.secondaryColor
+            //        UILabel.appearance().backgroundColor = Style.defaultColor
+
+            // UITabBarController
+
+            // UITableView
+
+            // UITableViewCell
+
+            // UIButton
+
+            // UIProgressBar
+            
+            // UILoadingIndicator (or whatever it is)
+            
+            //        UITableView.appearance().tintColor
+
+    }
+
     static var defaultColor = purpleColor
 
 //    static var defaultColor = UIColor.red

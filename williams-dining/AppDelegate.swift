@@ -121,7 +121,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         self.registerForPushNotifications(application: self.controller!.application)
 
-        self.setColors()
+//        self.setColors()
+        Style.initialize()
 
         return true
     }
