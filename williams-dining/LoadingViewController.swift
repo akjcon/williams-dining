@@ -11,7 +11,7 @@ import CoreData
 
 let incrementLoadingProgressBarKey = Notification.Name("incrementLoadingProgressBar")
 
-public class LoadingViewController: PurpleStatusBarViewController {
+public class LoadingViewController: ColoredStatusBarViewController {
 
     var diningHallsReturned: Float = 0
     let diningHallCount: Float = 5
@@ -22,7 +22,9 @@ public class LoadingViewController: PurpleStatusBarViewController {
      Some Williams-themed loading labels.
     */
     var orderedActivityLabels: [String] = ["Climbing the purple mountains...",
-                                           "Yodeling...",
+                                           "Yodeling",
+                                           "Wandering the steam tunnels",
+                                           "Swimming in the Green River",
                                            "Herding the cows...",
                                            "Milking the cattle...",
                                            "Curdling milk...",
@@ -30,8 +32,6 @@ public class LoadingViewController: PurpleStatusBarViewController {
                                            "Grilling steaks...",
                                            "Picking the vegetables...",
                                            "Mixing the salads...",
-                                           "Wandering the steam tunnels",
-                                           "Swimming in the Green River",
                                            "Loading menus..."]
 
     var timer: Timer?

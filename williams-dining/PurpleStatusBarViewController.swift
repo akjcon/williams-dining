@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PurpleStatusBarViewController: UIViewController {
+public class ColoredStatusBarViewController: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()

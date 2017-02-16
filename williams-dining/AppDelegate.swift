@@ -40,6 +40,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var defaults: UserDefaults = UserDefaults.standard
 
+    private func setColors() {
+//        UILabel.appearance().tintColor = Style.secondaryColor
+//        UILabel.appearance().backgroundColor = Style.defaultColor
+
+        // UITabBarController
+
+        // UITableView
+
+        // UITableViewCell
+
+        // UIButton
+
+        // UIProgressBar
+
+        // UILoadingIndicator (or whatever it is)
+
+//        UITableView.appearance().tintColor
+
+    }
+
     /**
      This function is called when loading the data had an error.
      */
@@ -84,7 +104,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 20)
         let view = UIView(frame: frame)
         view.backgroundColor = Style.defaultColor
-//        view.backgroundColor = Style.purpleColor
         self.window?.rootViewController!.view.addSubview(view)
 
         // set the background fetching interval
@@ -102,6 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         self.registerForPushNotifications(application: self.controller!.application)
 
+        self.setColors()
 
         return true
     }

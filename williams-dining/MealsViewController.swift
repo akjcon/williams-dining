@@ -106,9 +106,9 @@ extension MealsViewController: UITableViewDataSource, UITableViewDelegate {
         cell.glutenFreeLabel.isHidden = !menuItem.isGlutenFree
         cell.veganLabel.isHidden = !menuItem.isVegan
         if FavoritesHandler.isAFavoriteFood(name: menuItem.name) {
-            cell.backgroundColor = Style.yellowColor
+            cell.backgroundColor = Style.secondaryColor
         } else {
-            cell.backgroundColor = UIColor.clear
+            cell.backgroundColor = Style.clearColor
         }
 
         return cell;

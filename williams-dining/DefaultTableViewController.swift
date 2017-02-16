@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class DefaultTableViewController: PurpleStatusBarViewController {
+public class DefaultTableViewController: ColoredStatusBarViewController {
 
     public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
