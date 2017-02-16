@@ -38,9 +38,9 @@ class MenuLoader {
                 print("Fetched a menu. There are " + String(menusRemaining) + " menus remaining.")
                 if menusRemaining == 0 {
                     print("Closing")
-                    completionHandler(.newData)
                     appDelegate.saveContext()
                     favoritesNotifier.sendNotifications()
+                    completionHandler(.newData)
                 }
             }
         }

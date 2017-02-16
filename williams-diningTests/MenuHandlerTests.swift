@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import CoreData
 @testable import williams_dining
 
 class MenuHandlerTests: XCTestCase {
@@ -28,7 +29,7 @@ class MenuHandlerTests: XCTestCase {
         // determine an individual completion
         let validate = {
             (item: MenuItem) in
-            print(item)
+//            print(item)
         }
         let finished = {
             () in
@@ -37,8 +38,8 @@ class MenuHandlerTests: XCTestCase {
         }
         if let path = Bundle.main.path(forResource: "Whitmans", ofType: "json") {
             do {
-                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: Data.ReadingOptions.dataReadingMappedIfSafe)
-                if let jsonResult: AnyObject = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: Data.ReadingOptions.mappedIfSafe)
+                if let jsonResult: AnyObject = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject? {
                     MenuHandler.parseMenu(menu: jsonResult, diningHall: .Whitmans, individualCompletion: validate, completionHandler: finished)
                 }
                 // finish this up

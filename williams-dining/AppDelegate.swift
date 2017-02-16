@@ -64,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 NotificationCenter.default.post(name: reloadFavoritesTableKey, object: nil)
                 NotificationCenter.default.post(name: reloadMealTableViewKey as NSNotification.Name, object: nil)
                 NotificationCenter.default.post(name: reloadDiningHallTableViewKey as NSNotification.Name, object: nil)
+                print("should have reloaded")
             } else {
                 self.loadingDataHadError()
             }
@@ -156,14 +157,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "uk.co.plymouthsoftware.core_data" in the application's documents Application Support directory.
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-//        let urls = FileManager.default.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
         return urls[urls.count-1] as NSURL
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         let modelURL = Bundle.main.url(forResource: "williams-dining", withExtension: "momd")!
-//        let modelURL = Bundle.main.urlForResource("williams-dining", withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
 

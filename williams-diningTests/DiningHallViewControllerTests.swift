@@ -18,7 +18,6 @@ class DiningHallViewControllerTests: XCTestCase {
         // set the MOC to the MOCK MOC, haha
 
         MockMenuCache.initializeMockData()
-        print(MenuHandler.fetchDiningHalls(mealTime: nil, moc: MockMenuCache.mockManagedObjectContext))
 
         // Put setup code here. This method is called before the invocation of each test method in the class.
         viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DiningHallViewController") as! DiningHallViewController
@@ -33,7 +32,6 @@ class DiningHallViewControllerTests: XCTestCase {
     func testVCHasWhitmansDisplayed() {
         let _ = viewController.view
         viewController.refreshView()
-        print(viewController.pickerDataSource)
         viewController.pickerView.selectRow(viewController.pickerDataSource.index(of: DiningHall.Whitmans)!, inComponent: 0, animated: false)
         // select Whitmans
         var foodNames = Set<String>();
@@ -43,7 +41,6 @@ class DiningHallViewControllerTests: XCTestCase {
                 foodNames.insert(item.name)
             })
         }
-        print("made it this far")
 
         (viewController.tableView.visibleCells as! [FoodItemViewCell]).forEach({(cell) in
             print("are there even any cells?")
@@ -54,7 +51,6 @@ class DiningHallViewControllerTests: XCTestCase {
                 print("was no text")
             }
         })
-        print("well, passed test..")
     }
     
     func testExample() {

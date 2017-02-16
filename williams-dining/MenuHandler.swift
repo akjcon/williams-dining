@@ -15,17 +15,6 @@ MenuReader statically reads the menus in from Core Data memory.
  */
 public class MenuHandler: MenuHandlerProtocol {
 
-    // this is a var for Unit Testing
-
-/*    public static var managedObjectContext: NSManagedObjectContext {
-        get {
-
-        }
-        set {
-
-        }
-    }*/
-
     private static let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
 
     private static let courseKey = "course"

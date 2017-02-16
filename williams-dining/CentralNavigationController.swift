@@ -27,9 +27,11 @@ public class CentralNavigationController: UINavigationController, UINavigationCo
     }
 
     func hideLoadingScreen() {
-        // this is lagging
         loadingViewController.stopTimer()
-        self.popViewController(animated: true)
+
+        DispatchQueue.main.async {
+            self.popViewController(animated: true)
+        }
     }
 
     func hideLoadingScreenWithError() {

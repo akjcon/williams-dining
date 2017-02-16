@@ -22,10 +22,6 @@ public class CoreDataMenuItem: NSManagedObject {
         newItem.diningHall = NSNumber(integerLiteral: menuItem.diningHall.intValue())
         newItem.mealTime = NSNumber(integerLiteral: menuItem.mealTime.intValue())
 
-
-        // BUG:
-        // in new iOS beta, setting these booleans fails
-
         newItem.isGlutenFree = menuItem.isGlutenFree
         newItem.isVegan = menuItem.isVegan
 

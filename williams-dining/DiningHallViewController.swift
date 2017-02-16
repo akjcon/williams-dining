@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-//var diningHallVCIdentifier = "DiningHallViewController"
 
 public class DiningHallViewController: DefaultTableViewController {
 
