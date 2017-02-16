@@ -14,7 +14,7 @@ public class PurpleStatusBarViewController: UIViewController {
         super.viewDidLoad()
         let frame: CGRect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 20)
         let view = UIView(frame: frame)
-        view.backgroundColor = Style.purpleColor
+        view.backgroundColor = Style.defaultColor
         self.view.addSubview(view)
     }
 }
