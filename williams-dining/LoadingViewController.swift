@@ -38,7 +38,7 @@ public class LoadingViewController: ColoredStatusBarViewController {
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("view did appear")
+        print("Showing the loading view controller")
         diningHallsReturned = 0
         progressBar.setProgress(0, animated: true)
         activityLabel.text = orderedActivityLabels[0]

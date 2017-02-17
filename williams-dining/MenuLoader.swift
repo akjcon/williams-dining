@@ -37,7 +37,7 @@ class MenuLoader {
                 NotificationCenter.default.post(name: incrementLoadingProgressBarKey, object: nil)
                 print("Fetched a menu. There are " + String(menusRemaining) + " menus remaining.")
                 if menusRemaining == 0 {
-                    print("Closing")
+                    print("All menus fetched.")
                     appDelegate.saveContext()
                     favoritesNotifier.sendNotifications()
                     completionHandler(.newData)

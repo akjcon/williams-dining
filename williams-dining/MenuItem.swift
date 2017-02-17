@@ -20,29 +20,40 @@ public struct MenuItem {
     let foodNameKey = "formal_name"
     let glutenFreeKey = " GF"
     let veganKey = " V"
+    let altVeganKey = " VGT"
     let mealKey = "meal"
     let courseKey = "course"
+    let glutenFreeString = "gluten free"
 
     init(itemDict: [String:AnyObject], diningHall: DiningHall) {
-        let foodString = itemDict[foodNameKey] as! String
-        self.isGlutenFree = foodString.contains(glutenFreeKey)
-        self.isVegan = foodString.contains(veganKey)
+        var foodString = itemDict[foodNameKey] as! String
+
+        let whereVeganKeyWouldBeIndex = foodString.index(foodString.endIndex, offsetBy: -2)
+        self.isVegan = (foodString.substring(from: whereVeganKeyWouldBeIndex) == veganKey)
+        if isVegan {
+            foodString = foodString.substring(to: whereVeganKeyWouldBeIndex)
+        } else {
+            let whereVeganKeyWouldBeAltIndex = foodString.index(foodString.endIndex, offsetBy: -4)
+            self.isVegan = (foodString.substring(from: whereVeganKeyWouldBeAltIndex) == altVeganKey)
+            if isVegan {
+                foodString = foodString.substring(to: whereVeganKeyWouldBeAltIndex)
+            }
+        }
+
+        let whereGlutenFreeKeyWouldBeIndex = foodString.index(foodString.endIndex, offsetBy: -3)
+
+        self.isGlutenFree = (foodString.substring(from: whereGlutenFreeKeyWouldBeIndex) == glutenFreeKey)
 
         if isGlutenFree {
-            self.name = foodString.substring(to: foodString.indexOf(string: glutenFreeKey))
-        } else if isVegan {
-            self.name = foodString.substring(to: foodString.indexOf(string: veganKey))
-        } else {
-            self.name = foodString
+            foodString = foodString.substring(to: whereGlutenFreeKeyWouldBeIndex)
         }
+
+        self.name = foodString
+
+        self.isGlutenFree = self.isGlutenFree || foodString.localizedCaseInsensitiveContains(glutenFreeString)
+
         self.mealTime = MealTime(mealTime: itemDict[mealKey] as! String)
         self.diningHall = diningHall
         self.course = itemDict[courseKey] as! String
-    }
-}
-
-extension String {
-    func indexOf(string: String) -> String.Index {
-        return range(of: string, options: .literal, range: nil, locale: nil)?.lowerBound ?? startIndex
     }
 }

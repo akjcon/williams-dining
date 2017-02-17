@@ -12,10 +12,11 @@ import UIKit
 class CustomColorTabBar: UITabBar {
 
     private func sharedInit() {
+        self.barTintColor = Style.defaultColor
         self.tintColor = Style.secondaryColor
-        self.backgroundColor = Style.defaultColor
 
-        print("initted")
+        // do a rudimentary calculation on if the default color is too light
+        // and if so, set the 'unselected' to either black or white
     }
 
     required init?(coder aDecoder: NSCoder) {

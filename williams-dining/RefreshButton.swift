@@ -1,24 +1,21 @@
 //
-//  CustomColorToolbar.swift
+//  RefreshButton.swift
 //  williams-dining
 //
-//  Created by Nathan Andersen on 2/16/17.
+//  Created by Nathan Andersen on 2/17/17.
 //  Copyright © 2017 Andersen Labs. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class CustomColorToolbar: UIToolbar {
-
+class RefreshButton: UIBarButtonItem {
     private func sharedInit() {
         self.tintColor = Style.secondaryColor
-
-        self.barTintColor = Style.defaultColor
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init() {
+        super.init()
         self.sharedInit()
     }
 

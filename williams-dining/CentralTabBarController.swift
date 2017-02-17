@@ -12,7 +12,7 @@ import UIKit
 
 public class CentralTabBarController: UITabBarController {
 
-/*    private func sharedInit() {
+    private func sharedInit() {
         self.tabBar.backgroundColor = Style.defaultColor
         self.tabBar.tintColor = Style.secondaryColor
     }
@@ -25,7 +25,7 @@ public class CentralTabBarController: UITabBarController {
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.sharedInit()
-    }*/
+    }
 
     func displayLoadingError() {
         let alertController = UIAlertController(title: "Data Error", message: "Loading the menus timed out.\n\nPlease reload the data.", preferredStyle: .alert)

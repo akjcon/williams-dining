@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     internal func updateData() {
-        print("Starting to update the data.")
+//        print("Starting to update the data.")
         controller!.displayLoadingScreen()
         updateData() {(result: UIBackgroundFetchResult) in
             // eventually this will have to actually map to "new data" for real
@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 NotificationCenter.default.post(name: reloadFavoritesTableKey, object: nil)
                 NotificationCenter.default.post(name: reloadMealTableViewKey as NSNotification.Name, object: nil)
                 NotificationCenter.default.post(name: reloadDiningHallTableViewKey as NSNotification.Name, object: nil)
-                print("should have reloaded")
+                print("Closing the loading screen.")
             } else {
                 self.loadingDataHadError()
             }

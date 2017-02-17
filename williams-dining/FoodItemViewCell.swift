@@ -19,16 +19,17 @@ class FoodItemViewCell: UITableViewCell {
         self.veganLabel?.backgroundColor = Style.defaultColor
         self.glutenFreeLabel?.backgroundColor = Style.defaultColor
 
-        self.veganLabel?.tintColor = Style.secondaryColor
-        self.glutenFreeLabel?.tintColor = Style.secondaryColor
+        self.veganLabel.textColor = Style.secondaryColor
+        self.glutenFreeLabel.textColor = Style.secondaryColor
     }*/
 
     internal func drawColors() {
         self.veganLabel.backgroundColor = Style.defaultColor
         self.glutenFreeLabel.backgroundColor = Style.defaultColor
 
-        self.veganLabel.tintColor = Style.secondaryColor
-        self.glutenFreeLabel.tintColor = Style.secondaryColor
+
+        self.veganLabel.textColor = Style.secondaryColor
+        self.glutenFreeLabel.textColor = Style.secondaryColor
 
     }
 

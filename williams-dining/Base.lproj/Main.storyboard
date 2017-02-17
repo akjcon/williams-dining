@@ -23,7 +23,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2vk-Tb-q9e">
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2vk-Tb-q9e" customClass="CustomColorProgressView" customModule="williams_dining" customModuleProvider="target">
                                 <rect key="frame" x="66" y="291.5" width="243" height="2"/>
                                 <color key="progressTintColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                             </progressView>
@@ -134,7 +134,7 @@
                                     <constraint firstAttribute="width" secondItem="aL4-wb-duT" secondAttribute="height" multiplier="1:1" id="8rc-iw-t7t"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem systemItem="refresh" id="XYL-0N-MYP">
+                                    <barButtonItem systemItem="refresh" id="XYL-0N-MYP" customClass="RefreshButton" customModule="williams_dining" customModuleProvider="target">
                                         <color key="tintColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="refreshButtonWasClicked:" destination="8tk-jG-9OB" id="65M-9Y-Fyw"/>
@@ -490,7 +490,7 @@
                                     <constraint firstAttribute="width" secondItem="1rx-vs-myL" secondAttribute="height" multiplier="1:1" id="cYz-fL-WRu"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem systemItem="refresh" id="Kly-uL-yzS">
+                                    <barButtonItem systemItem="refresh" id="Kly-uL-yzS" customClass="RefreshButton" customModule="williams_dining" customModuleProvider="target">
                                         <color key="tintColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="refreshButtonWasClicked:" destination="vz2-Pb-mT1" id="I5U-t6-aWC"/>
@@ -538,17 +538,11 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" red="0.40000000000000002" green="0.20000000000000001" blue="0.59999999999999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                <color key="value" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
                         <segue destination="vz2-Pb-mT1" kind="relationship" relationship="viewControllers" id="kGE-hh-vgm"/>
                         <segue destination="8tk-jG-9OB" kind="relationship" relationship="viewControllers" id="XY4-pE-Wot"/>
                         <segue destination="Q2e-MM-F7c" kind="relationship" relationship="viewControllers" id="Ej4-tD-6Nq"/>
-                        <segue destination="d8k-7P-h0m" kind="relationship" relationship="viewControllers" id="IaM-sC-aQF"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GDN-zX-tJq" userLabel="First Responder" sceneMemberID="firstResponder"/>

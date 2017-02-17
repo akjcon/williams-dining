@@ -37,6 +37,8 @@
 		24939C691E560C5C00B5158B /* CustomColorToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24939C681E560C5C00B5158B /* CustomColorToolbar.swift */; };
 		24939C6B1E56101F00B5158B /* TitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24939C6A1E56101F00B5158B /* TitleLabel.swift */; };
 		24939C6D1E5616FC00B5158B /* CustomColorTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24939C6C1E5616FC00B5158B /* CustomColorTabBar.swift */; };
+		24939C6F1E56EE1E00B5158B /* CustomColorProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24939C6E1E56EE1E00B5158B /* CustomColorProgressView.swift */; };
+		24939C731E56F2A600B5158B /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24939C721E56F2A600B5158B /* RefreshButton.swift */; };
 		2497A61A1D24951300DD81DD /* DiningHall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A6191D24951300DD81DD /* DiningHall.swift */; };
 		2497A61C1D24957500DD81DD /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A61B1D24957500DD81DD /* MenuItem.swift */; };
 		2497A61E1D24958300DD81DD /* MealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497A61D1D24958300DD81DD /* MealTime.swift */; };
@@ -108,6 +110,8 @@
 		24939C681E560C5C00B5158B /* CustomColorToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColorToolbar.swift; sourceTree = "<group>"; };
 		24939C6A1E56101F00B5158B /* TitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleLabel.swift; sourceTree = "<group>"; };
 		24939C6C1E5616FC00B5158B /* CustomColorTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColorTabBar.swift; sourceTree = "<group>"; };
+		24939C6E1E56EE1E00B5158B /* CustomColorProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColorProgressView.swift; sourceTree = "<group>"; };
+		24939C721E56F2A600B5158B /* RefreshButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
 		2497A6191D24951300DD81DD /* DiningHall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHall.swift; sourceTree = "<group>"; };
 		2497A61B1D24957500DD81DD /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		2497A61D1D24958300DD81DD /* MealTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTime.swift; sourceTree = "<group>"; };
@@ -256,6 +260,8 @@
 				24939C681E560C5C00B5158B /* CustomColorToolbar.swift */,
 				24939C6A1E56101F00B5158B /* TitleLabel.swift */,
 				24939C6C1E5616FC00B5158B /* CustomColorTabBar.swift */,
+				24939C6E1E56EE1E00B5158B /* CustomColorProgressView.swift */,
+				24939C721E56F2A600B5158B /* RefreshButton.swift */,
 			);
 			name = UIObjects;
 			sourceTree = "<group>";
@@ -462,6 +468,7 @@
 				244627151CD7B9F300F3664F /* CentralTabBarController.swift in Sources */,
 				2416F1FF1D26BAB8004571D7 /* ReviewsViewController.swift in Sources */,
 				24DD9C841CD3B10C00E2777C /* williams-dining.xcdatamodeld in Sources */,
+				24939C731E56F2A600B5158B /* RefreshButton.swift in Sources */,
 				243A94A11CBF328B00A7C3B3 /* AppDelegate.swift in Sources */,
 				24A60E2D1D6210C70085FF72 /* MockMenuCache.swift in Sources */,
 				244CE8481CD326A50028D376 /* Style.swift in Sources */,
@@ -469,6 +476,7 @@
 				2497A61C1D24957500DD81DD /* MenuItem.swift in Sources */,
 				2416F2041D26ED25004571D7 /* ReviewHandler.swift in Sources */,
 				2497A61E1D24958300DD81DD /* MealTime.swift in Sources */,
+				24939C6F1E56EE1E00B5158B /* CustomColorProgressView.swift in Sources */,
 				2437F81B1D734793007D77E3 /* MarqueeLabel.swift in Sources */,
 				24939C691E560C5C00B5158B /* CustomColorToolbar.swift in Sources */,
 				24010CD11CD55635008046BD /* FavoritesViewController.swift in Sources */,

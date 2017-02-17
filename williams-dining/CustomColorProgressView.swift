@@ -1,20 +1,19 @@
 //
-//  CustomColorToolbar.swift
+//  CustomColorProgressView.swift
 //  williams-dining
 //
-//  Created by Nathan Andersen on 2/16/17.
+//  Created by Nathan Andersen on 2/17/17.
 //  Copyright © 2017 Andersen Labs. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class CustomColorToolbar: UIToolbar {
+class CustomColorProgressView: UIProgressView {
 
     private func sharedInit() {
-        self.tintColor = Style.secondaryColor
-
-        self.barTintColor = Style.defaultColor
+        self.progressTintColor = Style.defaultColor
+        self.trackTintColor = Style.secondaryColor
     }
 
     override init(frame: CGRect) {
@@ -26,4 +25,5 @@ class CustomColorToolbar: UIToolbar {
         super.init(coder: aDecoder)
         self.sharedInit()
     }
+
 }
