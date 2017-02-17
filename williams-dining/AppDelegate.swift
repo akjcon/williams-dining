@@ -40,37 +40,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var defaults: UserDefaults = UserDefaults.standard
 
-    private func setColors() {
-//        UILabel.appearance().tintColor = Style.secondaryColor
-//        UILabel.appearance().backgroundColor = Style.defaultColor
-
-        // UITabBarController
-
-        // UITableView
-
-        // UITableViewCell
-
-        // UIButton
-
-        // UIProgressBar
-
-        // UILoadingIndicator (or whatever it is)
-
-//        UITableView.appearance().tintColor
-
-    }
-
     /**
      This function is called when loading the data had an error.
      */
     internal func loadingDataHadError() {
-        print("Loading the data had an errror.")
+        print("There was an error while loading the data.")
         let yesterday = Date(timeInterval: -86400, since: Date())
         defaults.setValue(yesterday, forKey: lastUpdatedAtKey)
 
         if controller != nil {
             controller!.hideLoadingScreenWithError()
         }
+        
     }
 
     internal func updateData() {

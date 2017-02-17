@@ -31,12 +31,21 @@ class MenuLoader {
         MenuHandler.clearCachedData()
         let favoritesNotifier = FavoritesNotifier()
 
+        var success = true
+
         for diningHall in DiningHall.allCases {
             self.getMenu(diningHall: diningHall,favoritesNotifier: favoritesNotifier) {
+                (result: Bool) in
                 menusRemaining -= 1
                 NotificationCenter.default.post(name: incrementLoadingProgressBarKey, object: nil)
-                print("Fetched a menu. There are " + String(menusRemaining) + " menus remaining.")
+                print("A menu returned. It was successful: \(success). There are \(menusRemaining) menus remaining.")
+                success = success && result
                 if menusRemaining == 0 {
+                    if !success {
+                        print("there was an error")
+                        self.appDelegate.loadingDataHadError()
+                        return
+                    }
                     print("All menus fetched.")
                     appDelegate.saveContext()
                     favoritesNotifier.sendNotifications()
@@ -53,7 +62,7 @@ class MenuLoader {
         - favoritesNotifier: the FavoritesNotifier that will handle notifications
         - completionHandler: a function to call at completion
      */
-    private static func getMenu(diningHall: DiningHall, favoritesNotifier: FavoritesNotifier, completionHandler: @escaping () -> ()) {
+    private static func getMenu(diningHall: DiningHall, favoritesNotifier: FavoritesNotifier, completionHandler: @escaping (Bool) -> ()) {
         let url = apiBaseUrl + String(diningHall.getAPIValue())
         var request: URLRequest = URLRequest(url: URL(string: url)!)
         request.httpMethod = httpGet
@@ -63,15 +72,17 @@ class MenuLoader {
             (data, response, error) in
             guard error == nil && (response as! HTTPURLResponse).statusCode == 200 else {
                 print(error!)
-                self.appDelegate.loadingDataHadError()
+//                self.appDelegate.loadingDataHadError()
+                completionHandler(false)
                 return
             }
             if let jsonObject: AnyObject = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject? {
                 MenuHandler.parseMenu(menu: jsonObject, diningHall: diningHall, favoritesNotifier: favoritesNotifier) {
-                    completionHandler()
+                    completionHandler(true)
                 }
             } else {
-                self.appDelegate.loadingDataHadError()
+                completionHandler(false)
+//                self.appDelegate.loadingDataHadError()
             }
 
         })

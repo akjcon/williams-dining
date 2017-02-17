@@ -22,12 +22,12 @@ public class CentralNavigationController: UINavigationController, UINavigationCo
     let mainViewController: CentralTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainViewController") as! CentralTabBarController
 
     func displayLoadingScreen() {
-        loadingViewController.initializeLabelTimer()
+        self.loadingViewController.initializeLabelTimer()
         self.pushViewController(loadingViewController, animated: true)
     }
 
     func hideLoadingScreen() {
-        loadingViewController.stopTimer()
+        self.loadingViewController.stopTimer()
 
         DispatchQueue.main.async {
             self.popViewController(animated: true)
@@ -36,10 +36,20 @@ public class CentralNavigationController: UINavigationController, UINavigationCo
 
     func hideLoadingScreenWithError() {
         loadingViewController.stopTimer()
-        self.popViewController(animated: true)
 
-        mainViewController.displayLoadingError()
+        let alertController = UIAlertController(title: "Data Error", message: "There was an error while loading menus.\n\nPlease try again."/*Loading the menus timed out.\n\nPlease reload the data."*/, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .destructive) {
+            (action) in
+            self.popViewController(animated: true)
+//            self.mainViewController.selectedIndex = 2
+        })
+
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
+
+
 
     public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 

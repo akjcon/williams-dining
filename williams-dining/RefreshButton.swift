@@ -12,6 +12,7 @@ import UIKit
 class RefreshButton: UIBarButtonItem {
     private func sharedInit() {
         self.tintColor = Style.secondaryColor
+        print("set tint color to \(Style.secondaryColor)")
     }
 
     override init() {
