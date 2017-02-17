@@ -26,25 +26,4 @@ public class CentralTabBarController: UITabBarController {
         super.init(coder: aDecoder)
         self.sharedInit()
     }
-
-    /*
-    func displayLoadingError() {
-        let alertController = UIAlertController(title: "Data Error", message: "There was an error while loading menus.\n\nPlease try again."/*Loading the menus timed out.\n\nPlease reload the data."*/, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: .destructive) {
-            (action) in
-            self.selectedIndex = 2
-        })
-        if var topController = UIApplication.shared.keyWindow?.rootViewController {
-            if let presentedViewController = topController.presentedViewController {
-                topController = presentedViewController
-            }
-            // topController should now be your topmost view controller
-            topController.present(alertController, animated: true, completion: nil)
-        }
-
-
-//        self.presentedViewController?.present(alertController, animated: true, completion: nil)
-
-//        self.present(alertController, animated: true, completion: nil)
-    }*/
 }
