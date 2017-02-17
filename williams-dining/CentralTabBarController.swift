@@ -33,6 +33,11 @@ public class CentralTabBarController: UITabBarController {
             (action) in
             self.selectedIndex = 2
         })
-        self.present(alertController, animated: true, completion: nil)
+
+        // hae to figure out hwo to do this
+
+        self.presentedViewController?.present(alertController, animated: true, completion: nil)
+
+//        self.present(alertController, animated: true, completion: nil)
     }
 }
