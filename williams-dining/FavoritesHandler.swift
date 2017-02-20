@@ -40,12 +40,13 @@ public class FavoritesHandler {
     internal static func removeItemFromFavorites(name: String) {
         var food: FavoriteFood?
         for favorite in favoriteFoods {
-            if favorite.name == name {
+            if favorite.name?.localizedCaseInsensitiveCompare(name) == ComparisonResult.orderedSame {
                 food = favorite
                 break
             }
         }
         guard let favFood = food else {
+            print("something bad happened")
             return
         }
         appDelegate.managedObjectContext.delete(favFood)
@@ -60,7 +61,18 @@ public class FavoritesHandler {
         if favorites == nil {
             updateFavorites()
         }
-        return favorites.contains(name)
+
+        for favorite in favorites {
+            if name.localizedCaseInsensitiveContains(favorite) {
+                return true
+            }
+        }
+        return false
+
+
+//        return favorites.contains(name.lowercased())
+
+//        return favorites.contains(name)
     }
 
     /**
@@ -73,7 +85,8 @@ public class FavoritesHandler {
         }
         var favs: [String] = []
         for f in favorites {
-            favs.append(f)
+            favs.append(f.lowercased())
+//            favs.append(f)
         }
         return favs.sorted()
     }
@@ -84,7 +97,7 @@ public class FavoritesHandler {
     private static func updateFavorites() {
         favoriteFoods = fetchFavorites()
         favorites = Set<String>()
-        favoriteFoods.forEach({favorites.insert($0.name!)})
+        favoriteFoods.forEach({favorites.insert($0.name!.lowercased())})
 
         NotificationCenter.default.post(name: reloadFavoritesTableKey, object: nil)
         NotificationCenter.default.post(name: reloadMealTableViewKey, object: nil)

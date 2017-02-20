@@ -13,6 +13,9 @@ public class FavoritesViewController: DefaultTableViewController {
     
     @IBOutlet var tableView: UITableView!
 
+    @IBOutlet var favoriteFoodTextField: UITextField!
+    @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
+
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(FavoritesViewController.reloadTable), name: reloadFavoritesTableKey, object: nil)
@@ -29,6 +32,28 @@ public class FavoritesViewController: DefaultTableViewController {
         DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
         })
+    }
+    @IBAction func userDidTap(_ sender: Any) {
+        clearKeyboard()
+    }
+
+    internal func clearKeyboard() {
+        if favoriteFoodTextField.isFirstResponder {
+            favoriteFoodTextField.resignFirstResponder()
+        }
+
+    }
+}
+
+extension FavoritesViewController: UITextFieldDelegate {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let text = textField.text?.trimmingCharacters(in: CharacterSet.alphanumerics.inverted) {
+            FavoritesHandler.addItemToFavorites(name: text)
+        }
+        textField.text = ""
+        clearKeyboard()
+
+        return true
     }
 }
 
